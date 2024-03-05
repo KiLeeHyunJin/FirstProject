@@ -5,6 +5,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum State
+    {
+        Jump, Action, Down, Hit, Stune, Idle, Alert, Walk , Run, Reclined, 
+    }
+    public State CurrentState;
+    public StateMachine<State> fsm;
 
     [Header("수직 움직임 속도")]
     [SerializeField] float verticalWalkSpeed;
@@ -19,7 +25,6 @@ public class PlayerController : MonoBehaviour
     [Header("링크")]
     [SerializeField] Rigidbody2D rigid;
     [SerializeField] new SpriteRenderer renderer;
-    [SerializeField] CircleCollider2D circleCollider;
 
 
     Vector3 moveValue;
@@ -27,20 +32,39 @@ public class PlayerController : MonoBehaviour
     JumpSystem jump;
     Animator anim;
     NormalAttack attack;
+    ShockDownAttack shockDownAttack;
+    ShortAirSlash shortAirSlash;
     TransformPos transformPos;
-
+    public AttackSkill currentSkill;
+    Tester tester;
+    Walk walk;
     public void Awake()
     {
+        fsm = new StateMachine<State>();
         jump = GetComponent<JumpSystem>();
         transformPos = GetComponent<TransformPos>();
         transformPos.direction = TransformPos.Direction.Right;
+        walk = new Walk();
+        walk.SetStateMachine(fsm);
+        fsm.AddState(State.Walk,walk);
+        fsm.Start(State.Walk);
     }
-
+    void GetSkill()
+    {
+        attack = GetComponent<NormalAttack>();
+        shockDownAttack = GetComponent<ShockDownAttack>();
+        shortAirSlash = GetComponent<ShortAirSlash>();
+    }
     public void Start()
     {
+        tester = new Tester(GetComponent<PlayerInput>());
+        GetSkill();
         anim = GetComponentInChildren<Animator>();
-        attack = GetComponent<NormalAttack>();
         anim.speed = .35f;
+    }
+    private void Update()
+    {
+        fsm?.Update();
     }
     private void FixedUpdate()
     {
@@ -49,6 +73,7 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
+
         if(moveValue.magnitude != 0)
         {
             Vector2 moveVector = new Vector2(moveValue.x * horizontalSpeed, moveValue.y * verticalSpeed);
@@ -66,15 +91,16 @@ public class PlayerController : MonoBehaviour
             if(before != transformPos.direction)
             {
                 renderer.flipX = !renderer.flipX;
-                Vector2 colOffset = circleCollider.offset;
-                colOffset.x *= -1;
-                circleCollider.offset = colOffset;
             }
         }
     }
     float keyDownTime;
     public void OnMove(InputValue inputValue)
     {
+        if (CurrentState == State.Alert || CurrentState == State.Idle)
+        { 
+        }
+
         float beforeTime = keyDownTime;
         keyDownTime = Time.time;
         if (keyDownTime - beforeTime < 0.2f)
@@ -99,14 +125,26 @@ public class PlayerController : MonoBehaviour
             anim.Play("Idle");
         }
     }
-
     public void OnJump(InputValue inputValue)
     {
+        Debug.Log("본캐 발동!");
         jump.StartJump();
     }
 
     public void OnBaseAttack(InputValue inputValue)
     {
         attack.InputKeyCount();
+    }
+}
+public class Tester
+{
+    PlayerInput PlayerInput;
+    public Tester(PlayerInput input)
+    {
+        PlayerInput = input;
+    }
+    public void OnJump(InputValue value)
+    {
+        Debug.Log("부캐 발동!");
     }
 }

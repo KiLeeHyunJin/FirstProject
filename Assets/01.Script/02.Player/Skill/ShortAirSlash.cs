@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalAttack : AttackSkill
+public class ShortAirSlash : AttackSkill
 {
     public override void InputKeyCount()
     {
@@ -31,13 +31,7 @@ public class NormalAttack : AttackSkill
             animCo = StartCoroutine(AnimationInputSensor(inputCount));
             Attack(inputCount);
         }
-        else
-        {
-            anim.Play(animId[0]);
-            animCo = StartCoroutine(AnimationInputSensor(0));
-        }
     }
-
     protected Coroutine animCo = null;
     protected IEnumerator AnimationInputSensor(int input)
     {

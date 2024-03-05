@@ -39,7 +39,7 @@ public class TransformAddForce
         yRigid.AddForce(new Vector2(0, power.y), ForceMode2D.Impulse);
         xRigid.AddForce(new Vector2(power.x,0), ForceMode2D.Impulse);
         yield return WaitTime(time);
-        YAddForceReset();
+        //YAddForceReset();
         XAddForceReset();
     }
 
@@ -50,7 +50,7 @@ public class TransformAddForce
         if (xRigid != null)
             xRigid.velocity = new Vector2(powerVector.x, 0);
         yield return WaitTime(time);
-        YAddForceReset();
+        //YAddForceReset();
         XAddForceReset();
     }
     IEnumerator WaitTime(float time)
@@ -62,12 +62,13 @@ public class TransformAddForce
             yTransform.localPosition = new Vector3(0, yTransform.localPosition.y, 0);
             yield return new WaitForFixedUpdate();
         }
-        while (owner.Y > 0)
+        while (owner.Y >= 0)
         {
+            Debug.Log($"Y value : {owner.Y}");
             yTransform.localPosition = new Vector3(0, yTransform.localPosition.y, 0);
             yield return new WaitForFixedUpdate();
         }
-
+        YAddForceReset();
         while (timer < time)
         {
             timer += Time.deltaTime;

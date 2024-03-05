@@ -18,23 +18,32 @@ public class AttackController : MonoBehaviour
 
     int count;
     float damage;
+    bool isStart;
 
     public void Start()
     {
+        if(maxAttack < 1)
+            maxAttack = 5;
         colliders = new Collider2D[maxAttack];
+        isStart = true;
     }
+
     public void SetPosition(Vector2 _position, Vector3 _size)
     {
         offset = _position;
         size = _size * 0.5f;
-        if (pos.direction == TransformPos.Direction.Left)
-            offset.x *= -1;
+    }
+
+    public void SetKnockBack(Vector3 power)
+    {
+        knockbackPower = power; 
     }
 
     public void SetDamage(float _damage)
     {
         damage = _damage;
     }
+
     public void OnAttackEnable()
     {
         GetCollisionObject();
@@ -42,12 +51,33 @@ public class AttackController : MonoBehaviour
 
     private void GetCollisionObject()
     {
-        count = Physics2D.OverlapCircleNonAlloc(
-            new Vector2(pos.X + offset.x, pos.Y + offset.y)
-            , size.x, colliders, layerMask);
 
+        count = Physics2D.OverlapCircleNonAlloc(
+            new Vector2(pos.X + offset.x, pos.Z + offset.y)
+            , size.x, colliders,layerMask);
+
+        Debug.Log($"count : {count}");
         if(count > 0)
             StartCoroutine(AttackCo());
+        //else
+        //    SetttingReset();
+    }
+    private void OnDrawGizmos()
+    {
+        int temp = isStart ? 2 : 1;
+        //범위
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(
+            new Vector2(pos.X, pos.Z) + new Vector2(offset.x , 0),
+            new Vector2(size.x, size.z) *temp);
+
+        //높이
+        Gizmos.color = Color.yellow;
+        float realYPos =
+            (pos.Z + offset.y) + (size.y * 0.25f * temp);
+        Gizmos.DrawWireCube(
+            new Vector2(pos.X + offset.x , realYPos),
+            new Vector2(size.x, size.y) * temp);
     }
 
     IEnumerator AttackCo()
@@ -67,7 +97,7 @@ public class AttackController : MonoBehaviour
                 damagable.IGetDamage(damage);
             }
         }
-        SetttingReset();
+        //SetttingReset();
     }
 
     private void SetttingReset()
@@ -79,16 +109,5 @@ public class AttackController : MonoBehaviour
         knockbackPower = Vector2.zero;
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(
-            new Vector2(pos.X, pos.Z) + new Vector2(offset.x, 0), 
-            new Vector2(size.x,size.z));
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(
-            new Vector2(pos.X, pos.Z) + offset, 
-            new Vector2(size.x,size.y));
-    }
 }

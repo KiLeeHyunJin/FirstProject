@@ -18,7 +18,7 @@ public class AttackCollision
         ownerPos = _owner;
     }
     /// <summary>
-    /// 
+    /// 오브젝트와의 충돌
     /// </summary>
     /// <param name="_ownerPos"> 캐릭터 위치</param>
     /// <param name="_transformPos"> 공격의 오프셋 </param>
@@ -34,7 +34,7 @@ public class AttackCollision
         return Check();
     }
     /// <summary>
-    /// 
+    /// 캐릭터 간의 충돌
     /// </summary>
     /// <param name="_targetPos"> 원점 위치</param>
     /// <param name="_targetSize"> 크기</param>

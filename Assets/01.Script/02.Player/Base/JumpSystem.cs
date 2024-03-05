@@ -32,10 +32,13 @@ public class JumpSystem : MonoBehaviour
     public void FixedUpdate()
     {
         if (isJump)
-            rigid.transform.localPosition =
-                new Vector3(0, rigid.transform.localPosition.y, 0);
+            jumpTransform.localPosition =
+                new Vector3(0, jumpTransform.localPosition.y, 0);
         else
-            rigid.transform.localPosition = Vector3.zero;
+        {
+            jumpTransform.localPosition = Vector3.zero;
+            //ResetYPos();
+        }
     }
 
     private void JumpCo()
@@ -43,9 +46,8 @@ public class JumpSystem : MonoBehaviour
         if (pos.Y > 0)
             return;
         rigid.constraints =
-            RigidbodyConstraints2D.FreezeRotation;
+            RigidbodyConstraints2D.FreezeRotation ;
 
-        
         StartCoroutine(Jump());
     }
 
@@ -54,21 +56,36 @@ public class JumpSystem : MonoBehaviour
         isJump = true;
         rigid.velocity = new Vector2(0, jumpPower);
 
-        anim.SetTrigger("JumpStart");
+        anim.Play("Jump_Up");
         while (rigid.velocity.y > 0f)
             yield return null;
 
-        anim.SetTrigger("JumpDown");
-        while(pos.Y > 0)
-            yield return new WaitForFixedUpdate();
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Jump_Up"))
+            anim.Play("Jump_Down");
 
-        pos.Y = 0;
-        rigid.constraints = 
-            RigidbodyConstraints2D.FreezeRotation | 
-            RigidbodyConstraints2D.FreezePositionY;
-        isJump = false;
+        while (pos.Y > 0)
+            yield return new WaitForFixedUpdate();
+        ResetYPos();
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Jump_Down"))
+        {
+            anim.Play("Jump_Land");
+            yield return new WaitForSeconds(0.25f);
+        }
+
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Jump_Land"))
+            anim.Play("Idle");
+
         yield break;
     }
 
-
+    void ResetYPos()
+    {
+        pos.Y = 0;
+        rigid.constraints =
+            RigidbodyConstraints2D.FreezeRotation |
+            RigidbodyConstraints2D.FreezePositionY;
+        isJump = false;
+    }
 }
+

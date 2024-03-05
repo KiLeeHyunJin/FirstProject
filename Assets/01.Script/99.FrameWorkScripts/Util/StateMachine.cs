@@ -1,18 +1,29 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEngine.InputSystem;
 
 public class StateMachine<T> where T : Enum
 {
     private Dictionary<T, BaseState<T>> stateDic = new Dictionary<T, BaseState<T>>();
     private BaseState<T> curState;
 
+    public Action<InputAction.CallbackContext> GetEnterMethod(T state)
+    {
+        if (stateDic.ContainsKey(state))
+        {
+            return stateDic[state].Enter;
+        }
+        return null;
+    }
+
     public void Start(T startState)
     {
         curState = stateDic[startState];
-        curState.Enter();
+        //curState.Enter();
     }
 
-    private void Update()
+    public void Update()
     {
         curState.Update();
         curState.Transition();
@@ -38,7 +49,7 @@ public class StateMachine<T> where T : Enum
     {
         curState.Exit();
         curState = stateDic[stateEnum];
-        curState.Enter();
+        //curState.Enter();
     }
 }
 
@@ -56,7 +67,7 @@ public class BaseState<T> where T : Enum
         stateMachine.ChangeState(stateEnum);
     }
 
-    public virtual void Enter() { }
+    public virtual void Enter(InputAction.CallbackContext CallbackContext) { }
     public virtual void Exit() { }
     public virtual void Update() { }
     public virtual void LateUpdate() { }
