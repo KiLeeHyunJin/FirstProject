@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class StateMachine<T> where T : Enum
@@ -11,16 +12,25 @@ public class StateMachine<T> where T : Enum
     public Action<InputAction.CallbackContext> GetEnterMethod(T state)
     {
         if (stateDic.ContainsKey(state))
-        {
-            return stateDic[state].Enter;
-        }
+            return stateDic[state].EnterInputAction;
         return null;
     }
-
+    public Action<InputAction.CallbackContext> GetEventMethod(T state)
+    {
+        if (stateDic.ContainsKey(state))
+            return stateDic[state].UpdateInputAction;
+        return null;
+    }
+    public Action<InputAction.CallbackContext> GetExitMethod(T state)
+    {
+        if (stateDic.ContainsKey(state))
+            return stateDic[state].ExitInputAction;
+        return null;
+    }
     public void Start(T startState)
     {
         curState = stateDic[startState];
-        //curState.Enter();
+        curState.Enter();
     }
 
     public void Update()
@@ -49,14 +59,28 @@ public class StateMachine<T> where T : Enum
     {
         curState.Exit();
         curState = stateDic[stateEnum];
-        //curState.Enter();
+        curState.Enter();
     }
 }
-
+[Serializable]
 public class BaseState<T> where T : Enum
 {
     private StateMachine<T> stateMachine;
+    protected Animator anim;
+    protected TransformPos pos;
+    protected AttackController attack;
+    protected SpriteRenderer renderer;
+    public BaseState(Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer)
+    {
 
+    }
+    public void Setting(Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer)
+    {
+        anim = _anim;
+        pos = _transform;
+        attack = _atckCon;
+        renderer = _renderer;
+    }
     public void SetStateMachine(StateMachine<T> stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -67,9 +91,14 @@ public class BaseState<T> where T : Enum
         stateMachine.ChangeState(stateEnum);
     }
 
-    public virtual void Enter(InputAction.CallbackContext CallbackContext) { }
+    public virtual void EnterInputAction(InputAction.CallbackContext context) { }
+    public virtual void ExitInputAction(InputAction.CallbackContext context) { }
+    public virtual void UpdateInputAction(InputAction.CallbackContext context) { }
+    public virtual void Enter() { }
     public virtual void Exit() { }
     public virtual void Update() { }
+
+
     public virtual void LateUpdate() { }
     public virtual void FixedUpdate() { }
 

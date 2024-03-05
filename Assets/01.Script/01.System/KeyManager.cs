@@ -19,14 +19,12 @@ public class KeyManager : MonoBehaviour
         InputActionMap allKeysMap = inputActionAsset.FindActionMap("Player");
         StringBuilder sb = new StringBuilder();
         int temp = 0;
-        InputAction action = null;
+
         allKeysMap.Disable();
+
         InputAction moveAction = allKeysMap.FindAction("Move");
-        Action<InputAction.CallbackContext> action1 = player.fsm.GetEnterMethod(PlayerController.State.Walk);
-        if (action1 == null)
-            Debug.Log("참조 실패");
-        else
-            moveAction.performed += action1;
+        SetStateAction(moveAction, PlayerController.State.Walk);
+
         //foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
         //{
         //    if (temp == (int)key)
@@ -53,6 +51,21 @@ public class KeyManager : MonoBehaviour
         //action.started += OnKeyPressed;
         //allKeysMap.Enable();
     }
+
+    void SetStateAction(InputAction input, PlayerController.State state)
+    {
+        Action<InputAction.CallbackContext> action = null;
+        action = player.fsm.GetEnterMethod(PlayerController.State.Walk);
+        if(action != null)
+            input.started += action;
+        action = player.fsm.GetEventMethod(PlayerController.State.Walk);
+        if (action != null)
+            input.performed += action;
+        action = player.fsm.GetExitMethod(PlayerController.State.Walk);
+        if (action != null)
+            input.canceled += action;
+    }
+
 
 
     private void OnKeyPressed(InputAction.CallbackContext context)

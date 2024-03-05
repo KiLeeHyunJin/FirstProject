@@ -15,40 +15,48 @@ public class TransformAddForce
         owner = _owner;
         yTransform = _yRigid.transform;
     }
+    public void ForceZero(KeyCode pos) => ForceReset(pos);
 
-    public void AddForce(Vector2 power, float time) => AddForceMethod(power, time);
-    public void AddForceImpuse(Vector2 power, float time) => AddForceImpuseMethod(power, time);
+    private void ForceReset(KeyCode pos)
+    {
+        if(pos == KeyCode.X)
+            xRigid.velocity = Vector2.zero;
+        else if(pos == KeyCode.Y)
+            yRigid.velocity = Vector2.zero;
+    }
+    public void AddForce(Vector3 power, float time) => AddForceMethod(power, time);
+    public void AddForceImpuse(Vector3 power, float time) => AddForceImpuseMethod(power, time);
     Coroutine coroutine = null;
 
-    private void AddForceMethod(Vector2 powerVector, float time)
+    private void AddForceMethod(Vector3 powerVector, float time)
     {
         if (coroutine != null)
             owner.OwnerStopCo(coroutine);
             coroutine = owner.OwnerCo(ForceCo(powerVector, time));
     }
-    private void AddForceImpuseMethod(Vector2 powerVector, float time)
+    private void AddForceImpuseMethod(Vector3 powerVector, float time)
     {
         if (impulseCo != null)
             owner.OwnerStopCo(impulseCo);
         impulseCo = owner.OwnerCo(ImpulseForceCo(powerVector, time));
     }
     Coroutine impulseCo = null;
-    IEnumerator ImpulseForceCo(Vector2 power, float time)
+    IEnumerator ImpulseForceCo(Vector3 power, float time)
     {
         LimitYUnlock();
         yRigid.AddForce(new Vector2(0, power.y), ForceMode2D.Impulse);
-        xRigid.AddForce(new Vector2(power.x,0), ForceMode2D.Impulse);
+        xRigid.AddForce(new Vector2(power.x,power.z), ForceMode2D.Impulse);
         yield return WaitTime(time);
         //YAddForceReset();
         XAddForceReset();
     }
 
-    IEnumerator ForceCo(Vector2 powerVector,float time)
+    IEnumerator ForceCo(Vector3 powerVector,float time)
     {
         LimitYUnlock();
         yRigid.velocity = new Vector2(0, powerVector.y);
         if (xRigid != null)
-            xRigid.velocity = new Vector2(powerVector.x, 0);
+            xRigid.velocity = new Vector2(powerVector.x, powerVector.z);
         yield return WaitTime(time);
         //YAddForceReset();
         XAddForceReset();
@@ -62,9 +70,9 @@ public class TransformAddForce
             yTransform.localPosition = new Vector3(0, yTransform.localPosition.y, 0);
             yield return new WaitForFixedUpdate();
         }
-        while (owner.Y >= 0)
+        while (owner.Y > 0)
         {
-            Debug.Log($"Y value : {owner.Y}");
+            //Debug.Log($"Y value : {owner.Y}");
             yTransform.localPosition = new Vector3(0, yTransform.localPosition.y, 0);
             yield return new WaitForFixedUpdate();
         }

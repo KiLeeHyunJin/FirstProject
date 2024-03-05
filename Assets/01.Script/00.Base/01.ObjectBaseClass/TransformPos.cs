@@ -27,14 +27,12 @@ public class TransformPos : MonoBehaviour
         Size = hitBox != null ? new Vector3(hitBox.localScale.x / 2, Heigth, hitBox.localScale.y / 2) : Vector2.zero;
         Offset = hitBox != null ? new Vector2(hitBox.transform.localPosition.x, hitBox.transform.localPosition.y): Vector2.zero;
     }
-    public void AddForce(Vector2 power, float moveTime = 0)
-    {
-        AddForceClass.AddForce(power, moveTime);
-    }
-    public void AddForceImpuse(Vector2 power, float moveTime = 0)
-    {
-        AddForceClass.AddForceImpuse(power,moveTime);
-    }
+    public void ForceZero(KeyCode pos)
+    {   AddForceClass.ForceZero(pos); }
+    public void AddForce(Vector3 power, float moveTime = 0)
+    {   AddForceClass.AddForce(power, moveTime);    }
+    public void AddForceImpuse(Vector3 power, float moveTime = 0)
+    {   AddForceClass.AddForceImpuse(power,moveTime);   }
 
     public Coroutine OwnerCo(IEnumerator enumerator)
     {
