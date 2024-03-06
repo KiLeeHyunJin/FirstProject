@@ -12,19 +12,19 @@ public class StateMachine<T> where T : Enum
     public Action<InputAction.CallbackContext> GetEnterMethod(T state)
     {
         if (stateDic.ContainsKey(state))
-            return stateDic[state].EnterInputAction;
+            return stateDic[state].StartedInputAction;
         return null;
     }
     public Action<InputAction.CallbackContext> GetEventMethod(T state)
     {
         if (stateDic.ContainsKey(state))
-            return stateDic[state].UpdateInputAction;
+            return stateDic[state].PerformedInputAction;
         return null;
     }
     public Action<InputAction.CallbackContext> GetExitMethod(T state)
     {
         if (stateDic.ContainsKey(state))
-            return stateDic[state].ExitInputAction;
+            return stateDic[state].CanceledInputAction;
         return null;
     }
     public void Start(T startState)
@@ -91,9 +91,9 @@ public class BaseState<T> where T : Enum
         stateMachine.ChangeState(stateEnum);
     }
 
-    public virtual void EnterInputAction(InputAction.CallbackContext context) { }
-    public virtual void ExitInputAction(InputAction.CallbackContext context) { }
-    public virtual void UpdateInputAction(InputAction.CallbackContext context) { }
+    public virtual void StartedInputAction(InputAction.CallbackContext context) { }
+    public virtual void CanceledInputAction(InputAction.CallbackContext context) { }
+    public virtual void PerformedInputAction(InputAction.CallbackContext context) { }
     public virtual void Enter() { }
     public virtual void Exit() { }
     public virtual void Update() { }

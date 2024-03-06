@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 [Serializable]
 public class Walk : BaseState<PlayerController.State>
 {
@@ -16,36 +17,35 @@ public class Walk : BaseState<PlayerController.State>
     [SerializeField] float verticalSpeed;
     [SerializeField] float horizontalSpeed;
     Vector2 moveValue;
-    float keyDownTime;
-
+    float outTime;
+    float inTime;
     public Walk(Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer) 
         : base(_anim, _transform, _atckCon, _renderer)
     {
     }
 
-    public override void EnterInputAction(InputAction.CallbackContext context) 
+    public override void StartedInputAction(InputAction.CallbackContext context) 
     {
         //Vector2 moveValue = context.ReadValue<Vector2>();
 
         // 여기에서 필요한 동작을 수행
         Debug.Log("초기 진입");
-    }
-    public override void ExitInputAction(InputAction.CallbackContext context) 
-    {
-        //Vector2 inputValue = context.ReadValue<Vector2>();
-        moveValue = Vector3.zero;//new Vector3(inputValue.x, 0, inputValue.y).normalized;
+        inTime = Time.time;
 
+    }
+    public override void CanceledInputAction(InputAction.CallbackContext context) 
+    {
+        outTime = Time.time;
+        moveValue = Vector3.zero;
         pos.ForceZero(KeyCode.X);
         anim.Play("Idle");
     }
-    public override void UpdateInputAction(InputAction.CallbackContext context)
+    public override void PerformedInputAction(InputAction.CallbackContext context)
     {
         Vector2 inputValue = context.ReadValue<Vector2>();
 
         //Debug.Log(inputValue);
-        float beforeTime = keyDownTime;
-        keyDownTime = Time.time;
-        if (keyDownTime - beforeTime < 0.2f)
+        if (inTime - outTime < 0.2f)
         {
             anim.Play("Run");
             horizontalSpeed = horizontalRunSpeed;
