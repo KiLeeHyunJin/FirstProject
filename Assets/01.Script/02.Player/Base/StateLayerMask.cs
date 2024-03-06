@@ -12,7 +12,7 @@ public class StateLayerMask
     public void OnLayer(PlayerKeyLayer checkKey)
     {
         int addLayer = 1 << (int)layer;
-        layer += addLayer; 
+        layer |= addLayer; 
     }
     public bool ContainLayer(PlayerKeyLayer checkKey)
     {
