@@ -14,7 +14,7 @@ public class TransformPos : MonoBehaviour
     [SerializeField] Transform hitBox;
 
     public AttackCollision attackCheck { get; private set; }
-    TransformAddForce AddForceClass;
+    [SerializeField]TransformAddForce AddForceClass;
     public Vector3 Size { get; private set; }
     public Vector2 Offset { get; private set; }
     public float Heigth { get; private set; }
@@ -27,22 +27,12 @@ public class TransformPos : MonoBehaviour
         Size = hitBox != null ? new Vector3(hitBox.localScale.x / 2, Heigth, hitBox.localScale.y / 2) : Vector2.zero;
         Offset = hitBox != null ? new Vector2(hitBox.transform.localPosition.x, hitBox.transform.localPosition.y): Vector2.zero;
     }
-    public void ForceZero(KeyCode pos)
-    {   AddForceClass.ForceZero(pos); }
-    public void AddForce(Vector3 power, float moveTime = 0)
-    {   AddForceClass.AddForce(power, moveTime);    }
-    public void AddForceImpuse(Vector3 power, float moveTime = 0)
-    {   AddForceClass.AddForceImpuse(power,moveTime);   }
 
-    public Coroutine OwnerCo(IEnumerator enumerator)
-    {
-        return StartCoroutine(enumerator);
-    }
-    public void OwnerStopCo(Coroutine coroutine)
-    {
-        StopCoroutine(coroutine);
-    }
-
+    public Vector3 Velocity() => AddForceClass.GetVelocity();
+    public void ForceZero(KeyCode pos) => AddForceClass.ForceZero(pos);
+    public void AddForce(Vector3 power, float moveTime = 0) => AddForceClass.AddForce(power, moveTime);  
+    public void AddForceImpuse(Vector3 power, float moveTime = 0) => AddForceClass.AddForceImpuse(power, moveTime);
+    public TransformAddForce.YState yState() => AddForceClass.Ystate;
     public Vector3 Pose 
     { get 
         {

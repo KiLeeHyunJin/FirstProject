@@ -1,20 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class TransformAddForce
 {
+    public enum YState
+    {
+        Up,Down,None
+    }
     Rigidbody2D xRigid;
     Rigidbody2D yRigid;
     Transform yTransform;
     TransformPos owner;
+    [field:SerializeField]public YState Ystate { get; private set; }
     public TransformAddForce(Rigidbody2D _xRigid, Rigidbody2D _yRigid,TransformPos _owner)
     {
         xRigid = _xRigid;
         yRigid = _yRigid;
         owner = _owner;
         yTransform = _yRigid.transform;
+        Ystate = YState.None;
     }
+    public Vector3 GetVelocity()
+    {
+        return new Vector3(xRigid.velocity.x, yRigid.velocity.y, xRigid.velocity.y);
+    }
+
     public void ForceZero(KeyCode pos) => ForceReset(pos);
 
     private void ForceReset(KeyCode pos)
@@ -31,34 +44,48 @@ public class TransformAddForce
     private void AddForceMethod(Vector3 powerVector, float time)
     {
         if (coroutine != null)
-            owner.OwnerStopCo(coroutine);
-            coroutine = owner.OwnerCo(ForceCo(powerVector, time));
+            owner.StopCoroutine(coroutine);
+            coroutine = owner.StartCoroutine(ForceCo(powerVector, time));
     }
     private void AddForceImpuseMethod(Vector3 powerVector, float time)
     {
         if (impulseCo != null)
-            owner.OwnerStopCo(impulseCo);
-        impulseCo = owner.OwnerCo(ImpulseForceCo(powerVector, time));
+            owner.StopCoroutine(impulseCo);
+        impulseCo = owner.StartCoroutine(ImpulseForceCo(powerVector, time));
     }
     Coroutine impulseCo = null;
     IEnumerator ImpulseForceCo(Vector3 power, float time)
     {
-        LimitYUnlock();
-        yRigid.AddForce(new Vector2(0, power.y), ForceMode2D.Impulse);
-        xRigid.AddForce(new Vector2(power.x,power.z), ForceMode2D.Impulse);
+        if(power.y != 0)
+        {
+            LimitYUnlock();
+            yRigid.AddForce(new Vector2(0, power.y), ForceMode2D.Impulse);
+            Ystate  = power.y > 0 ? YState.Up : YState.Down;
+        }
+        if (xRigid != null)
+            xRigid.AddForce(new Vector2(power.x,power.z), ForceMode2D.Impulse);
         yield return WaitTime(time);
-        //YAddForceReset();
         XAddForceReset();
     }
 
-    IEnumerator ForceCo(Vector3 powerVector,float time)
+    IEnumerator ForceCo(Vector3 power, float time)
     {
-        LimitYUnlock();
-        yRigid.velocity = new Vector2(0, powerVector.y);
+        if (power.y != 0)
+        {
+            LimitYUnlock();
+            yRigid.velocity = new Vector2(0, power.y);
+            Ystate = power.y > 0 ? YState.Up : YState.Down;
+        }
         if (xRigid != null)
-            xRigid.velocity = new Vector2(powerVector.x, powerVector.z);
+        {
+            Vector2 check = new Vector2(power.x, power.z);
+            if (check.x == 0)
+                check.x = xRigid.velocity.x;
+            if (check.y == 0)
+                check.y = xRigid.velocity.y;
+            xRigid.velocity = check;
+        }
         yield return WaitTime(time);
-        //YAddForceReset();
         XAddForceReset();
     }
     IEnumerator WaitTime(float time)
@@ -67,11 +94,15 @@ public class TransformAddForce
 
         while (yRigid.velocity.y > 0)
         {
+            if(Ystate != YState.None)
+                Ystate = YState.Up;
             yTransform.localPosition = new Vector3(0, yTransform.localPosition.y, 0);
             yield return new WaitForFixedUpdate();
         }
         while (owner.Y > 0)
         {
+            if (Ystate != YState.None)
+                Ystate = YState.Down;
             //Debug.Log($"Y value : {owner.Y}");
             yTransform.localPosition = new Vector3(0, yTransform.localPosition.y, 0);
             yield return new WaitForFixedUpdate();
@@ -96,6 +127,7 @@ public class TransformAddForce
     {
         if (yRigid == null)
             return;
+        Ystate = YState.None;
         yRigid.velocity = Vector2.zero;
         yRigid.constraints =
             RigidbodyConstraints2D.FreezePositionX |

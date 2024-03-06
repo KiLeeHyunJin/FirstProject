@@ -49,6 +49,7 @@ public class NormalAttack : AttackSkill
                     break;
             yield return new WaitForFixedUpdate();
         }
-        anim.Play("Idle");
+        controller.SetState = PlayerController.State.Idle;
+        //anim.Play("Idle");
     }
 }

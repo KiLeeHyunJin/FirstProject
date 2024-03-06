@@ -9,6 +9,12 @@ public class StateMachine<T> where T : Enum
     private Dictionary<T, BaseState<T>> stateDic = new Dictionary<T, BaseState<T>>();
     private BaseState<T> curState;
 
+    //public bool IsValueType(T state)
+    //{
+    //    if(stateDic.ContainsKey(state))
+    //        return stateDic[state].ValueType;
+    //    return false;
+    //}
     public Action<InputAction.CallbackContext> GetEnterMethod(T state)
     {
         if (stateDic.ContainsKey(state))
@@ -39,15 +45,9 @@ public class StateMachine<T> where T : Enum
         curState.Transition();
     }
 
-    private void LateUpdate()
-    {
-        curState.LateUpdate();
-    }
+    private void LateUpdate() => curState.LateUpdate();
 
-    private void FixedUpdate()
-    {
-        curState.FixedUpdate();
-    }
+    private void FixedUpdate() => curState.FixedUpdate();
 
     public void AddState(T stateEnum, BaseState<T> state)
     {
@@ -63,33 +63,30 @@ public class StateMachine<T> where T : Enum
     }
 }
 [Serializable]
-public class BaseState<T> where T : Enum
+public abstract class BaseState<T> where T : Enum
 {
     private StateMachine<T> stateMachine;
     protected Animator anim;
     protected TransformPos pos;
     protected AttackController attack;
     protected SpriteRenderer renderer;
-    public BaseState(Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer)
-    {
-
-    }
-    public void Setting(Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer)
+    protected PlayerController owner;
+    protected bool isEnter;
+    [field: SerializeField] public bool ValueType { get; private set; }
+    public void Setting(PlayerController _controller, Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer)
     {
         anim = _anim;
         pos = _transform;
         attack = _atckCon;
         renderer = _renderer;
-    }
-    public void SetStateMachine(StateMachine<T> stateMachine)
-    {
-        this.stateMachine = stateMachine;
+        owner = _controller;
     }
 
-    protected void ChangeState(T stateEnum)
-    {
-        stateMachine.ChangeState(stateEnum);
-    }
+    public void SetStateMachine(StateMachine<T> stateMachine) => this.stateMachine = stateMachine;
+  
+    protected void ChangeState(T stateEnum) => stateMachine.ChangeState(stateEnum);
+
+    protected abstract void EnterCheck();
 
     public virtual void StartedInputAction(InputAction.CallbackContext context) { }
     public virtual void CanceledInputAction(InputAction.CallbackContext context) { }

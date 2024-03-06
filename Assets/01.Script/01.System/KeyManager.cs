@@ -18,12 +18,14 @@ public class KeyManager : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
         InputActionMap allKeysMap = inputActionAsset.FindActionMap("Player");
         StringBuilder sb = new StringBuilder();
-        int temp = 0;
-
         allKeysMap.Disable();
 
-        InputAction moveAction = allKeysMap.FindAction("Move");
-        SetStateAction(moveAction, PlayerController.State.Walk);
+        InputAction action;
+        action = allKeysMap.FindAction("Move");
+        SetStateAction(action, PlayerController.State.Walk);
+
+        action = allKeysMap.FindAction("Jump");
+        SetStateAction(action, PlayerController.State.Jump);
 
         //foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
         //{
@@ -47,7 +49,8 @@ public class KeyManager : MonoBehaviour
         //if (jumpAction != null)
         //    jumpAction.RemoveAction();
 
-        //action = allKeysMap.AddAction(KeyCode.DownArrow.ToString(), type: InputActionType.PassThrough, binding: $"<Keyboard>/{KeyCode.DownArrow.ToString()}");
+        //action = allKeysMap.AddAction(KeyCode.DownArrow.ToString(), type: InputActionType.PassThrough,
+        //binding: $"<Keyboard>/{KeyCode.DownArrow.ToString()}");
         //action.started += OnKeyPressed;
         //allKeysMap.Enable();
     }
@@ -55,23 +58,22 @@ public class KeyManager : MonoBehaviour
     void SetStateAction(InputAction input, PlayerController.State state)
     {
         Action<InputAction.CallbackContext> action = null;
-        action = player.fsm.GetEnterMethod(PlayerController.State.Walk);
+        action = player.fsm.GetEnterMethod(state);
         if(action != null)
             input.started += action;
-        action = player.fsm.GetEventMethod(PlayerController.State.Walk);
-        if (action != null)
-            input.performed += action;
-        action = player.fsm.GetExitMethod(PlayerController.State.Walk);
+
+        //if(player.fsm.IsValueType(state))
+        //{
+            action = player.fsm.GetEventMethod(state);
+            if (action != null)
+                input.performed += action;
+        //}
+
+        action = player.fsm.GetExitMethod(state);
         if (action != null)
             input.canceled += action;
     }
 
-
-
-    private void OnKeyPressed(InputAction.CallbackContext context)
-    {
-        Debug.Log($"Key name : {context.control.name}");
-    }
 
     void CheckKeyName(KeyCode key, ref StringBuilder sb)
     {

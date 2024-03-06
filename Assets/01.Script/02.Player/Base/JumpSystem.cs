@@ -47,7 +47,6 @@ public class JumpSystem : MonoBehaviour
             return;
         rigid.constraints =
             RigidbodyConstraints2D.FreezeRotation ;
-
         StartCoroutine(Jump());
     }
 
@@ -70,6 +69,7 @@ public class JumpSystem : MonoBehaviour
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Jump_Down"))
         {
             anim.Play("Jump_Land");
+            
             yield return new WaitForSeconds(0.25f);
         }
 

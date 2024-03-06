@@ -3,18 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public struct AttackData
-{
-    public string AnimName;
-    [Range(0, 1)]
-    public float delay;
-    public Vector2 offset;
-    public Vector3 size;
-    public Vector2 power;
-    public Vector2 move;
-    public float moveTime;
-}
+
 
 public abstract class AttackSkill : MonoBehaviour
 {
@@ -23,8 +12,8 @@ public abstract class AttackSkill : MonoBehaviour
         JumpAction,
         Action,
     }
-
-    /*[SerializeField] */protected AttackController atkData;
+    /*[SerializeField] */
+    protected AttackController atkData;
     /*[SerializeField] */protected TransformPos pos;
     /*[SerializeField] */protected PlayerController controller;
     [SerializeField] protected float coolTime;
@@ -88,7 +77,7 @@ public abstract class AttackSkill : MonoBehaviour
 
     protected void Attack(int count)
     {
-        controller.currentSkill = this;
+        //controller.currentSkill = this;
         int direction = 1;
         if (pos.direction == TransformPos.Direction.Left)
             direction = -1;

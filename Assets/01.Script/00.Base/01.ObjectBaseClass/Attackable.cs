@@ -8,6 +8,7 @@ public class Attackable : MonoBehaviour, IDamagable
 
     public void IGetDamage(float damage)
     {
+
     }
 
     public void ISetKnockback(Vector2 power, Vector3 pos, Vector3 size, Vector2 offset)

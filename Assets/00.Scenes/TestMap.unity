@@ -369,6 +369,8 @@ MonoBehaviour:
   xPosTarget: {fileID: 310048721}
   yPosTarget: {fileID: 1672251065}
   hitBox: {fileID: 660233462}
+  AddForceClass:
+    <Ystate>k__BackingField: 0
 --- !u!58 &310048723
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -597,7 +599,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
 --- !u!95 &1195409011
@@ -862,7 +864,7 @@ SpriteRenderer:
   m_Size: {x: 1.18, y: 1.13}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
 --- !u!95 &1675917342
@@ -976,14 +978,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1985023439}
   - component: {fileID: 1985023438}
-  - component: {fileID: 1985023437}
   - component: {fileID: 1985023436}
   - component: {fileID: 1985023435}
   - component: {fileID: 1985023434}
   - component: {fileID: 1985023433}
-  - component: {fileID: 1985023440}
-  - component: {fileID: 1985023441}
-  - component: {fileID: 1985023442}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -1095,34 +1093,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d34e0a6e7d5ac447869353dde1959ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentState: 0
-  rigid: {fileID: 1985023434}
+  <CurrentState>k__BackingField: 5
+  yPos: {fileID: 35571950}
   renderer: {fileID: 1675917341}
   anim: {fileID: 1675917342}
   atkController: {fileID: 1721595375}
-  currentSkill: {fileID: 0}
   walk:
+    <ValueType>k__BackingField: 1
     verticalWalkSpeed: 1
     verticalRunSpeed: 1.5
     horizontalWalkSpeed: 1.2
     horizontalRunSpeed: 2.5
-    verticalSpeed: 0
-    horizontalSpeed: 0
---- !u!114 &1985023437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985023432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8672e06573bcc004396be9ce8b19172e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigid: {fileID: 35571951}
-  jumpPower: 7
-  isJump: 0
+    Speed: {x: 0, y: 0}
+    moveVector: {x: 0, y: 0, z: 0}
+    isMotion: 0
+  jump:
+    <ValueType>k__BackingField: 1
+    jumpPower: 7
+    isJump: 0
+  idle:
+    <ValueType>k__BackingField: 0
+  land:
+    <ValueType>k__BackingField: 0
+    delayTime: 0.151
+  hit:
+    <ValueType>k__BackingField: 0
+    delay: 0.5
+  down:
+    <ValueType>k__BackingField: 0
+    downTime: 1
 --- !u!114 &1985023438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,6 +1137,8 @@ MonoBehaviour:
   xPosTarget: {fileID: 1985023439}
   yPosTarget: {fileID: 35571950}
   hitBox: {fileID: 258632343}
+  AddForceClass:
+    <Ystate>k__BackingField: 2
 --- !u!4 &1985023439
 Transform:
   m_ObjectHideFlags: 0
@@ -1156,106 +1157,6 @@ Transform:
   - {fileID: 1406242679}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1985023440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985023432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfd85ec9c48f5674eafcef15a968774b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolTime: 0
-  type: 0
-  hasCoolTime: 0
-  mana: []
-  attackData:
-  - AnimName: NomalAtck_0
-    delay: 0.748
-    offset: {x: 0.32, y: 0.5}
-    size: {x: 0.99, y: 1, z: 0.24}
-    power: {x: 1, y: 2}
-    move: {x: 1, y: 0}
-    moveTime: 0.1
-  - AnimName: NomalAtck_1
-    delay: 0.766
-    offset: {x: 0.32, y: 0.5}
-    size: {x: 0.99, y: 1, z: 0.24}
-    power: {x: 1, y: 3}
-    move: {x: 2, y: 0}
-    moveTime: 0.15
-  - AnimName: NomalAtck_2
-    delay: 1
-    offset: {x: 0.32, y: 0.5}
-    size: {x: 0.99, y: 1, z: 0.24}
-    power: {x: 3, y: 4}
-    move: {x: 3, y: 0}
-    moveTime: 0.2
---- !u!114 &1985023441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985023432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3139f323eb67e254ea14aab45d104195, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolTime: 0
-  type: 0
-  hasCoolTime: 0
-  mana: []
-  attackData:
-  - AnimName: ShockDown
-    delay: 0.865
-    offset: {x: 0.9, y: 0.6}
-    size: {x: 2, y: 1.2, z: 1}
-    power: {x: 1.7, y: 4}
-    move: {x: 0.5, y: -8}
-    moveTime: 0.5
---- !u!114 &1985023442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985023432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bc780aa02af81d4f9039acae287d644, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolTime: 0
-  type: 0
-  hasCoolTime: 0
-  mana: []
-  attackData:
-  - AnimName: NomalAtck_0
-    delay: 0.804
-    offset: {x: 0, y: 0}
-    size: {x: 0, y: 0, z: 0}
-    power: {x: 0, y: 0}
-    move: {x: 30, y: 0}
-    moveTime: 0.15
-  - AnimName: NomalAtck_1
-    delay: 0.729
-    offset: {x: 0, y: 0}
-    size: {x: 0, y: 0, z: 0}
-    power: {x: 0, y: 0}
-    move: {x: 30, y: 0}
-    moveTime: 0.15
-  - AnimName: UperSlash
-    delay: 0.748
-    offset: {x: 0, y: 0}
-    size: {x: 0, y: 0, z: 0}
-    power: {x: 0, y: 0}
-    move: {x: 30, y: 0}
-    moveTime: 0.1
 --- !u!1 &2011059809
 GameObject:
   m_ObjectHideFlags: 0
