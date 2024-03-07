@@ -13,6 +13,7 @@ public class Fall : BaseState<PlayerController.State>
         isTransition = false;
         if(coroutine != null)
             owner.StopCoroutine(coroutine);
+        owner.OnStartAlert();
         coroutine = owner.StartCoroutine(FallingCo());
         anim.Play(AnimIdTable.GetInstance.FallingId);
     }

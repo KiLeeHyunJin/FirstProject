@@ -20,22 +20,16 @@ public class InteracterKey : BaseState<PlayerController.State>
         else
             type = Interact.Attack;
     }
-    public override void Exit() 
-    { 
-    
-    }
-    public override void Update() 
-    { 
-    
-    }
 
     public override void Transition()
     {
         switch (type)
         {
             case Interact.Attack:
+                owner.SetState = PlayerController.State.BasicAtck;
                 break;
             case Interact.Pick:
+                owner.SetState = PlayerController.State.ItemPick;
                 break;
         }
     }

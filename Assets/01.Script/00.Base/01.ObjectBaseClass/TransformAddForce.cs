@@ -52,24 +52,20 @@ public class TransformAddForce
         }
             
     }
-    public void AddForce(Vector3 power, float time) => AddForceMethod(power, time);
-    Coroutine coroutine = null;
-
-    private void AddForceMethod(Vector3 powerVector, float time)
+    Coroutine forceCo = null;
+    public void AddForce(Vector3 powerVector, float time)
     {
-        if (coroutine != null)
-            owner.StopCoroutine(coroutine);
-            coroutine = owner.StartCoroutine(ForceCo(powerVector, time));
+        if (forceCo != null)
+            owner.StopCoroutine(forceCo);
+        forceCo = owner.StartCoroutine(ForceCo(powerVector, time));
     }
-    public void AddForceImpuse(Vector3 power, float time) => AddForceImpuseMethod(power, time);
-    public void AddForceWalk(Vector2 power) => MoveForce(power);
-    private void AddForceImpuseMethod(Vector3 powerVector, float time)
+    Coroutine impulseCo = null;
+    public void AddForceImpuse(Vector3 powerVector, float time)
     {
         if (impulseCo != null)
             owner.StopCoroutine(impulseCo);
         impulseCo = owner.StartCoroutine(ImpulseForceCo(powerVector, time));
     }
-    Coroutine impulseCo = null;
     IEnumerator ImpulseForceCo(Vector3 power, float time)
     {
         if(power.y != 0)
@@ -83,7 +79,7 @@ public class TransformAddForce
         yield return WaitTime(time);
         XAddForceReset();
     }
-    void MoveForce(Vector2 power)
+    public void AddForceWalk(Vector2 power)
     {
         if (xRigid != null)
         {
@@ -103,7 +99,7 @@ public class TransformAddForce
             yRigid.velocity = new Vector2(0, power.y);
             Ystate = power.y > 0 ? YState.Up : YState.Down;
         }
-        MoveForce(new Vector2(power.x,power.z));
+        AddForceWalk(new Vector2(power.x,power.z));
         yield return WaitTime(time);
         XAddForceReset();
     }
@@ -122,7 +118,6 @@ public class TransformAddForce
         {
             if (Ystate != YState.None)
                 Ystate = YState.Down;
-            //Debug.Log($"Y value : {owner.Y}");
             yTransform.localPosition = new Vector3(0, yTransform.localPosition.y, 0);
             yield return new WaitForFixedUpdate();
         }
@@ -130,6 +125,7 @@ public class TransformAddForce
         while (timer < time)
         {
             timer += Time.deltaTime;
+            yTransform.localPosition = new Vector3(0, yTransform.localPosition.y, 0);
             yield return new WaitForFixedUpdate();
         }
     }

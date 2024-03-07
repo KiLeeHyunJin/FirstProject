@@ -49,7 +49,7 @@ public class Sit : BaseState<PlayerController.State>
                 owner.SetState = PlayerController.State.Walk;
             else if (
                 owner.keys.ContainLayer(KeyManager.Key.C))
-                owner.SetState = PlayerController.State.Jump;
+                owner.SetState = PlayerController.State.JumpUp;
             else if (
                 owner.keys.ContainLayer(KeyManager.Key.X))
                 owner.SetState = PlayerController.State.Interaction;

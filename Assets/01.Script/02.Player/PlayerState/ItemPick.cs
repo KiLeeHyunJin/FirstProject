@@ -4,44 +4,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Hit : BaseState<PlayerController.State>
+public class ItemPick : BaseState<PlayerController.State>
 {
-    [SerializeField] public float delay;
-    public void SetDelayTime(float time) => delay = time;
+    [SerializeField] float pickTime;
     bool isTransition;
     public override void Enter()
     {
         isTransition = false;
-
-        if (coroutine != null)
+        if(coroutine != null)
             owner.StopCoroutine(coroutine);
-        coroutine = owner.StartCoroutine(WaitCoroutine());
-        owner.OnStartAlert();
-        int idx = UnityEngine.Random.Range(0, 2);
-        if (idx == 1)
-            anim.Play(AnimIdTable.GetInstance.Hit1Id);
-        else
-            anim.Play(AnimIdTable.GetInstance.Hit2Id);
+        coroutine = owner.StartCoroutine(PickingCo());
+        anim.Play(AnimIdTable.GetInstance.SitId);
     }
     Coroutine coroutine = null;
-    IEnumerator WaitCoroutine()
+    IEnumerator PickingCo()
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(pickTime);
         isTransition = true;
     }
+
     public override void FixedUpdate()
     {
-        pos.Synchro();
+        pos.ForceZero();
     }
+
     public override void Exit()
     {
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
     }
-
     public override void Transition()
     {
-        if(isTransition)
+        if (isTransition)
             owner.SetState = PlayerController.State.Idle;
     }
 }

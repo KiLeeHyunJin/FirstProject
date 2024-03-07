@@ -54,7 +54,7 @@ public class AttackController : MonoBehaviour
     {
 
         targetCount = Physics2D.OverlapCircleNonAlloc(
-            new Vector2(pos.X + offset.x, pos.Z + offset.y)
+            new Vector2(pos.X + offset.x, pos.Z + pos.Y + offset.y)
             , size.x, colliders,layerMask);
 
         Debug.Log($"count : {targetCount}");
@@ -75,32 +75,26 @@ public class AttackController : MonoBehaviour
         //≥Ù¿Ã
         Gizmos.color = Color.yellow;
         float realYPos =
-            (pos.Z + offset.y) + (size.y * 0.25f * temp);
-        Gizmos.DrawWireCube(
-            new Vector2(pos.X + offset.x , realYPos),
-            new Vector2(size.x, size.y) * temp);
+            (pos.Z + offset.y + pos.Y) + (size.y * 0.25f * temp);
+        Gizmos.DrawWireSphere(new Vector2(pos.X + offset.x, realYPos), size.x  * 0.5f* temp);
     }
 
     IEnumerator AttackCo()
     {
-        for (int j = 0; j < attackCount; j++)
+        for (int i = 0; i < targetCount; i++)
         {
-            for (int i = 0; i < targetCount; i++)
+            IDamagable damagable = colliders[i].GetComponent<IDamagable>();
+            if (damagable != null)
             {
-                yield return new WaitForSeconds(0.02f);
-                IDamagable damagable = colliders[i].GetComponent<IDamagable>();
-                if (damagable != null)
-                {
-                    damagable.ISetKnockback(
-                        knockbackPower,
-                        pos.Pose,
-                        size,
-                        offset
-                        );
-                    damagable.IGetDamage(damage);
-                }
+                damagable.ISetKnockback(
+                    knockbackPower,
+                    pos.Pose,
+                    size,
+                    offset
+                    );
+                damagable.IGetDamage(damage);
             }
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.01f);
         }
 
         //SetttingReset();

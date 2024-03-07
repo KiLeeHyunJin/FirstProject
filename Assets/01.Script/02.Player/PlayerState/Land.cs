@@ -38,6 +38,14 @@ public class Land : BaseState<PlayerController.State>
     public override void Transition()
     {
         if (isTransition)
-            owner.SetState = PlayerController.State.Idle;
+        {
+            if(owner.WalkType == PlayerController.State.Run)
+                owner.SetState = PlayerController.State.Run;
+            else if(owner.WalkType == PlayerController.State.Walk)
+                owner.SetState = PlayerController.State.Walk;
+            else
+                owner.SetState = PlayerController.State.Idle;
+
+        }
     }
 }

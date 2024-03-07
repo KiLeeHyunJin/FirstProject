@@ -11,25 +11,30 @@ public class PlayerController : MonoBehaviour
 {
     public enum State
     {
-        Idle, Jump, Alert, 
+        Idle, 
         Walk, Run, 
-        Land,
-        Hit, Stune, Down, Fall, Sit,
-        Action, BasicAtck, JumpAtck, 
-        Interaction
+        JumpUp, JumpDown,Land,
+        Hit, Stune, 
+        Fall, Down, Sit,
+        
+        JumpAtck, Stap, LandAttack,
+        Interaction, BasicAtck, ItemPick,
+
+        Action,
     }
     [field: SerializeField] public State CurrentState { get; private set; }
+    [SerializeField] float alertTime;
+
     public State SetState
     {
         set
         {
             CurrentState = value;
-            if (value != State.Fall)
-                fsm.ChangeState(CurrentState);
-            else
-                fsm.Start(CurrentState);
+            fsm.ChangeState(value);
+            //Debug.Log($"{value.ToString()}");
         }
     }
+    public State WalkType { get; set; }
     public AnimIdTable animId { get; private set; }
     public StateMachine<State> fsm;
     [Header("¸µÅ©")]
@@ -37,25 +42,29 @@ public class PlayerController : MonoBehaviour
     [SerializeField] new SpriteRenderer renderer;
     [SerializeField] Animator anim;
     [SerializeField] AttackController atkController;
+
     [SerializeField] public KeyManager keys { get; private set; }
-    Rigidbody2D rigid;
+    public bool isAlert { get; private set; }
     TransformPos transformPos;
     [field : SerializeField] public Vector2 moveValue { get; private set; }
 
     public AttackState currentSkill;
     [SerializeField] Idle idle;
-
     [SerializeField] Walk walk;
     [SerializeField] Run run;
 
-    [SerializeField] Jump jump;
+    [SerializeField] JumpUp jumpUp;
+    [SerializeField] JumpDown jumpDown;
     [SerializeField] Land land;
 
     [SerializeField] Fall fall;
     [SerializeField] Hit hit;
     [SerializeField] Down down;
     [SerializeField] Sit sit;
+    [SerializeField] ItemPick itemPick;
     [SerializeField] InteracterKey interact;
+    [SerializeField] JumpAttack jumpAtck;
+    BasicAttack basicAttack;
 
     NormalAttack attack;
     ShockDownAttack shockDownAttack;
@@ -66,22 +75,26 @@ public class PlayerController : MonoBehaviour
     {
         fsm = new StateMachine<State>();
         transformPos = GetComponent<TransformPos>();
-        rigid = GetComponent<Rigidbody2D>();
         keys = GetComponent<KeyManager>();
-
+        basicAttack = new BasicAttack();
         SetStateData(walk);
         SetStateData(run);
-        SetStateData(jump);
+        SetStateData(jumpUp);
+        SetStateData(jumpDown);
         SetStateData(idle);
         SetStateData(land);
         SetStateData(hit);
         SetStateData(down);
         SetStateData(fall);
         SetStateData(sit);
+        SetStateData(itemPick);
+        SetStateData(jumpAtck);
         SetStateData(interact);
+        SetStateData(basicAttack);
         
 
-        fsm.AddState(State.Jump, jump);
+        fsm.AddState(State.JumpUp, jumpUp);
+        fsm.AddState(State.JumpDown, jumpDown);
         fsm.AddState(State.Interaction, interact);
         fsm.AddState(State.Walk, walk);
         fsm.AddState(State.Run, run);
@@ -90,7 +103,10 @@ public class PlayerController : MonoBehaviour
         fsm.AddState(State.Hit, hit);
         fsm.AddState(State.Fall, fall);
         fsm.AddState(State.Down, down);
+        fsm.AddState(State.ItemPick, itemPick);
         fsm.AddState(State.Sit, sit);
+        fsm.AddState(State.JumpAtck, jumpAtck);
+        fsm.AddState(State.BasicAtck, basicAttack);
 
     }
     public void Start()
@@ -98,6 +114,7 @@ public class PlayerController : MonoBehaviour
         GetSkill();
         anim = GetComponentInChildren<Animator>();
         fsm.Start(State.Idle);
+
     }
 
     void SetStateData(BaseState<PlayerController.State> state)
@@ -105,6 +122,9 @@ public class PlayerController : MonoBehaviour
         state.Setting(this, anim, transformPos, atkController, renderer);
         state.SetStateMachine(fsm);
         transformPos.direction = TransformPos.Direction.Right;
+        AttackState attack = state as AttackState;
+        if (attack != null)
+            attack.SettingAttack();
     }
 
     void GetSkill()
@@ -116,12 +136,25 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        fsm?.Update();
+        fsm.Update();
         keys.ResetLayer();
     }
 
-    private void FixedUpdate() => fsm?.FixedUpdate();
+    private void FixedUpdate() => fsm.FixedUpdate();
 
+    public void OnStartAlert()
+    {
+        if (Alertcoroutine != null)
+            StopCoroutine(Alertcoroutine);
+        Alertcoroutine = StartCoroutine(StartAlert());
+        isAlert = true;
+    }
+    Coroutine Alertcoroutine = null;
+    IEnumerator StartAlert()
+    {
+        yield return new WaitForSeconds(alertTime);
+        isAlert = false;
+    }
     void OnMove(InputValue value)
     {
         moveValue = value.Get<Vector2>();

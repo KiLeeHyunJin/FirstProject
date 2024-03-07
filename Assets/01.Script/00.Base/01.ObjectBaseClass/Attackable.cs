@@ -15,9 +15,10 @@ public class Attackable : MonoBehaviour, IDamagable
     {
         if (transformPos.attackCheck.CheckAttackCollision(pos, size, offset))
         {
-            transformPos.AddForce(power);
             if (controller != null)
                 controller.CallDown();
+            transformPos.AddForce(power);
+            Debug.Log("Ãæµ¹");
         }
     }
 }

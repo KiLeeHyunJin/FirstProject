@@ -12,6 +12,7 @@ public class Run : BaseState<PlayerController.State>
     public override void Enter()
     {
         anim.Play(AnimIdTable.GetInstance.RunId);
+        owner.WalkType = PlayerController.State.Run;
     }
     public override void Update()
     {
@@ -32,7 +33,7 @@ public class Run : BaseState<PlayerController.State>
     public override void Transition()
     {
         if (owner.keys.ContainLayer(KeyManager.Key.C))
-            owner.SetState = PlayerController.State.Jump;
+            owner.SetState = PlayerController.State.JumpUp;
         else if (
             owner.keys.ContainLayer(KeyManager.Key.X))
             owner.SetState = PlayerController.State.BasicAtck;

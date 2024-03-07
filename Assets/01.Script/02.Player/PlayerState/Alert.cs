@@ -4,33 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Idle : BaseState<PlayerController.State>
+public class Alert : BaseState<PlayerController.State>
 {
-    bool isAlerted;
-    public override void Enter() 
+    // Start is called before the first frame update
+    public override void Enter()
     {
-        isAlerted = owner.isAlert;
-        if (isAlerted)
-        {
-            anim.Play(AnimIdTable.GetInstance.AlertId);
-        }
-        else
-            anim.Play(AnimIdTable.GetInstance.IdleId);
-        owner.WalkType = PlayerController.State.Idle;
+        anim.Play(AnimIdTable.GetInstance.AlertId);
+
     }
-    public override void Update()
-    {
-        if(isAlerted != owner.isAlert)
-        {
-            anim.Play(AnimIdTable.GetInstance.IdleId);
-            isAlerted = owner.isAlert;
-        }
-    }
+
+
+    // Update is called once per frame
     public override void FixedUpdate()
     {
         pos.Synchro();
     }
-
     public override void Transition()
     {
         if (owner.keys.ContainLayer(KeyManager.Key.Move))

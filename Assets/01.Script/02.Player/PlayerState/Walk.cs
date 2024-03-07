@@ -17,7 +17,10 @@ public class Walk : BaseState<PlayerController.State>
         if(enterTime - beforeEnterTime < term)
             owner.SetState = PlayerController.State.Run;
         else
+        {
             anim.Play(AnimIdTable.GetInstance.WalkId);
+            owner.WalkType = PlayerController.State.Walk;
+        }
     }
     public override void Update()
     {
@@ -37,7 +40,7 @@ public class Walk : BaseState<PlayerController.State>
     public override void Transition()
     {
         if (owner.keys.ContainLayer(KeyManager.Key.C))
-            owner.SetState = PlayerController.State.Jump;
+            owner.SetState = PlayerController.State.JumpUp;
         else if (
             owner.keys.ContainLayer(KeyManager.Key.X))
             owner.SetState = PlayerController.State.BasicAtck;
