@@ -15,8 +15,8 @@ public class AttackController : MonoBehaviour
     [SerializeField] Vector3 size;
 
     Vector2 knockbackPower;
-    int attackCount;
     int targetCount;
+    float per;
     float damage;
     bool isStart;
 
@@ -39,10 +39,10 @@ public class AttackController : MonoBehaviour
         knockbackPower = power; 
     }
 
-    public void SetDamage(float _damage, int count)
+    public void SetDamage(float _perDamage, float _damage)
     {
+        per = _perDamage;
         damage = _damage;
-        attackCount = count;
     }
 
     public void OnAttackEnable()
@@ -92,7 +92,7 @@ public class AttackController : MonoBehaviour
                     size,
                     offset
                     );
-                damagable.IGetDamage(damage);
+                damagable.IGetDamage(damage * per);
             }
             yield return new WaitForSeconds(0.01f);
         }

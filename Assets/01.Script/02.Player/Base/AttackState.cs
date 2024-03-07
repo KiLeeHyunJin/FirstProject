@@ -37,7 +37,7 @@ public abstract class AttackState : BaseState<PlayerController.State>
         public string AnimName;
         [Range(0, 1)]
         public float delay;
-
+        public float damage;
         public float mana;
         public AttackSize attackSize;
         public MoveData move;
@@ -119,7 +119,7 @@ public abstract class AttackState : BaseState<PlayerController.State>
                         attackData[inputCount].attackCounts[count].power.x * direction,
                         attackData[inputCount].attackCounts[count].power.y));
 
-                attack.SetDamage(attackData[inputCount].attackCounts[count].Percent);
+                attack.SetDamage(attackData[inputCount].attackCounts[count].Percent, attackData[inputCount].damage);
                 attack.OnAttackEnable();
                 count++;
             }
