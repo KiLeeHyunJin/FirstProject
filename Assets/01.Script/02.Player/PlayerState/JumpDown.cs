@@ -6,8 +6,11 @@ using UnityEngine;
 [Serializable]
 public class JumpDown : BaseState<PlayerController.State>
 {
-    [SerializeField] Vector2 moveSpeed;
+    [SerializeField] Vector2 moveWalkSpeed;
+    [SerializeField] Vector2 moveRunSpeed;
     bool isTransition;
+    Vector2 speed;
+
     public override void Transition()
     {
         if (isTransition)
@@ -21,13 +24,17 @@ public class JumpDown : BaseState<PlayerController.State>
     {
         anim.Play(AnimIdTable.GetInstance.JumpDownId);
         isTransition = false;
+        if (owner.WalkType == PlayerController.State.Walk)
+            speed = moveWalkSpeed;
+        else
+            speed = moveRunSpeed;
     }
 
     public override void Update()
     {
         Vector2 moveValue = owner.moveValue;
         owner.FlipCheck();
-        pos.AddForceMove(moveValue * moveSpeed);
+        pos.AddForceMove(moveValue * speed);
     }
     public override void FixedUpdate()
     {

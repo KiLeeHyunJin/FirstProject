@@ -18,10 +18,12 @@ public class BasicAttack : BaseState<PlayerController.State>
         if (pos.yState() == TransformAddForce.YState.None)
         {
             owner.SetState = PlayerController.State.Idle;
-            //    if (owner.WalkType == PlayerController.State.Run)
-            //        owner.SetState = PlayerController.State.Stap;
-            //    else
-            //        owner.SetState = PlayerController.State.LandAttack;
+            if (owner.WalkType == PlayerController.State.Run)
+            {
+                return;//owner.SetState = PlayerController.State.Stap;
+            }
+            else
+                owner.SetState = PlayerController.State.LandAttack;
         }
         else
         {

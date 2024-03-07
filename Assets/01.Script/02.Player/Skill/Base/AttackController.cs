@@ -20,7 +20,7 @@ public class AttackController : MonoBehaviour
     float damage;
     bool isStart;
 
-    public void Start()
+    public void Awake()
     {
         if(maxAttack < 1)
             maxAttack = 5;
@@ -52,7 +52,6 @@ public class AttackController : MonoBehaviour
 
     private void GetCollisionObject()
     {
-
         targetCount = Physics2D.OverlapCircleNonAlloc(
             new Vector2(pos.X + offset.x, pos.Z + pos.Y + offset.y)
             , size.x, colliders,layerMask);
@@ -63,8 +62,10 @@ public class AttackController : MonoBehaviour
         //else
         //    SetttingReset();
     }
+
     private void OnDrawGizmos()
     {
+
         int temp = isStart ? 2 : 1;
         //¹üÀ§
         Gizmos.color = Color.red;
@@ -78,31 +79,35 @@ public class AttackController : MonoBehaviour
             (pos.Z + offset.y + pos.Y) + (size.y * 0.25f * temp);
         Gizmos.DrawWireSphere(new Vector2(pos.X + offset.x, realYPos), size.x  * 0.5f* temp);
     }
-
+    Coroutine coroutine = null;
     IEnumerator AttackCo()
     {
+        float value = damage * per;
+        Vector2 returnKnockback = knockbackPower;
+        Vector3 returnPos = pos.Pose;
+        Vector3 returnSize = size;
+        Vector2 returnOffset = offset;
         for (int i = 0; i < targetCount; i++)
         {
             IDamagable damagable = colliders[i].GetComponent<IDamagable>();
             if (damagable != null)
             {
                 damagable.ISetKnockback(
-                    knockbackPower,
-                    pos.Pose,
-                    size,
-                    offset
+                    returnKnockback,
+                    returnPos,
+                    returnSize,
+                    returnOffset
                     );
-                damagable.IGetDamage(damage * per);
+                damagable.IGetDamage(value);
             }
             yield return new WaitForSeconds(0.01f);
         }
-
         //SetttingReset();
     }
 
     private void SetttingReset()
     {
-        attackCount = 0;
+        per = 0;
         targetCount = 0;
         damage = 0;
         offset = Vector2.zero;

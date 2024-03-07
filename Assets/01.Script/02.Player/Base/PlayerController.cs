@@ -64,6 +64,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ItemPick itemPick;
     [SerializeField] InteracterKey interact;
     [SerializeField] JumpAttack jumpAtck;
+    [SerializeField] LandAttack landAtck;
+    
+    
     BasicAttack basicAttack;
 
     NormalAttack attack;
@@ -88,7 +91,10 @@ public class PlayerController : MonoBehaviour
         SetStateData(fall);
         SetStateData(sit);
         SetStateData(itemPick);
+
         SetStateData(jumpAtck);
+        SetStateData(landAtck);
+
         SetStateData(interact);
         SetStateData(basicAttack);
         
@@ -106,6 +112,7 @@ public class PlayerController : MonoBehaviour
         fsm.AddState(State.ItemPick, itemPick);
         fsm.AddState(State.Sit, sit);
         fsm.AddState(State.JumpAtck, jumpAtck);
+        fsm.AddState(State.LandAttack, landAtck);
         fsm.AddState(State.BasicAtck, basicAttack);
 
     }

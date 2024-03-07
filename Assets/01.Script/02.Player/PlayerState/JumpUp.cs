@@ -7,16 +7,21 @@ using static UnityEditor.PlayerSettings;
 [Serializable]
 public class JumpUp : BaseState<PlayerController.State>
 {
-    [SerializeField] Vector2 moveSpeed;
+    [SerializeField] Vector2 moveWalkSpeed;
+    [SerializeField] Vector2 moveRunSpeed;
     [SerializeField] float jumpPower;
     bool isTransition;
-
+    Vector2 speed;
     public override void Enter()
     {
         anim.Play(AnimIdTable.GetInstance.JumpUpId);
         isTransition = false;
         if (pos.yState() == TransformAddForce.YState.None || pos.Y <= 0)
             pos.AddForce(new Vector3(0, jumpPower, 0));
+        if (owner.WalkType == PlayerController.State.Walk)
+            speed = moveWalkSpeed;
+        else
+            speed = moveRunSpeed;
     }
 
 
@@ -24,7 +29,7 @@ public class JumpUp : BaseState<PlayerController.State>
     {
         Vector2 moveValue = owner.moveValue;
         owner.FlipCheck();
-        pos.AddForceMove(moveValue * moveSpeed);
+        pos.AddForceMove(moveValue * speed);
     }
 
     public override void FixedUpdate()

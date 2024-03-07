@@ -5,6 +5,7 @@ using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
+using static AttackState;
 
 [Serializable]
 public abstract class AttackState : BaseState<PlayerController.State>
@@ -20,8 +21,10 @@ public abstract class AttackState : BaseState<PlayerController.State>
     [Serializable]
     public struct MoveData
     {
-        public Vector2 move;
+        [Range(0,1)]
         public float moveTime;
+        public Vector2 move;
+        public float movingTime;
     }
     [Serializable]
     public struct AttackSize
@@ -53,6 +56,7 @@ public abstract class AttackState : BaseState<PlayerController.State>
     [SerializeField] bool hasCoolTime;
     [SerializeField] float[] mana;
     [SerializeField] protected AttackData[] attackData;
+
     protected float time;
     protected int[] animId;
     protected int inputCount;
@@ -93,36 +97,51 @@ public abstract class AttackState : BaseState<PlayerController.State>
 
     protected abstract void AttackEffect();
 
-    int count;
+    int atckCount;
+    int moveCount;
     public override void Update()
     {
         if (inputCount >= attackData.Length)
             return;
         if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[inputCount].AnimName))
         {
-            if (count > attackData[inputCount].attackCounts.Length - 1)
-                return;
-            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].attackCounts[count].AttackTime)
+            if (atckCount < attackData[inputCount].attackCounts.Length - 1)
             {
-                owner.currentSkill = this;
-                int direction =
-                    pos.direction == TransformPos.Direction.Left ? -1 : 1;
+                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].attackCounts[atckCount].AttackTime)
+                {
+                    owner.currentSkill = this;
+                    int direction =
+                        pos.direction == TransformPos.Direction.Left ? -1 : 1;
 
-                attack.SetPosition(
-                    new Vector2(
-                        attackData[inputCount].attackSize.offset.x * direction,
-                        attackData[inputCount].attackSize.offset.y),
-                    attackData[inputCount].attackSize.size);
+                    attack.SetPosition(
+                        new Vector2(
+                            attackData[inputCount].attackSize.offset.x * direction,
+                            attackData[inputCount].attackSize.offset.y),
+                        attackData[inputCount].attackSize.size);
 
-                attack.SetKnockBack(
-                    new Vector2(
-                        attackData[inputCount].attackCounts[count].power.x * direction,
-                        attackData[inputCount].attackCounts[count].power.y));
+                    attack.SetKnockBack(
+                        new Vector2(
+                            attackData[inputCount].attackCounts[atckCount].power.x * direction,
+                            attackData[inputCount].attackCounts[atckCount].power.y));
 
-                attack.SetDamage(attackData[inputCount].attackCounts[count].Percent, attackData[inputCount].damage);
-                attack.OnAttackEnable();
-                count++;
+                    attack.SetDamage(attackData[inputCount].attackCounts[atckCount].Percent, attackData[inputCount].damage);
+                    attack.OnAttackEnable();
+                    AttackEffect();
+                    atckCount++;
+                }
             }
+            if(moveCount < 1)
+            {
+                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].move.moveTime)
+                {
+                    Vector2 movePos = attackData[inputCount].move.move;
+                    if (pos.direction == TransformPos.Direction.Left)
+                        movePos.x *= -1;
+                    pos.AddForce(movePos, attackData[inputCount].move.movingTime);
+                    moveCount++;
+                }
+            }
+
         }
     }
 
@@ -149,7 +168,8 @@ public abstract class AttackState : BaseState<PlayerController.State>
             {
                 inputCount = 0;
             }
-            count = 0;
+            atckCount = 0;
+            moveCount = 0;
             anim.Play(animId[inputCount]);
             if (animCo != null)
                 owner.StopCoroutine(animCo);
@@ -159,21 +179,32 @@ public abstract class AttackState : BaseState<PlayerController.State>
         else
         {
             inputCount = 0;
-            count = 0;
+            atckCount = 0;
+            moveCount = 0;
             anim.Play(animId[0]);
             animCo = owner.StartCoroutine(AnimationInputSensor(0));
         }
     }
 
-
     protected Coroutine animCo = null;
     protected IEnumerator AnimationInputSensor(int input)
     {
+        int checkId = input;
         while (true)
         {
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[inputCount].AnimName))
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[checkId].AnimName))
+            {
                 if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+                {
                     break;
+                }
+            }
+            //else
+            //{
+            //    isTransition = true;
+            //    yield break;
+            //}
+            //Debug.Log("¼øÈ¸ Áß");
             yield return new WaitForFixedUpdate();
         }
         isTransition = true;
@@ -181,7 +212,8 @@ public abstract class AttackState : BaseState<PlayerController.State>
     public override void Exit()
     {
         inputCount = 0;
-        count = 0;
+        atckCount = 0;
+        moveCount = 0;
         if (animCo != null)
             owner.StopCoroutine(animCo);
     }
