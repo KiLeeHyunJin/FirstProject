@@ -8,19 +8,15 @@ public class Hit : BaseState<PlayerController.State>
 {
     [SerializeField] public float delay;
     public void SetDelayTime(float time) => delay = time;
-
-    protected override void EnterCheck()
-    {
-        isEnter = true;
-    }
+    bool isTransition;
     public override void Enter()
     {
-        EnterCheck();
-        if (isEnter == false)
-            return;
-        if(coroutine != null)
+        isTransition = false;
+
+        if (coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(WaitCoroutine());
+
         int idx = UnityEngine.Random.Range(0, 2);
         if (idx == 1)
             anim.Play(AnimIdTable.GetInstance.Hit1Id);
@@ -31,18 +27,21 @@ public class Hit : BaseState<PlayerController.State>
     IEnumerator WaitCoroutine()
     {
         yield return new WaitForSeconds(delay);
-        owner.SetState = PlayerController.State.Idle;
+        isTransition = true;
+    }
+    public override void FixedUpdate()
+    {
+        pos.Synchro();
     }
     public override void Exit()
     {
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
-        if (isEnter == false)
-            return;
-        //coroutine = owner.StartCoroutine(WaitCoroutine());
     }
 
     public override void Transition()
     {
+        if(isTransition)
+            owner.SetState = PlayerController.State.Idle;
     }
 }

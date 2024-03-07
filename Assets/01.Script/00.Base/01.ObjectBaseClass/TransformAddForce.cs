@@ -45,6 +45,12 @@ public class TransformAddForce
             xRigid.velocity = Vector2.zero;
         else if(pos == KeyCode.Y)
             yRigid.velocity = Vector2.zero;
+        else
+        {
+            xRigid.velocity = Vector2.zero;
+            yRigid.velocity = Vector2.zero;
+        }
+            
     }
     public void AddForce(Vector3 power, float time) => AddForceMethod(power, time);
     Coroutine coroutine = null;

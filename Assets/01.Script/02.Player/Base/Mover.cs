@@ -40,15 +40,8 @@ public class Mover
 
             if (moveValue.x != 0)
             {
-                TransformPos.Direction before = pos.direction;
 
-                if (moveValue.x < 0)
-                    pos.direction = TransformPos.Direction.Left;
-                else
-                    pos.direction = TransformPos.Direction.Right;
 
-                if (before != pos.direction)
-                    renderer.flipX = !renderer.flipX;
             }
         }
         else

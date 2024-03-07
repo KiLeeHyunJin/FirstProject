@@ -7,38 +7,35 @@ using UnityEngine;
 public class Down : BaseState<PlayerController.State>
 {
     [SerializeField] float downTime;
-    protected override void EnterCheck()
-    {
-        isEnter = true;
-    }
+    bool isTransition;
     public override void Enter() 
     {
-        EnterCheck();
-        if (isEnter == false)
-            return;
-        if(coroutine != null)
+        isTransition = false;
+        anim.Play(AnimIdTable.GetInstance.DownId);
+        if (coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(WaitTime());
-        anim.Play(AnimIdTable.GetInstance.FallingId);
     }
     Coroutine coroutine = null;
     IEnumerator WaitTime()
     {
-        while(pos.yState() != TransformAddForce.YState.None)
-        {
-            yield return new WaitForFixedUpdate();
-        }
-        anim.Play(AnimIdTable.GetInstance.DownId);
         yield return new WaitForSeconds(downTime);
-        owner.SetState = PlayerController.State.Idle;
+        isTransition = true;
+    }
+    public override void FixedUpdate()
+    {
+        pos.Synchro();
     }
     public override void Exit() 
     {
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
+        pos.ForceZero(KeyCode.X);
     }
 
     public override void Transition()
     {
+        if (isTransition)
+            owner.SetState = PlayerController.State.Sit;
     }
 }

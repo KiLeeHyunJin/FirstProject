@@ -7,47 +7,42 @@ using UnityEngine.InputSystem;
 public class Jump : BaseState<PlayerController.State>
 {
     [SerializeField] float jumpPower = 5;
-    [SerializeField] bool isJump;
+    [SerializeField] Vector2 moveSpeed;
     
-    protected override void EnterCheck()
-    {
-        if (
-            owner.CurrentState == PlayerController.State.Walk ||
-            owner.CurrentState == PlayerController.State.Run ||
-            owner.CurrentState == PlayerController.State.Idle ||
-            owner.CurrentState == PlayerController.State.Alert ||
-            owner.CurrentState == PlayerController.State.Jump
-            )
-            isEnter = true;
-        else
-            isEnter = false;
-    }
     Coroutine coroutine = null;
-    public override void StartedInputAction(InputAction.CallbackContext context) 
-    {
-        EnterCheck();
-        if (isEnter == false)
-            return;
-
-        if (pos.yState() != TransformAddForce.YState.None)
-            return;
-
-        pos.AddForce(new Vector3(0, jumpPower, 0));
-        owner.SetState = PlayerController.State.Jump;
-    }
+    bool isTransition;
     public override void Enter()
     {
-        if (coroutine != null)
+        isTransition = false;
+        anim.Play(AnimIdTable.GetInstance.JumpUpId);
+        if(coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(JumpCo());
     }
-    public override void Exit() 
-    { 
 
+    public override void Update()
+    {
+        Vector2 moveValue = owner.moveValue;
+        owner.FlipCheck();
+        pos.AddForceMove(moveValue * moveSpeed);
+        
+    }
+    public override void FixedUpdate()
+    {
+        pos.JumpingFreezePosition();
+    }
+    public override void Exit() 
+    {
+        if (coroutine != null)
+            owner.StopCoroutine(coroutine);
     }
     IEnumerator JumpCo()
     {
+        yield return new WaitForFixedUpdate();
+
         anim.Play(AnimIdTable.GetInstance.JumpUpId);
+        pos.AddForce(new Vector3(0, jumpPower, 0));
+
         while (pos.yState() == TransformAddForce.YState.Up)
             yield return new WaitForFixedUpdate();
 
@@ -57,10 +52,12 @@ public class Jump : BaseState<PlayerController.State>
         while (pos.yState() != TransformAddForce.YState.None)
             yield return new WaitForFixedUpdate();
 
-        owner.SetState = PlayerController.State.Land;
+        isTransition = true;    
     }
 
     public override void Transition()
     {
+        if(isTransition)
+            owner.SetState = PlayerController.State.Land;
     }
 }

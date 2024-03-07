@@ -4,12 +4,19 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
+using static KeyManager;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerController : MonoBehaviour
 {
     public enum State
     {
-        Jump, Action, Down, Hit, Stune, Idle, Alert, Walk, Run, Reclined, Land, BasicAtck, JumpAtck,
+        Idle, Jump, Alert, 
+        Walk, Run, 
+        Land,
+        Hit, Stune, Down, Fall, Sit,
+        Action, BasicAtck, JumpAtck, 
+        Interaction
     }
     [field: SerializeField] public State CurrentState { get; private set; }
     public State SetState
@@ -17,7 +24,10 @@ public class PlayerController : MonoBehaviour
         set
         {
             CurrentState = value;
-            fsm.ChangeState(CurrentState);
+            if (value != State.Fall)
+                fsm.ChangeState(CurrentState);
+            else
+                fsm.Start(CurrentState);
         }
     }
     public AnimIdTable animId { get; private set; }
@@ -27,18 +37,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField] new SpriteRenderer renderer;
     [SerializeField] Animator anim;
     [SerializeField] AttackController atkController;
+    [SerializeField] public KeyManager keys { get; private set; }
     Rigidbody2D rigid;
     TransformPos transformPos;
-    Vector2 moveValue;
+    [field : SerializeField] public Vector2 moveValue { get; private set; }
 
     public AttackState currentSkill;
-    [SerializeField] Mover mover;
-    [SerializeField] Walk walk;
-    [SerializeField] Jump jump;
     [SerializeField] Idle idle;
+
+    [SerializeField] Walk walk;
+    [SerializeField] Run run;
+
+    [SerializeField] Jump jump;
     [SerializeField] Land land;
+
+    [SerializeField] Fall fall;
     [SerializeField] Hit hit;
     [SerializeField] Down down;
+    [SerializeField] Sit sit;
+    [SerializeField] InteracterKey interact;
+
     NormalAttack attack;
     ShockDownAttack shockDownAttack;
     ShortAirSlash shortAirSlash;
@@ -49,23 +67,37 @@ public class PlayerController : MonoBehaviour
         fsm = new StateMachine<State>();
         transformPos = GetComponent<TransformPos>();
         rigid = GetComponent<Rigidbody2D>();
+        keys = GetComponent<KeyManager>();
 
-        //mover.Setting(transformPos, this, renderer);
         SetStateData(walk);
+        SetStateData(run);
         SetStateData(jump);
         SetStateData(idle);
         SetStateData(land);
         SetStateData(hit);
         SetStateData(down);
+        SetStateData(fall);
+        SetStateData(sit);
+        SetStateData(interact);
         
 
         fsm.AddState(State.Jump, jump);
+        fsm.AddState(State.Interaction, interact);
         fsm.AddState(State.Walk, walk);
+        fsm.AddState(State.Run, run);
         fsm.AddState(State.Idle, idle);
         fsm.AddState(State.Land, land);
         fsm.AddState(State.Hit, hit);
+        fsm.AddState(State.Fall, fall);
         fsm.AddState(State.Down, down);
+        fsm.AddState(State.Sit, sit);
 
+    }
+    public void Start()
+    {
+        GetSkill();
+        anim = GetComponentInChildren<Animator>();
+        fsm.Start(State.Idle);
     }
 
     void SetStateData(BaseState<PlayerController.State> state)
@@ -82,49 +114,38 @@ public class PlayerController : MonoBehaviour
         shortAirSlash = GetComponent<ShortAirSlash>();
     }
 
-    public void Start()
-    {
-        GetSkill();
-        anim = GetComponentInChildren<Animator>();
-        fsm.Start(State.Idle);
-    }
     private void Update()
     {
-        //mover.Move(moveValue);
         fsm?.Update();
-        LockYObject();
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            transformPos.AddForce(new Vector2(1, 0.5f));
-            SetState = State.Hit;
-        }
+        keys.ResetLayer();
     }
 
-    //float inTime;
-    //void OnMove(InputValue value)
-    //{
-    //    moveValue = value.Get<Vector2>();
-    //    if (value.isPressed)
-    //    {
-    //        float beforeTime = inTime;
-    //        inTime = Time.time;
-    //        if (inTime - beforeTime < 0.2f)
-    //            mover.Run();
-    //        else
-    //            mover.Walk();
-    //    }
-    //}
+    private void FixedUpdate() => fsm?.FixedUpdate();
 
-    void LockYObject()
+    void OnMove(InputValue value)
     {
-        if (transformPos.yState() != TransformAddForce.YState.None)
-            yPos.localPosition = new Vector3(0, transformPos.Y, 0);
+        moveValue = value.Get<Vector2>();
+        if (moveValue.x == 0 && moveValue.y == 0)
+            keys.OffMoveLayer();
         else
-            yPos.localPosition = Vector3.zero;
+            keys.OnMoveLayer();
     }
 
-    public void OnBaseAttack(InputValue inputValue)
+    public void FlipCheck()
     {
-        //attack.InputKeyCount();
+        if (moveValue.x == 0)
+            return;
+        TransformPos.Direction before = transformPos.direction;
+        if (moveValue.x < 0)
+            transformPos.direction = TransformPos.Direction.Left;
+        else
+            transformPos.direction = TransformPos.Direction.Right;
+
+        if (before != transformPos.direction)
+            renderer.flipX = !renderer.flipX;
+    }
+    public void CallDown()
+    {
+        SetState = State.Fall;
     }
 }

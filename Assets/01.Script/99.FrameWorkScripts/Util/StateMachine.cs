@@ -15,24 +15,6 @@ public class StateMachine<T> where T : Enum
     //        return stateDic[state].ValueType;
     //    return false;
     //}
-    public Action<InputAction.CallbackContext> GetEnterMethod(T state)
-    {
-        if (stateDic.ContainsKey(state))
-            return stateDic[state].StartedInputAction;
-        return null;
-    }
-    public Action<InputAction.CallbackContext> GetEventMethod(T state)
-    {
-        if (stateDic.ContainsKey(state))
-            return stateDic[state].PerformedInputAction;
-        return null;
-    }
-    public Action<InputAction.CallbackContext> GetExitMethod(T state)
-    {
-        if (stateDic.ContainsKey(state))
-            return stateDic[state].CanceledInputAction;
-        return null;
-    }
     public void Start(T startState)
     {
         curState = stateDic[startState];
@@ -47,7 +29,7 @@ public class StateMachine<T> where T : Enum
 
     private void LateUpdate() => curState.LateUpdate();
 
-    private void FixedUpdate() => curState.FixedUpdate();
+    public void FixedUpdate() => curState.FixedUpdate();
 
     public void AddState(T stateEnum, BaseState<T> state)
     {
@@ -71,8 +53,6 @@ public abstract class BaseState<T> where T : Enum
     protected AttackController attack;
     protected SpriteRenderer renderer;
     protected PlayerController owner;
-    protected bool isEnter;
-    [field: SerializeField] public bool ValueType { get; private set; }
     public void Setting(PlayerController _controller, Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer)
     {
         anim = _anim;
@@ -86,11 +66,6 @@ public abstract class BaseState<T> where T : Enum
   
     protected void ChangeState(T stateEnum) => stateMachine.ChangeState(stateEnum);
 
-    protected abstract void EnterCheck();
-
-    public virtual void StartedInputAction(InputAction.CallbackContext context) { }
-    public virtual void CanceledInputAction(InputAction.CallbackContext context) { }
-    public virtual void PerformedInputAction(InputAction.CallbackContext context) { }
     public virtual void Enter() { }
     public virtual void Exit() { }
     public virtual void Update() { }

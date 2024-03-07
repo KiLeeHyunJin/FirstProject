@@ -30,7 +30,9 @@ public class TransformPos : MonoBehaviour
 
     public Vector3 Velocity() => AddForceClass.GetVelocity;
     public Vector2 Velocity2D() => AddForceClass.GetVelocity2;
-    public void ForceZero(KeyCode pos) => AddForceClass.ForceZero(pos);
+    public void Synchro(float value = 0) => yPosTarget.localPosition = new Vector3(0,value,0);
+    public void JumpingFreezePosition() => yPosTarget.localPosition = new Vector3(0, yPosTarget.localPosition.y, 0);
+    public void ForceZero(KeyCode pos = KeyCode.Clear) => AddForceClass.ForceZero(pos);
     public void AddForceMove(Vector2 power) => AddForceClass.AddForceWalk(power);
     public void AddForce(Vector3 power, float moveTime = 0) => AddForceClass.AddForce(power, moveTime);  
     public void AddForceImpuse(Vector3 power, float moveTime = 0) => AddForceClass.AddForceImpuse(power, moveTime);

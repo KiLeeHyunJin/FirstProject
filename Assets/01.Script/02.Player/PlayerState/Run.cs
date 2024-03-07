@@ -2,22 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
+
 [Serializable]
-public class Walk : BaseState<PlayerController.State>
+public class Run : BaseState<PlayerController.State>
 {
+
     [SerializeField] Vector2 Speed;
-    [SerializeField] float term;
-    float enterTime;
-    public override void Enter() 
+
+    public override void Enter()
     {
-        float beforeEnterTime = enterTime;
-        enterTime = Time.time;
-        if(enterTime - beforeEnterTime < term)
-            owner.SetState = PlayerController.State.Run;
-        else
-            anim.Play(AnimIdTable.GetInstance.WalkId);
+        anim.Play(AnimIdTable.GetInstance.RunId);
     }
     public override void Update()
     {
@@ -25,6 +19,7 @@ public class Walk : BaseState<PlayerController.State>
         owner.FlipCheck();
         pos.AddForceMove(moveValue * Speed);
     }
+
     public override void FixedUpdate()
     {
         pos.Synchro();

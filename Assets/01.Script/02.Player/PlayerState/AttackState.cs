@@ -62,16 +62,6 @@ public abstract class AttackState : BaseState<PlayerController.State>
         }
     }
 
-    public override void StartedInputAction(InputAction.CallbackContext context) 
-    {
-        EnterCheck();
-        if (isEnter == false)
-            return;
-        Attack();
-    }
-    public override void PerformedInputAction(InputAction.CallbackContext context)
-    {}
-
     protected abstract void AttackEffect();
 
 
