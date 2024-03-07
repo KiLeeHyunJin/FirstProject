@@ -14,14 +14,14 @@ public class MonsterTest : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
-        {
-            Attackable attackable = collision.gameObject.GetComponent<Attackable>();
-            if (attackable == null)
-                return;
+        //if(collision.gameObject.CompareTag("Player"))
+        //{
+        //    Attackable attackable = collision.gameObject.GetComponent<Attackable>();
+        //    if (attackable == null)
+        //        return;
 
-            attackable.ISetKnockback(new Vector2(2, 3), transformPos.Pose,transformPos.Size, transformPos.Offset);
-        }
+        //    attackable.ISetKnockback(new Vector2(2, 3), transformPos.Pose,transformPos.Size, transformPos.Offset);
+        //}
     }
     public void OnDrawGizmos()
     {

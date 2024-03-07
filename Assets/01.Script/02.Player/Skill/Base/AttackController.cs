@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackController : MonoBehaviour
@@ -26,6 +27,8 @@ public class AttackController : MonoBehaviour
             maxAttack = 5;
         colliders = new Collider2D[maxAttack];
         isStart = true;
+        offset = Vector3.zero;
+        size = Vector3.zero;
     }
 
     public void SetPosition(Vector2 _position, Vector3 _size)
@@ -52,9 +55,11 @@ public class AttackController : MonoBehaviour
 
     private void GetCollisionObject()
     {
+        float checkLength = size.x > size.y ? size.x : size.y;
+
         targetCount = Physics2D.OverlapCircleNonAlloc(
             new Vector2(pos.X + offset.x, pos.Z + pos.Y + offset.y)
-            , size.x, colliders,layerMask);
+            , checkLength, colliders,layerMask);
 
         Debug.Log($"count : {targetCount}");
         if(targetCount > 0)
@@ -65,19 +70,25 @@ public class AttackController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-
-        int temp = isStart ? 2 : 1;
+        Vector2 gizmoSize = size;
+        float checkLength = gizmoSize.x > gizmoSize.y ? gizmoSize.x : gizmoSize.y;
+        float temp = isStart ? 1: 0.5f;
         //범위
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(
             new Vector2(pos.X, pos.Z) + new Vector2(offset.x , 0),
-            new Vector2(size.x, size.z) *temp);
+            new Vector2(size.x, size.z) * temp * 2);
 
         //높이
         Gizmos.color = Color.yellow;
         float realYPos =
-            (pos.Z + offset.y + pos.Y) + (size.y * 0.25f * temp);
-        Gizmos.DrawWireSphere(new Vector2(pos.X + offset.x, realYPos), size.x  * 0.5f* temp);
+            (pos.Z  + pos.Y) + (gizmoSize.y * temp * 0.5f);
+        Gizmos.DrawWireSphere(new Vector2(pos.X , realYPos) + offset, checkLength * temp);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(new Vector2(pos.X , realYPos) + offset, 
+            new Vector2(size.x * temp * 2, size.y * temp));
+
     }
     Coroutine coroutine = null;
     IEnumerator AttackCo()

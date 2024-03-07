@@ -105,7 +105,7 @@ public abstract class AttackState : BaseState<PlayerController.State>
             return;
         if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[inputCount].AnimName))
         {
-            if (atckCount < attackData[inputCount].attackCounts.Length - 1)
+            if (atckCount <= attackData[inputCount].attackCounts.Length - 1)
             {
                 if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].attackCounts[atckCount].AttackTime)
                 {
