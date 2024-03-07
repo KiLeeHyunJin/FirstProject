@@ -18,8 +18,6 @@ public class Land : BaseState<PlayerController.State>
         EnterCheck();
         if (isEnter == false)
             return;
-
-        anim.Play("Jump_Land");
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(DelayCo());
@@ -27,15 +25,20 @@ public class Land : BaseState<PlayerController.State>
     Coroutine coroutine = null;
     IEnumerator DelayCo()
     {
+        anim.Play("Jump_Land");
         yield return new WaitForSeconds(delayTime);
         owner.SetState = PlayerController.State.Idle;
     }
     public override void Exit()
     {
-        if (isEnter == false)
-            return;
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
+        if (isEnter == false)
+            return;
+
     }
 
+    public override void Transition()
+    {
+    }
 }

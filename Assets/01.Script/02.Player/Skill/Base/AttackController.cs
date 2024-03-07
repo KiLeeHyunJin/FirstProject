@@ -15,8 +15,8 @@ public class AttackController : MonoBehaviour
     [SerializeField] Vector3 size;
 
     Vector2 knockbackPower;
-
-    int count;
+    int attackCount;
+    int targetCount;
     float damage;
     bool isStart;
 
@@ -39,9 +39,10 @@ public class AttackController : MonoBehaviour
         knockbackPower = power; 
     }
 
-    public void SetDamage(float _damage)
+    public void SetDamage(float _damage, int count)
     {
         damage = _damage;
+        attackCount = count;
     }
 
     public void OnAttackEnable()
@@ -52,12 +53,12 @@ public class AttackController : MonoBehaviour
     private void GetCollisionObject()
     {
 
-        count = Physics2D.OverlapCircleNonAlloc(
+        targetCount = Physics2D.OverlapCircleNonAlloc(
             new Vector2(pos.X + offset.x, pos.Z + offset.y)
             , size.x, colliders,layerMask);
 
-        Debug.Log($"count : {count}");
-        if(count > 0)
+        Debug.Log($"count : {targetCount}");
+        if(targetCount > 0)
             StartCoroutine(AttackCo());
         //else
         //    SetttingReset();
@@ -82,27 +83,33 @@ public class AttackController : MonoBehaviour
 
     IEnumerator AttackCo()
     {
-        for (int i = 0; i < count; i++)
+        for (int j = 0; j < attackCount; j++)
         {
-            yield return new WaitForSeconds(0.07f);
-            IDamagable damagable = colliders[i].GetComponent<IDamagable>();
-            if(damagable != null)
+            for (int i = 0; i < targetCount; i++)
             {
-                damagable.ISetKnockback(
-                    knockbackPower,
-                    pos.Pose,
-                    size,
-                    offset
-                    );
-                damagable.IGetDamage(damage);
+                yield return new WaitForSeconds(0.02f);
+                IDamagable damagable = colliders[i].GetComponent<IDamagable>();
+                if (damagable != null)
+                {
+                    damagable.ISetKnockback(
+                        knockbackPower,
+                        pos.Pose,
+                        size,
+                        offset
+                        );
+                    damagable.IGetDamage(damage);
+                }
             }
+            yield return new WaitForSeconds(0.05f);
         }
+
         //SetttingReset();
     }
 
     private void SetttingReset()
     {
-        count = 0;
+        attackCount = 0;
+        targetCount = 0;
         damage = 0;
         offset = Vector2.zero;
         size = Vector3.zero;

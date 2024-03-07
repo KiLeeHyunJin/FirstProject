@@ -14,7 +14,17 @@ public class Idle : BaseState<PlayerController.State>
     {
         if (pos.yState() != TransformAddForce.YState.None)
             owner.SetState = PlayerController.State.Jump;
-        else if (pos.Velocity().magnitude > 0)
-            owner.SetState = PlayerController.State.Walk;
+        else
+            anim.Play(AnimIdTable.GetInstance.IdleId);
+    }
+    public override void Update()
+    {
+
+        //else if (pos.Velocity2D().sqrMagnitude > 0)
+        //    owner.SetState = PlayerController.State.Walk;
+    }
+
+    public override void Transition()
+    {
     }
 }

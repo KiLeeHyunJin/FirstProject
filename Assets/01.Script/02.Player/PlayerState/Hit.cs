@@ -23,9 +23,9 @@ public class Hit : BaseState<PlayerController.State>
         coroutine = owner.StartCoroutine(WaitCoroutine());
         int idx = UnityEngine.Random.Range(0, 2);
         if (idx == 1)
-            anim.Play("Hit1");
+            anim.Play(AnimIdTable.GetInstance.Hit1Id);
         else
-            anim.Play("Hit2");
+            anim.Play(AnimIdTable.GetInstance.Hit2Id);
     }
     Coroutine coroutine = null;
     IEnumerator WaitCoroutine()
@@ -35,11 +35,14 @@ public class Hit : BaseState<PlayerController.State>
     }
     public override void Exit()
     {
-        if (isEnter == false)
-            return;
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
-        coroutine = owner.StartCoroutine(WaitCoroutine());
+        if (isEnter == false)
+            return;
+        //coroutine = owner.StartCoroutine(WaitCoroutine());
+    }
 
+    public override void Transition()
+    {
     }
 }

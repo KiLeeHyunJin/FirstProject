@@ -20,6 +20,8 @@ public abstract class AttackState : BaseState<PlayerController.State>
         public Vector2 move;
         public float moveTime;
         public float mana;
+        public int attackCount;
+        public float damage;
     }
     public enum AttackPlaceType
     {   JumpAction, Action, }
@@ -126,7 +128,7 @@ public abstract class AttackState : BaseState<PlayerController.State>
                 attackData[count].power.x * direction, 
                 attackData[count].power.y));
 
-        attack.SetDamage(100);
+        attack.SetDamage(attackData[count].damage, attackData[count].attackCount);
     }
 
     protected Coroutine animCo = null;

@@ -8,6 +8,7 @@ public class Jump : BaseState<PlayerController.State>
 {
     [SerializeField] float jumpPower = 5;
     [SerializeField] bool isJump;
+    
     protected override void EnterCheck()
     {
         if (
@@ -46,16 +47,20 @@ public class Jump : BaseState<PlayerController.State>
     }
     IEnumerator JumpCo()
     {
-        anim.Play("Jump_Up");
-        while (pos.Velocity().y > 0f)
+        anim.Play(AnimIdTable.GetInstance.JumpUpId);
+        while (pos.yState() == TransformAddForce.YState.Up)
             yield return new WaitForFixedUpdate();
 
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Jump_Up"))
-            anim.Play("Jump_Down");
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Jump_Up"))//(AnimIdTable.GetInstance.JumpUpId))
+            anim.Play(AnimIdTable.GetInstance.JumpDownId);
 
-        while (pos.Y > 0)
+        while (pos.yState() != TransformAddForce.YState.None)
             yield return new WaitForFixedUpdate();
 
         owner.SetState = PlayerController.State.Land;
+    }
+
+    public override void Transition()
+    {
     }
 }

@@ -85,7 +85,7 @@ public abstract class AttackSkill : MonoBehaviour
             new Vector2(attackData[count].offset.x * direction, attackData[count].offset.y), 
             attackData[count].size);
         atkData.SetKnockBack(new Vector2(attackData[count].power.x * direction, attackData[count].power.y));
-        atkData.SetDamage(100);
+        atkData.SetDamage(attackData[count].damage, attackData[count].attackCount);
     }
 
     public void moveMethod()

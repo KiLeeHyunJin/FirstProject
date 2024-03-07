@@ -23,11 +23,20 @@ public class TransformAddForce
         yTransform = _yRigid.transform;
         Ystate = YState.None;
     }
-    public Vector3 GetVelocity()
+    public Vector3 GetVelocity
     {
-        return new Vector3(xRigid.velocity.x, yRigid.velocity.y, xRigid.velocity.y);
+        get
+        {
+            return new Vector3(xRigid.velocity.x, yRigid.velocity.y, xRigid.velocity.y);
+        }
     }
-
+    public Vector2 GetVelocity2
+    {
+        get
+        {
+            return xRigid.velocity;
+        }
+    }
     public void ForceZero(KeyCode pos) => ForceReset(pos);
 
     private void ForceReset(KeyCode pos)
@@ -38,7 +47,6 @@ public class TransformAddForce
             yRigid.velocity = Vector2.zero;
     }
     public void AddForce(Vector3 power, float time) => AddForceMethod(power, time);
-    public void AddForceImpuse(Vector3 power, float time) => AddForceImpuseMethod(power, time);
     Coroutine coroutine = null;
 
     private void AddForceMethod(Vector3 powerVector, float time)
@@ -47,6 +55,8 @@ public class TransformAddForce
             owner.StopCoroutine(coroutine);
             coroutine = owner.StartCoroutine(ForceCo(powerVector, time));
     }
+    public void AddForceImpuse(Vector3 power, float time) => AddForceImpuseMethod(power, time);
+    public void AddForceWalk(Vector2 power) => MoveForce(power);
     private void AddForceImpuseMethod(Vector3 powerVector, float time)
     {
         if (impulseCo != null)
@@ -67,7 +77,18 @@ public class TransformAddForce
         yield return WaitTime(time);
         XAddForceReset();
     }
-
+    void MoveForce(Vector2 power)
+    {
+        if (xRigid != null)
+        {
+            Vector2 check = new Vector2(power.x, power.y);
+            if (check.x == 0)
+                check.x = xRigid.velocity.x;
+            if (check.y == 0)
+                check.y = xRigid.velocity.y;
+            xRigid.velocity = check;
+        }
+    }
     IEnumerator ForceCo(Vector3 power, float time)
     {
         if (power.y != 0)
@@ -76,15 +97,7 @@ public class TransformAddForce
             yRigid.velocity = new Vector2(0, power.y);
             Ystate = power.y > 0 ? YState.Up : YState.Down;
         }
-        if (xRigid != null)
-        {
-            Vector2 check = new Vector2(power.x, power.z);
-            if (check.x == 0)
-                check.x = xRigid.velocity.x;
-            if (check.y == 0)
-                check.y = xRigid.velocity.y;
-            xRigid.velocity = check;
-        }
+        MoveForce(new Vector2(power.x,power.z));
         yield return WaitTime(time);
         XAddForceReset();
     }

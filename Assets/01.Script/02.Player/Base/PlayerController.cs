@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,8 +20,8 @@ public class PlayerController : MonoBehaviour
             fsm.ChangeState(CurrentState);
         }
     }
+    public AnimIdTable animId { get; private set; }
     public StateMachine<State> fsm;
-
     [Header("¸µÅ©")]
     [SerializeField] Transform yPos;
     [SerializeField] new SpriteRenderer renderer;
@@ -27,8 +29,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AttackController atkController;
     Rigidbody2D rigid;
     TransformPos transformPos;
+    Vector2 moveValue;
 
     public AttackState currentSkill;
+    [SerializeField] Mover mover;
     [SerializeField] Walk walk;
     [SerializeField] Jump jump;
     [SerializeField] Idle idle;
@@ -39,12 +43,14 @@ public class PlayerController : MonoBehaviour
     ShockDownAttack shockDownAttack;
     ShortAirSlash shortAirSlash;
 
+
     public void Awake()
     {
         fsm = new StateMachine<State>();
         transformPos = GetComponent<TransformPos>();
         rigid = GetComponent<Rigidbody2D>();
 
+        //mover.Setting(transformPos, this, renderer);
         SetStateData(walk);
         SetStateData(jump);
         SetStateData(idle);
@@ -78,13 +84,13 @@ public class PlayerController : MonoBehaviour
 
     public void Start()
     {
-        fsm.Start(State.Idle);
         GetSkill();
         anim = GetComponentInChildren<Animator>();
-        anim.speed = .35f;
+        fsm.Start(State.Idle);
     }
     private void Update()
     {
+        //mover.Move(moveValue);
         fsm?.Update();
         LockYObject();
         if(Input.GetKeyDown(KeyCode.S))
@@ -93,6 +99,21 @@ public class PlayerController : MonoBehaviour
             SetState = State.Hit;
         }
     }
+
+    //float inTime;
+    //void OnMove(InputValue value)
+    //{
+    //    moveValue = value.Get<Vector2>();
+    //    if (value.isPressed)
+    //    {
+    //        float beforeTime = inTime;
+    //        inTime = Time.time;
+    //        if (inTime - beforeTime < 0.2f)
+    //            mover.Run();
+    //        else
+    //            mover.Walk();
+    //    }
+    //}
 
     void LockYObject()
     {

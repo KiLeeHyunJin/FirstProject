@@ -17,4 +17,6 @@ public struct AttackData
     public Vector2 move;
     public float moveTime;
     public float mana;
+    public float damage;
+    public int attackCount;
 }

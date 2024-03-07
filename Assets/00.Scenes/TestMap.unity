@@ -1098,6 +1098,13 @@ MonoBehaviour:
   renderer: {fileID: 1675917341}
   anim: {fileID: 1675917342}
   atkController: {fileID: 1721595375}
+  mover:
+    verticalWalkSpeed: 1
+    verticalRunSpeed: 1.5
+    horizontalWalkSpeed: 1.2
+    horizontalRunSpeed: 2.5
+    Speed: {x: 0, y: 0}
+    moveVector: {x: 0, y: 0, z: 0}
   walk:
     <ValueType>k__BackingField: 1
     verticalWalkSpeed: 1

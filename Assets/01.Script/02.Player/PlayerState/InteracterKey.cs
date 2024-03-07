@@ -25,4 +25,8 @@ public class InteracterKey : BaseState<PlayerController.State>
     { 
     
     }
+
+    public override void Transition()
+    {
+    }
 }

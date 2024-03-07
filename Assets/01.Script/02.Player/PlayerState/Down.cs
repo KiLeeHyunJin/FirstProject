@@ -19,7 +19,7 @@ public class Down : BaseState<PlayerController.State>
         if(coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(WaitTime());
-        anim.Play("Falling");
+        anim.Play(AnimIdTable.GetInstance.FallingId);
     }
     Coroutine coroutine = null;
     IEnumerator WaitTime()
@@ -28,7 +28,7 @@ public class Down : BaseState<PlayerController.State>
         {
             yield return new WaitForFixedUpdate();
         }
-        anim.Play("Down");
+        anim.Play(AnimIdTable.GetInstance.DownId);
         yield return new WaitForSeconds(downTime);
         owner.SetState = PlayerController.State.Idle;
     }
@@ -36,5 +36,9 @@ public class Down : BaseState<PlayerController.State>
     {
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
+    }
+
+    public override void Transition()
+    {
     }
 }

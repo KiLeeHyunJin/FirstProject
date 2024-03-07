@@ -99,5 +99,5 @@ public abstract class BaseState<T> where T : Enum
     public virtual void LateUpdate() { }
     public virtual void FixedUpdate() { }
 
-    public virtual void Transition() { }
+    public abstract void Transition();
 }
