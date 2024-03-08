@@ -6,6 +6,7 @@ using UnityEngine;
 public class TargetSensor : MonoBehaviour
 { 
     int targetLayer;
+    [field: SerializeField]
     public Transform target { get; private set; } 
     protected void Awake()
     {

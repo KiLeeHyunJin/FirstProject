@@ -5,19 +5,25 @@ using UnityEngine;
 public class Attackable : MonoBehaviour, IDamagable
 {
     public TransformPos transformPos;
-    public PlayerController controller;
+    [field :SerializeField]public IConnectController controller;
+    float dam;
+    void Start()
+    {
+        controller = transformPos.GetComponent<IConnectController>();
+    }
+
     public void IGetDamage(float damage)
     {
-
+        dam = damage;
     }
 
     public void ISetKnockback(Vector2 power, Vector3 pos, Vector3 size, Vector2 offset)
     {
         if (transformPos.attackCheck.CheckAttackCollision(pos, size, offset))
         {
-            if (controller != null)
-                controller.CallDown();
             transformPos.AddForce(power);
+            if (controller != null)
+                controller.ISetDamage(dam);
             Debug.Log("Ãæµ¹");
         }
     }

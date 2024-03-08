@@ -9,12 +9,6 @@ public class StateMachine<T> where T : Enum
     private Dictionary<T, BaseState<T>> stateDic = new Dictionary<T, BaseState<T>>();
     private BaseState<T> curState;
     
-    //public bool IsValueType(T state)
-    //{
-    //    if(stateDic.ContainsKey(state))
-    //        return stateDic[state].ValueType;
-    //    return false;
-    //}
     public void Start(T startState)
     {
         curState = stateDic[startState];
@@ -46,6 +40,10 @@ public class StateMachine<T> where T : Enum
         curState.Enter();
     }
 }
+
+
+
+
 [Serializable]
 public abstract class BaseState<T> where T : Enum
 {
@@ -53,13 +51,11 @@ public abstract class BaseState<T> where T : Enum
     protected Animator anim;
     protected TransformPos pos;
     protected SpriteRenderer renderer;
-    protected BaseController<T> owner;
-    public void Setting(Animator _anim, TransformPos _transform, SpriteRenderer _renderer, BaseController<T> _owner)
+    public void Setting(Animator _anim, TransformPos _transform, SpriteRenderer _renderer)
     {
         anim = _anim;
         pos = _transform;
         renderer = _renderer;
-        owner = _owner;
     }
     public void SetStateMachine(StateMachine<T> stateMachine) => this.stateMachine = stateMachine;
 
@@ -69,34 +65,24 @@ public abstract class BaseState<T> where T : Enum
     public virtual void Exit() { }
     public virtual void Update() { }
 
-
     public virtual void LateUpdate() { }
     public virtual void FixedUpdate() { }
 
     public abstract void Transition();
 }
-
+public abstract class MonsterState<T> : BaseState<T> where T : Enum
+{
+    protected MonsterController<T> owner;
+    public void SetController(MonsterController<T> monsterController) => owner = monsterController;
+}
 [Serializable]
 public abstract class PlayerBaseState<T> : BaseState<T> where T : Enum
 {
-    //protected PlayerController owner;
     protected AttackController attack;
-    protected PlayerController playerOwner;
+    protected PlayerController owner;
+    public void SetController(PlayerController playerController) => owner = playerController;
     public void SettingAttackData(AttackController _atckCon)
     {
         attack = _atckCon;
-        PlayerController player = owner as PlayerController;
-        if (player != null)
-        {
-            playerOwner = player;
-        }
     }
-    //public void Setting(PlayerController _controller, Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer)
-    //{
-    //    anim = _anim;
-    //    pos = _transform;
-    //    attack = _atckCon;
-    //    renderer = _renderer;
-    //    owner = _controller;
-    //}
 }

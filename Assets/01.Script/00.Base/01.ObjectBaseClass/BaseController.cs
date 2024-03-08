@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseController<T> : MonoBehaviour where T : Enum
+public abstract class BaseController<T> : MonoBehaviour, IConnectController where T : Enum
 {
     public StateMachine<T> fsm;
+    [field : SerializeField]
     public T CurrentState 
     { 
         get;
@@ -23,17 +24,18 @@ public abstract class BaseController<T> : MonoBehaviour where T : Enum
     [SerializeField] protected new SpriteRenderer renderer;
     [SerializeField] protected Animator anim;
 
-    protected TransformPos transformPos;
+    [SerializeField] protected TransformPos transformPos;
 
     protected virtual void Awake()
     {
-        transformPos = GetComponent<TransformPos>();
+        if(transformPos == null)
+            transformPos = GetComponent<TransformPos>();
         fsm = new StateMachine<T>();
     }
     void SetStateData(BaseState<T> state)
     {
         state.SetStateMachine(fsm);
-        state.Setting(anim, transformPos, renderer,this);
+        state.Setting(anim, transformPos, renderer);
     }
     protected virtual void Start()
     {
@@ -61,5 +63,13 @@ public abstract class BaseController<T> : MonoBehaviour where T : Enum
 
         if (before != transformPos.direction)
             renderer.flipX = !renderer.flipX;
+    }
+
+    public virtual void ISetDamage(float damage)
+    {
+    }
+
+    public virtual void ISetType()
+    {
     }
 }

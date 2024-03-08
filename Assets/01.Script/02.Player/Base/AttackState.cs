@@ -82,8 +82,8 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
     {
         time = coolTime;
         if(coolTimeCo != null)
-            playerOwner.StopCoroutine(coolTimeCo);
-        coolTimeCo = playerOwner.StartCoroutine(CoolTimeCountDownCo());
+            owner.StopCoroutine(coolTimeCo);
+        coolTimeCo = owner.StartCoroutine(CoolTimeCountDownCo());
     }
     Coroutine coolTimeCo = null;
     IEnumerator CoolTimeCountDownCo()
@@ -109,7 +109,7 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
             {
                 if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].attackCounts[atckCount].AttackTime)
                 {
-                    playerOwner.currentSkill = this;
+                    owner.currentSkill = this;
                     int direction =
                         pos.direction == TransformPos.Direction.Left ? -1 : 1;
 
@@ -172,8 +172,8 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
             moveCount = 0;
             anim.Play(animId[inputCount]);
             if (animCo != null)
-                playerOwner.StopCoroutine(animCo);
-            animCo = playerOwner.StartCoroutine(AnimationInputSensor(inputCount));
+                owner.StopCoroutine(animCo);
+            animCo = owner.StartCoroutine(AnimationInputSensor(inputCount));
             
         }
         else
@@ -182,7 +182,7 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
             atckCount = 0;
             moveCount = 0;
             anim.Play(animId[0]);
-            animCo = playerOwner.StartCoroutine(AnimationInputSensor(0));
+            animCo = owner.StartCoroutine(AnimationInputSensor(0));
         }
     }
 
@@ -215,7 +215,7 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
         atckCount = 0;
         moveCount = 0;
         if (animCo != null)
-            playerOwner.StopCoroutine(animCo);
+            owner.StopCoroutine(animCo);
     }
 
     public void moveMethod()

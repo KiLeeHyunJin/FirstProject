@@ -10,10 +10,10 @@ public class LandAttack : AttackState
     {
         if (isTransition)
         {
-            playerOwner.SetState = PlayerState.Idle;
+            owner.SetState = PlayerState.Idle;
             return;
         }
-        else if (playerOwner.keys.ContainLayer(KeyManager.Key.X))
+        else if (owner.keys.ContainLayer(KeyManager.Key.X))
             Attack();
     }
 

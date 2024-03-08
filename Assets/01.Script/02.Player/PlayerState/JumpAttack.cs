@@ -20,13 +20,9 @@ public class JumpAttack : AttackState
             if (pos.yState() != TransformAddForce.YState.None)
             {
                 if (pos.Velocity().y > 0)
-                {
                     owner.SetState = PlayerState.JumpUp;
-                }
                 else
-                {
                     owner.SetState= PlayerState.JumpDown;
-                }
             }
             else
                 owner.SetState = PlayerState.Idle;

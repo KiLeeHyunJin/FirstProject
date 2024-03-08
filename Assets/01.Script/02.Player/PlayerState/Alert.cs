@@ -10,7 +10,6 @@ public class Alert : PlayerBaseState<PlayerState>
     public override void Enter()
     {
         anim.Play(AnimIdTable.GetInstance.AlertId);
-
     }
 
 
@@ -21,13 +20,13 @@ public class Alert : PlayerBaseState<PlayerState>
     }
     public override void Transition()
     {
-        if (playerOwner.keys.ContainLayer(KeyManager.Key.Move))
-            playerOwner.SetState = PlayerState.Walk;
+        if (owner.keys.ContainLayer(KeyManager.Key.Move))
+            owner.SetState = PlayerState.Walk;
         else if
-            (playerOwner.keys.ContainLayer(KeyManager.Key.C))
-            playerOwner.SetState = PlayerState.JumpUp;
+            (owner.keys.ContainLayer(KeyManager.Key.C))
+            owner.SetState = PlayerState.JumpUp;
         else if
-            (playerOwner.keys.ContainLayer(KeyManager.Key.X))
-            playerOwner.SetState = PlayerState.Interaction;
+            (owner.keys.ContainLayer(KeyManager.Key.X))
+            owner.SetState = PlayerState.Interaction;
     }
 }

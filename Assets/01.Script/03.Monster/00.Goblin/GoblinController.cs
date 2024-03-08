@@ -40,7 +40,16 @@ public class GoblinController : MonsterController<GoblinState>
     }
     protected override void Start()
     {
+        base.Start();
         fsm.Start(GoblinState.Idle);
     }
 
+    public override void ISetDamage(float damage)
+    {
+        SetState = GoblinState.Fall;
+    }
+    public override void ISetType()
+    {
+        base.ISetType();
+    }
 }

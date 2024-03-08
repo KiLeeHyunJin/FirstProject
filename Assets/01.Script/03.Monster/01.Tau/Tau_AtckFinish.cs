@@ -4,17 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Goblin_Hit : BaseState<GoblinState>
+public class Tau_AtckFinish : MonsterState<TauState>
 {
 
+    bool isTransition;
     public override void Enter()
     {
-        anim.Play(AnimIdTable.GetInstance.Hit1Id);
     }
     public override void Update()
     {
     }
+
+    public override void FixedUpdate()
+    {
+    }
+
+    public override void Exit()
+    {
+    }
+
     public override void Transition()
     {
     }
+
 }

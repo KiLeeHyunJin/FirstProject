@@ -12,9 +12,9 @@ public class Fall : PlayerBaseState<PlayerState>
     {
         isTransition = false;
         if(coroutine != null)
-            playerOwner.StopCoroutine(coroutine);
-        playerOwner.OnStartAlert();
-        coroutine = playerOwner.StartCoroutine(FallingCo());
+            owner.StopCoroutine(coroutine);
+        owner.OnStartAlert();
+        coroutine = owner.StartCoroutine(FallingCo());
         anim.Play(AnimIdTable.GetInstance.FallingId);
     }
     public override void Exit()
@@ -38,6 +38,6 @@ public class Fall : PlayerBaseState<PlayerState>
     public override void Transition()
     {
         if(isTransition)
-            playerOwner.SetState = PlayerState.Down;
+            owner.SetState = PlayerState.Down;
     }
 }

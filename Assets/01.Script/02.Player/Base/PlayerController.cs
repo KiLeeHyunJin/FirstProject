@@ -113,8 +113,9 @@ public class PlayerController : BaseController<PlayerState>
 
     void SetStateData(PlayerBaseState<PlayerState> state)
     {
-        state.Setting(anim, transformPos, renderer, this );
+        state.Setting(anim, transformPos, renderer );
         state.SetStateMachine(fsm);
+        state.SetController(this);
         state.SettingAttackData(atkController);
         transformPos.direction = TransformPos.Direction.Right;
         AttackState attack = state as AttackState;
@@ -157,7 +158,7 @@ public class PlayerController : BaseController<PlayerState>
             keys.OnMoveLayer();
     }
 
-    public void CallDown()
+    public override void ISetDamage(float damage)
     {
         SetState = PlayerState.Fall;
     }

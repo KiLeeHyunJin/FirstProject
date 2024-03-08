@@ -12,12 +12,12 @@ public class Run : PlayerBaseState<PlayerState>
     public override void Enter()
     {
         anim.Play(AnimIdTable.GetInstance.RunId);
-        playerOwner.WalkType = PlayerState.Run;
+        owner.WalkType = PlayerState.Run;
     }
     public override void Update()
     {
-        Vector2 moveValue = playerOwner.moveValue;
-        playerOwner.FlipCheck(moveValue);
+        Vector2 moveValue = owner.moveValue;
+        owner.FlipCheck(moveValue);
         pos.AddForceMove(moveValue * Speed);
     }
 
@@ -32,13 +32,13 @@ public class Run : PlayerBaseState<PlayerState>
 
     public override void Transition()
     {
-        if (playerOwner.keys.ContainLayer(KeyManager.Key.C))
-            playerOwner.SetState = PlayerState.JumpUp;
+        if (owner.keys.ContainLayer(KeyManager.Key.C))
+            owner.SetState = PlayerState.JumpUp;
         else if (
-            playerOwner.keys.ContainLayer(KeyManager.Key.X))
-            playerOwner.SetState = PlayerState.BasicAtck;
+            owner.keys.ContainLayer(KeyManager.Key.X))
+            owner.SetState = PlayerState.BasicAtck;
         else if (
-            playerOwner.keys.ContainLayer(KeyManager.Key.Move) == false)
-            playerOwner.SetState = PlayerState.Idle;
+            owner.keys.ContainLayer(KeyManager.Key.Move) == false)
+            owner.SetState = PlayerState.Idle;
     }
 }

@@ -6,18 +6,16 @@ using UnityEngine;
 [Serializable]
 public class RunAttack : AttackState
 {
-
     public override void Transition()
     {
         if (isTransition)
-            playerOwner.SetState = PlayerState.Idle;
+            owner.SetState = PlayerState.Idle;
     }
     public override void Enter()
     {
         isTransition = false;
         Attack();
     }
-
     protected override void AttackEffect()
     {
     }

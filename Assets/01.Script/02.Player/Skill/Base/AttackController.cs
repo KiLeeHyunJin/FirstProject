@@ -63,8 +63,6 @@ public class AttackController : MonoBehaviour
         Debug.Log($"count : {targetCount}");
         if(targetCount > 0)
             StartCoroutine(AttackCo());
-        //else
-        //    SetttingReset();
     }
 
     private void OnDrawGizmos()
@@ -101,13 +99,13 @@ public class AttackController : MonoBehaviour
             IDamagable damagable = colliders[i].GetComponent<IDamagable>();
             if (damagable != null)
             {
+                damagable.IGetDamage(value);
                 damagable.ISetKnockback(
                     returnKnockback,
                     returnPos,
                     returnSize,
                     returnOffset
                     );
-                damagable.IGetDamage(value);
             }
             yield return new WaitForSeconds(0.01f);
         }

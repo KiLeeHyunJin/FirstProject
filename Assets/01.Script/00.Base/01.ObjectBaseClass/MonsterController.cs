@@ -10,10 +10,10 @@ public class MonsterController<T> : BaseController<T> where T : Enum
     {
          sensor = sensor == null ? GetComponentInChildren<TargetSensor>() : sensor;
     }
-
-    protected void SetStateClass(BaseState<T> state)
+    protected void SetStateClass(MonsterState<T> state)
     {
         state.SetStateMachine(fsm);
-        state.Setting(anim, transformPos, renderer, this);
+        state.Setting(anim, transformPos, renderer);
+        state.SetController(this);
     }
 }
