@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 
 public class StateMachine<T> where T : Enum
 {
-    private Dictionary<T, BaseState<T>> stateDic = new Dictionary<T, BaseState<T>>();
-    private BaseState<T> curState;
+    private Dictionary<T, PlayerBaseState<T>> stateDic = new Dictionary<T, PlayerBaseState<T>>();
+    private PlayerBaseState<T> curState;
 
     //public bool IsValueType(T state)
     //{
@@ -31,7 +31,7 @@ public class StateMachine<T> where T : Enum
 
     public void FixedUpdate() => curState.FixedUpdate();
 
-    public void AddState(T stateEnum, BaseState<T> state)
+    public void AddState(T stateEnum, PlayerBaseState<T> state)
     {
         state.SetStateMachine(this);
         stateDic.Add(stateEnum, state);
@@ -50,20 +50,16 @@ public abstract class BaseState<T> where T : Enum
     private StateMachine<T> stateMachine;
     protected Animator anim;
     protected TransformPos pos;
-    protected AttackController attack;
     protected SpriteRenderer renderer;
-    protected PlayerController owner;
-    public void Setting(PlayerController _controller, Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer)
+
+    public void Setting(Animator _anim, TransformPos _transform, SpriteRenderer _renderer)
     {
         anim = _anim;
         pos = _transform;
-        attack = _atckCon;
         renderer = _renderer;
-        owner = _controller;
     }
-
     public void SetStateMachine(StateMachine<T> stateMachine) => this.stateMachine = stateMachine;
-  
+
     protected void ChangeState(T stateEnum) => stateMachine.ChangeState(stateEnum);
 
     public virtual void Enter() { }
@@ -75,4 +71,19 @@ public abstract class BaseState<T> where T : Enum
     public virtual void FixedUpdate() { }
 
     public abstract void Transition();
+}
+
+[Serializable]
+public abstract class PlayerBaseState<T> : BaseState<T> where T : Enum
+{
+    protected PlayerController owner;
+    protected AttackController attack;
+    public void Setting(PlayerController _controller, Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer)
+    {
+        anim = _anim;
+        pos = _transform;
+        attack = _atckCon;
+        renderer = _renderer;
+        owner = _controller;
+    }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 [Serializable]
-public class Walk : BaseState<PlayerController.State>
+public class Walk : PlayerBaseState<PlayerState>
 {
     [SerializeField] Vector2 Speed;
     [SerializeField] float term;
@@ -15,11 +15,11 @@ public class Walk : BaseState<PlayerController.State>
         float beforeEnterTime = enterTime;
         enterTime = Time.time;
         if(enterTime - beforeEnterTime < term)
-            owner.SetState = PlayerController.State.Run;
+            owner.SetState = PlayerState.Run;
         else
         {
             anim.Play(AnimIdTable.GetInstance.WalkId);
-            owner.WalkType = PlayerController.State.Walk;
+            owner.WalkType = PlayerState.Walk;
         }
     }
     public override void Update()
@@ -40,12 +40,12 @@ public class Walk : BaseState<PlayerController.State>
     public override void Transition()
     {
         if (owner.keys.ContainLayer(KeyManager.Key.C))
-            owner.SetState = PlayerController.State.JumpUp;
+            owner.SetState = PlayerState.JumpUp;
         else if (
             owner.keys.ContainLayer(KeyManager.Key.X))
-            owner.SetState = PlayerController.State.BasicAtck;
+            owner.SetState = PlayerState.BasicAtck;
         else if (
             owner.keys.ContainLayer(KeyManager.Key.Move) == false)
-            owner.SetState = PlayerController.State.Idle;
+            owner.SetState = PlayerState.Idle;
     }
 }

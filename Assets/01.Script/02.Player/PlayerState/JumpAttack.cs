@@ -6,6 +6,13 @@ using UnityEngine;
 [Serializable]
 public class JumpAttack : AttackState
 {
+    public override void Enter()
+    {
+        isTransition = false;
+        if(pos.Velocity().y < 0)
+            pos.AddForce(new Vector3(0, 0.2f, 0));
+        Attack();
+    }
     public override void Transition()
     {
         if(isTransition)
@@ -14,15 +21,15 @@ public class JumpAttack : AttackState
             {
                 if (pos.Velocity().y > 0)
                 {
-                    owner.SetState = PlayerController.State.JumpUp;
+                    owner.SetState = PlayerState.JumpUp;
                 }
                 else
                 {
-                    owner.SetState= PlayerController.State.JumpDown;
+                    owner.SetState= PlayerState.JumpDown;
                 }
             }
             else
-                owner.SetState = PlayerController.State.Idle;
+                owner.SetState = PlayerState.Idle;
         }
     }
 
@@ -30,12 +37,5 @@ public class JumpAttack : AttackState
     {
     }
 
-    public override void Enter()
-    {
-        isTransition = false;
-        //anim.Play(animId[0]);
-        pos.AddForce(new Vector3(0, 0.2f, 0));
-        Attack();
-    }
 
 }

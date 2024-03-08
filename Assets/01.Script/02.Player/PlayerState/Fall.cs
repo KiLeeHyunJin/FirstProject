@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Fall : BaseState<PlayerController.State>
+public class Fall : PlayerBaseState<PlayerState>
 {
     bool isTransition;
 
@@ -38,6 +38,6 @@ public class Fall : BaseState<PlayerController.State>
     public override void Transition()
     {
         if(isTransition)
-            owner.SetState = PlayerController.State.Down;
+            owner.SetState = PlayerState.Down;
     }
 }

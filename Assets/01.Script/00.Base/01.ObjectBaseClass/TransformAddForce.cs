@@ -14,6 +14,7 @@ public class TransformAddForce
     Rigidbody2D yRigid;
     Transform yTransform;
     TransformPos owner;
+    float originGravity;
     [field:SerializeField]public YState Ystate { get; private set; }
     public TransformAddForce(Rigidbody2D _xRigid, Rigidbody2D _yRigid,TransformPos _owner)
     {
@@ -21,6 +22,7 @@ public class TransformAddForce
         yRigid = _yRigid;
         owner = _owner;
         yTransform = _yRigid.transform;
+        originGravity = yRigid.gravityScale;
         Ystate = YState.None;
     }
     public Vector3 GetVelocity
@@ -37,6 +39,8 @@ public class TransformAddForce
             return xRigid.velocity;
         }
     }
+    public void SetGravity(float value) => yRigid.gravityScale = value;
+    public void ResetGravity() => yRigid.gravityScale = originGravity;
     public void ForceZero(KeyCode pos) => ForceReset(pos);
 
     private void ForceReset(KeyCode pos)

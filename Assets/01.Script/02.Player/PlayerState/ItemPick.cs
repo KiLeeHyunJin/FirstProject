@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class ItemPick : BaseState<PlayerController.State>
+public class ItemPick : PlayerBaseState<PlayerState>
 {
     [SerializeField] float pickTime;
     bool isTransition;
@@ -36,6 +36,6 @@ public class ItemPick : BaseState<PlayerController.State>
     public override void Transition()
     {
         if (isTransition)
-            owner.SetState = PlayerController.State.Idle;
+            owner.SetState = PlayerState.Idle;
     }
 }

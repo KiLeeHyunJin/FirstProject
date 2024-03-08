@@ -12,6 +12,7 @@ public class TransformPos : MonoBehaviour
     [SerializeField] Transform xPosTarget;
     [SerializeField] Transform yPosTarget;
     [SerializeField] Transform hitBox;
+    [SerializeField] SpriteRenderer renderer;
 
     public AttackCollision attackCheck { get; private set; }
     [SerializeField]TransformAddForce AddForceClass;
@@ -27,7 +28,13 @@ public class TransformPos : MonoBehaviour
         Size = hitBox != null ? new Vector3(hitBox.localScale.x / 2, Heigth, hitBox.localScale.y / 2) : Vector2.zero;
         Offset = hitBox != null ? new Vector2(hitBox.transform.localPosition.x, hitBox.transform.localPosition.y): Vector2.zero;
     }
+    private void Update()
+    {
+        renderer.sortingOrder = (int) -(xPosTarget.position.y * 10);
+    }
 
+    public void ChangeGravity(float value) => AddForceClass.SetGravity(value);
+    public void ResetGravity() => AddForceClass.ResetGravity();
     public Vector3 Velocity() => AddForceClass.GetVelocity;
     public Vector2 Velocity2D() => AddForceClass.GetVelocity2;
     public void Synchro(float value = 0) => yPosTarget.localPosition = new Vector3(0,value,0);

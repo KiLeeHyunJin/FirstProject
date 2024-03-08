@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Sit : BaseState<PlayerController.State>
+public class Sit : PlayerBaseState<PlayerState>
 {
     [SerializeField] float readyTime;
     [SerializeField] float defaultTime;
@@ -40,19 +40,19 @@ public class Sit : BaseState<PlayerController.State>
     {
         if (isTransition)
         {
-            owner.SetState = PlayerController.State.Idle;
+            owner.SetState = PlayerState.Idle;
         }
         else if (isReady)
         {
             if (
                 owner.keys.ContainLayer(KeyManager.Key.Move))
-                owner.SetState = PlayerController.State.Walk;
+                owner.SetState = PlayerState.Walk;
             else if (
                 owner.keys.ContainLayer(KeyManager.Key.C))
-                owner.SetState = PlayerController.State.JumpUp;
+                owner.SetState = PlayerState.JumpUp;
             else if (
                 owner.keys.ContainLayer(KeyManager.Key.X))
-                owner.SetState = PlayerController.State.Interaction;
+                owner.SetState = PlayerState.Interaction;
         }
 
     }

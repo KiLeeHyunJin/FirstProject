@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Hit : BaseState<PlayerController.State>
+public class Hit : PlayerBaseState<PlayerState>
 {
     [SerializeField] public float delay;
     public void SetDelayTime(float time) => delay = time;
@@ -42,6 +42,6 @@ public class Hit : BaseState<PlayerController.State>
     public override void Transition()
     {
         if(isTransition)
-            owner.SetState = PlayerController.State.Idle;
+            owner.SetState = PlayerState.Idle;
     }
 }

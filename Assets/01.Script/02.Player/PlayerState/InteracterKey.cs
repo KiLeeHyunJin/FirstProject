@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [Serializable]
-public class InteracterKey : BaseState<PlayerController.State>
+public class InteracterKey : PlayerBaseState<PlayerState>
 {
     Collider2D[] collider = new Collider2D[1];
     [SerializeField] LayerMask layerMask;
@@ -26,10 +26,10 @@ public class InteracterKey : BaseState<PlayerController.State>
         switch (type)
         {
             case Interact.Attack:
-                owner.SetState = PlayerController.State.BasicAtck;
+                owner.SetState = PlayerState.BasicAtck;
                 break;
             case Interact.Pick:
-                owner.SetState = PlayerController.State.ItemPick;
+                owner.SetState = PlayerState.ItemPick;
                 break;
         }
     }

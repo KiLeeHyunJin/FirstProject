@@ -5,7 +5,7 @@ using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
 [Serializable]
-public class JumpUp : BaseState<PlayerController.State>
+public class JumpUp : PlayerBaseState<PlayerState>
 {
     [SerializeField] Vector2 moveWalkSpeed;
     [SerializeField] Vector2 moveRunSpeed;
@@ -18,7 +18,7 @@ public class JumpUp : BaseState<PlayerController.State>
         isTransition = false;
         if (pos.yState() == TransformAddForce.YState.None || pos.Y <= 0)
             pos.AddForce(new Vector3(0, jumpPower, 0));
-        if (owner.WalkType == PlayerController.State.Walk)
+        if (owner.WalkType == PlayerState.Walk)
             speed = moveWalkSpeed;
         else
             speed = moveRunSpeed;
@@ -41,10 +41,10 @@ public class JumpUp : BaseState<PlayerController.State>
     public override void Transition()
     {
         if (isTransition)
-            owner.SetState = PlayerController.State.JumpDown;
+            owner.SetState = PlayerState.JumpDown;
         else if (owner.keys.ContainLayer(KeyManager.Key.X))
             if (pos.Y > 0.5f)
-                owner.SetState = PlayerController.State.Interaction;
+                owner.SetState = PlayerState.Interaction;
     }
 
 

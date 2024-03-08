@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Down : BaseState<PlayerController.State>
+public class Down : PlayerBaseState<PlayerState>
 {
     [SerializeField] float downTime;
     bool isTransition;
@@ -36,6 +36,6 @@ public class Down : BaseState<PlayerController.State>
     public override void Transition()
     {
         if (isTransition)
-            owner.SetState = PlayerController.State.Sit;
+            owner.SetState = PlayerState.Sit;
     }
 }

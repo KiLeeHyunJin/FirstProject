@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.XR;
 using static AttackState;
 
 [Serializable]
-public abstract class AttackState : BaseState<PlayerController.State>
+public abstract class AttackState : PlayerBaseState<PlayerState>
 {
     [Serializable]
     public struct AttackCount
@@ -194,7 +194,7 @@ public abstract class AttackState : BaseState<PlayerController.State>
         {
             if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[checkId].AnimName))
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
                 {
                     break;
                 }

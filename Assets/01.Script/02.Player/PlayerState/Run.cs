@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Run : BaseState<PlayerController.State>
+public class Run : PlayerBaseState<PlayerState>
 {
 
     [SerializeField] Vector2 Speed;
@@ -12,7 +12,7 @@ public class Run : BaseState<PlayerController.State>
     public override void Enter()
     {
         anim.Play(AnimIdTable.GetInstance.RunId);
-        owner.WalkType = PlayerController.State.Run;
+        owner.WalkType = PlayerState.Run;
     }
     public override void Update()
     {
@@ -33,12 +33,12 @@ public class Run : BaseState<PlayerController.State>
     public override void Transition()
     {
         if (owner.keys.ContainLayer(KeyManager.Key.C))
-            owner.SetState = PlayerController.State.JumpUp;
+            owner.SetState = PlayerState.JumpUp;
         else if (
             owner.keys.ContainLayer(KeyManager.Key.X))
-            owner.SetState = PlayerController.State.BasicAtck;
+            owner.SetState = PlayerState.BasicAtck;
         else if (
             owner.keys.ContainLayer(KeyManager.Key.Move) == false)
-            owner.SetState = PlayerController.State.Idle;
+            owner.SetState = PlayerState.Idle;
     }
 }

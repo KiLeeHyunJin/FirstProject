@@ -6,46 +6,32 @@ using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 using static KeyManager;
 using static UnityEditor.PlayerSettings;
-
-public class PlayerController : MonoBehaviour
+public enum PlayerState
 {
-    public enum State
-    {
-        Idle, 
-        Walk, Run, 
-        JumpUp, JumpDown,Land,
-        Hit, Stune, 
-        Fall, Down, Sit,
-        
-        JumpAtck, Stap, LandAttack,
-        Interaction, BasicAtck, ItemPick,
+    Idle,
+    Walk, Run,
+    JumpUp, JumpDown, Land,
+    Hit, Stune,
+    Fall, Down, Sit,
 
-        Action,
-    }
-    [field: SerializeField] public State CurrentState { get; private set; }
+    JumpAtck, RunAtck, LandAtck,
+    Interaction, BasicAtck, ItemPick,
+
+    Action,
+}
+public class PlayerController : BaseController<PlayerState>
+{
+
+    [field: SerializeField] public PlayerState WalkType { get; set; }
+
     [SerializeField] float alertTime;
 
-    public State SetState
-    {
-        set
-        {
-            CurrentState = value;
-            fsm.ChangeState(value);
-            //Debug.Log($"{value.ToString()}");
-        }
-    }
-    public State WalkType { get; set; }
     public AnimIdTable animId { get; private set; }
-    public StateMachine<State> fsm;
     [Header("¸µÅ©")]
-    [SerializeField] Transform yPos;
-    [SerializeField] new SpriteRenderer renderer;
-    [SerializeField] Animator anim;
     [SerializeField] AttackController atkController;
 
     [SerializeField] public KeyManager keys { get; private set; }
     public bool isAlert { get; private set; }
-    TransformPos transformPos;
     [field : SerializeField] public Vector2 moveValue { get; private set; }
 
     public AttackState currentSkill;
@@ -61,13 +47,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Hit hit;
     [SerializeField] Down down;
     [SerializeField] Sit sit;
+    
     [SerializeField] ItemPick itemPick;
     [SerializeField] InteracterKey interact;
+    [SerializeField] BasicAttack basicAttack;
+
     [SerializeField] JumpAttack jumpAtck;
     [SerializeField] LandAttack landAtck;
-    
-    
-    BasicAttack basicAttack;
+    [SerializeField] RunAttack runAtck;
+
+
 
     NormalAttack attack;
     ShockDownAttack shockDownAttack;
@@ -79,7 +68,6 @@ public class PlayerController : MonoBehaviour
         fsm = new StateMachine<State>();
         transformPos = GetComponent<TransformPos>();
         keys = GetComponent<KeyManager>();
-        basicAttack = new BasicAttack();
         SetStateData(walk);
         SetStateData(run);
         SetStateData(jumpUp);
@@ -91,6 +79,7 @@ public class PlayerController : MonoBehaviour
         SetStateData(fall);
         SetStateData(sit);
         SetStateData(itemPick);
+        SetStateData(runAtck);
 
         SetStateData(jumpAtck);
         SetStateData(landAtck);
@@ -99,32 +88,33 @@ public class PlayerController : MonoBehaviour
         SetStateData(basicAttack);
         
 
-        fsm.AddState(State.JumpUp, jumpUp);
-        fsm.AddState(State.JumpDown, jumpDown);
-        fsm.AddState(State.Interaction, interact);
-        fsm.AddState(State.Walk, walk);
-        fsm.AddState(State.Run, run);
-        fsm.AddState(State.Idle, idle);
-        fsm.AddState(State.Land, land);
-        fsm.AddState(State.Hit, hit);
-        fsm.AddState(State.Fall, fall);
-        fsm.AddState(State.Down, down);
-        fsm.AddState(State.ItemPick, itemPick);
-        fsm.AddState(State.Sit, sit);
-        fsm.AddState(State.JumpAtck, jumpAtck);
-        fsm.AddState(State.LandAttack, landAtck);
-        fsm.AddState(State.BasicAtck, basicAttack);
+        fsm.AddState(PlayerState.JumpUp, jumpUp);
+        fsm.AddState(PlayerState.JumpDown, jumpDown);
+        fsm.AddState(PlayerState.Interaction, interact);
+        fsm.AddState(PlayerState.Walk, walk);
+        fsm.AddState(PlayerState.Run, run);
+        fsm.AddState(PlayerState.Idle, idle);
+        fsm.AddState(PlayerState.Land, land);
+        fsm.AddState(PlayerState.Hit, hit);
+        fsm.AddState(PlayerState.Fall, fall);
+        fsm.AddState(PlayerState.Down, down);
+        fsm.AddState(PlayerState.ItemPick, itemPick);
+        fsm.AddState(PlayerState.Sit, sit);
+        fsm.AddState(PlayerState.JumpAtck, jumpAtck);
+        fsm.AddState(PlayerState.LandAtck, landAtck);
+        fsm.AddState(PlayerState.BasicAtck, basicAttack);
+        fsm.AddState(PlayerState.RunAtck, runAtck);
 
     }
     public void Start()
     {
         GetSkill();
         anim = GetComponentInChildren<Animator>();
-        fsm.Start(State.Idle);
+        fsm.Start(PlayerState.Idle);
 
     }
 
-    void SetStateData(BaseState<PlayerController.State> state)
+    void SetStateData(PlayerBaseState<PlayerState> state)
     {
         state.Setting(this, anim, transformPos, atkController, renderer);
         state.SetStateMachine(fsm);

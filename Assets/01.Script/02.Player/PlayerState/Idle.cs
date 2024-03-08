@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Idle : BaseState<PlayerController.State>
+public class Idle : PlayerBaseState<PlayerState>
 {
     bool isAlerted;
     public override void Enter() 
@@ -16,7 +16,7 @@ public class Idle : BaseState<PlayerController.State>
         }
         else
             anim.Play(AnimIdTable.GetInstance.IdleId);
-        owner.WalkType = PlayerController.State.Idle;
+        owner.WalkType = PlayerState.Idle;
     }
     public override void Update()
     {
@@ -34,12 +34,12 @@ public class Idle : BaseState<PlayerController.State>
     public override void Transition()
     {
         if (owner.keys.ContainLayer(KeyManager.Key.Move))
-            owner.SetState = PlayerController.State.Walk;
+            owner.SetState = PlayerState.Walk;
         else if
             (owner.keys.ContainLayer(KeyManager.Key.C))
-            owner.SetState = PlayerController.State.JumpUp;
+            owner.SetState = PlayerState.JumpUp;
         else if
             (owner.keys.ContainLayer(KeyManager.Key.X))
-            owner.SetState = PlayerController.State.Interaction;
+            owner.SetState = PlayerState.Interaction;
     }
 }

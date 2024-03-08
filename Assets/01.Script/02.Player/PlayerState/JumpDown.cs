@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class JumpDown : BaseState<PlayerController.State>
+public class JumpDown : PlayerBaseState<PlayerState>
 {
     [SerializeField] Vector2 moveWalkSpeed;
     [SerializeField] Vector2 moveRunSpeed;
@@ -14,17 +14,17 @@ public class JumpDown : BaseState<PlayerController.State>
     public override void Transition()
     {
         if (isTransition)
-            owner.SetState = PlayerController.State.Land;
+            owner.SetState = PlayerState.Land;
         else if (owner.keys.ContainLayer(KeyManager.Key.X))
             if(pos.Y > 0.5f)
-                owner.SetState = PlayerController.State.Interaction;
+                owner.SetState = PlayerState.Interaction;
     }
 
     public override void Enter()
     {
         anim.Play(AnimIdTable.GetInstance.JumpDownId);
         isTransition = false;
-        if (owner.WalkType == PlayerController.State.Walk)
+        if (owner.WalkType == PlayerState.Walk)
             speed = moveWalkSpeed;
         else
             speed = moveRunSpeed;

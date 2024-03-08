@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicAttack : BaseState<PlayerController.State>
+[Serializable]
+public class BasicAttack : PlayerBaseState<PlayerState>
 {
+    [SerializeField] float jumpLimitYPos;
     public override void Enter()
     {
         owner.OnStartAlert();
@@ -17,20 +20,18 @@ public class BasicAttack : BaseState<PlayerController.State>
     {
         if (pos.yState() == TransformAddForce.YState.None)
         {
-            owner.SetState = PlayerController.State.Idle;
-            if (owner.WalkType == PlayerController.State.Run)
-            {
-                return;//owner.SetState = PlayerController.State.Stap;
-            }
+            if (owner.WalkType == PlayerState.Run)
+                owner.SetState = PlayerState.RunAtck;
             else
-                owner.SetState = PlayerController.State.LandAttack;
+                owner.SetState = PlayerState.LandAtck;
+            owner.WalkType = PlayerState.Idle;
         }
         else
         {
-            if (pos.Y > 0.5f)
-                owner.SetState = PlayerController.State.JumpAtck;
+            if (pos.Y > jumpLimitYPos)
+                owner.SetState = PlayerState.JumpAtck;
             else
-                owner.SetState = PlayerController.State.JumpUp;
+                owner.SetState = PlayerState.JumpUp;
         }
     }
 }

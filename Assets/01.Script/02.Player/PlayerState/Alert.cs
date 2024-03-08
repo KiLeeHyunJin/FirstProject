@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Alert : BaseState<PlayerController.State>
+public class Alert : PlayerBaseState<PlayerState>
 {
     // Start is called before the first frame update
     public override void Enter()
@@ -22,12 +22,12 @@ public class Alert : BaseState<PlayerController.State>
     public override void Transition()
     {
         if (owner.keys.ContainLayer(KeyManager.Key.Move))
-            owner.SetState = PlayerController.State.Walk;
+            owner.SetState = PlayerState.Walk;
         else if
             (owner.keys.ContainLayer(KeyManager.Key.C))
-            owner.SetState = PlayerController.State.JumpUp;
+            owner.SetState = PlayerState.JumpUp;
         else if
             (owner.keys.ContainLayer(KeyManager.Key.X))
-            owner.SetState = PlayerController.State.Interaction;
+            owner.SetState = PlayerState.Interaction;
     }
 }

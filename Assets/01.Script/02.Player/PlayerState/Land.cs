@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Land : BaseState<PlayerController.State>
+public class Land : PlayerBaseState<PlayerState>
 {
     [Range(0,0.5f)]
     [SerializeField]
@@ -39,12 +39,12 @@ public class Land : BaseState<PlayerController.State>
     {
         if (isTransition)
         {
-            if(owner.WalkType == PlayerController.State.Run)
-                owner.SetState = PlayerController.State.Run;
-            else if(owner.WalkType == PlayerController.State.Walk)
-                owner.SetState = PlayerController.State.Walk;
+            if(owner.WalkType == PlayerState.Run)
+                owner.SetState = PlayerState.Run;
+            else if(owner.WalkType == PlayerState.Walk)
+                owner.SetState = PlayerState.Walk;
             else
-                owner.SetState = PlayerController.State.Idle;
+                owner.SetState = PlayerState.Idle;
 
         }
     }
