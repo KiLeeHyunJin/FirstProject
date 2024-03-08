@@ -23,15 +23,17 @@ public class StateMachine<T> where T : Enum
 
     public void Update()
     {
+        if (curState == null)
+            return;
         curState.Update();
         curState.Transition();
     }
 
-    private void LateUpdate() => curState.LateUpdate();
+    public void LateUpdate() => curState?.LateUpdate();
 
-    public void FixedUpdate() => curState.FixedUpdate();
+    public void FixedUpdate() => curState?.FixedUpdate();
 
-    public void AddState(T stateEnum, PlayerBaseState<T> state)
+    public void AddState(T stateEnum, BaseState<T> state)
     {
         state.SetStateMachine(this);
         stateDic.Add(stateEnum, state);

@@ -89,7 +89,6 @@ public class AttackController : MonoBehaviour
             new Vector2(size.x * temp * 2, size.y * temp));
 
     }
-    Coroutine coroutine = null;
     IEnumerator AttackCo()
     {
         float value = damage * per;

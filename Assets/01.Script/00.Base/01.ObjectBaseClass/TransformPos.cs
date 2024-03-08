@@ -12,7 +12,7 @@ public class TransformPos : MonoBehaviour
     [SerializeField] Transform xPosTarget;
     [SerializeField] Transform yPosTarget;
     [SerializeField] Transform hitBox;
-    [SerializeField] SpriteRenderer renderer;
+    [SerializeField] new SpriteRenderer renderer;
 
     public AttackCollision attackCheck { get; private set; }
     [SerializeField]TransformAddForce AddForceClass;

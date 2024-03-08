@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseController<T> : MonoBehaviour where T : Enum
+public abstract class BaseController<T> : MonoBehaviour where T : Enum
 {
     public StateMachine<T> fsm;
     public T CurrentState 
@@ -35,7 +35,10 @@ public class BaseController<T> : MonoBehaviour where T : Enum
         state.SetStateMachine(fsm);
         state.Setting(anim, transformPos, renderer,this);
     }
+    protected virtual void Start()
+    {
 
+    }
     // Update is called once per frame
     protected virtual void Update()
     {

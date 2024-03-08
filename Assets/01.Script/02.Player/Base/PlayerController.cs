@@ -104,7 +104,7 @@ public class PlayerController : BaseController<PlayerState>
         fsm.AddState(PlayerState.RunAtck, runAtck);
 
     }
-    public void Start()
+    protected override void Start()
     {
         GetSkill();
         //anim = GetComponentInChildren<Animator>();
@@ -134,7 +134,6 @@ public class PlayerController : BaseController<PlayerState>
         base.Update();
         keys.ResetLayer();
     }
-
 
     public void OnStartAlert()
     {

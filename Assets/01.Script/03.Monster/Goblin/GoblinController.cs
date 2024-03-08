@@ -1,20 +1,46 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterController<T> : BaseController<T> where T : Enum
+public enum GoblinState
 {
-    [SerializeField] LayerMask layerMask;
-    public Transform target;
-    private void OnTriggerEnter2D(Collider2D collision)
+    Idle, Walk,
+    Hit, Fall, Down,
+    Sit,
+    Atck
+}
+public class GoblinController : MonsterController<GoblinState>
+{
+    [SerializeField] Goblin_Atck atck;
+    [SerializeField] Goblin_Down down;
+    [SerializeField] Goblin_Fall fall;
+    [SerializeField] Goblin_Hit hit;
+    [SerializeField] Goblin_Idle idle;
+    [SerializeField] Goblin_Sit sit;
+    [SerializeField] Goblin_Walk walk;
+
+    protected override void Awake()
     {
-        if (collision.gameObject.layer == layerMask)
-            target = collision.transform;
+        base.Awake();
+        SetStateClass(atck);
+        SetStateClass(down);
+        SetStateClass(fall);
+        SetStateClass(hit);
+        SetStateClass(idle);
+        SetStateClass(sit);
+        SetStateClass(walk);
+
+        fsm.AddState(GoblinState.Atck,atck);
+        fsm.AddState(GoblinState.Down,down);
+        fsm.AddState(GoblinState.Fall,fall);
+        fsm.AddState(GoblinState.Hit, hit);
+        fsm.AddState(GoblinState.Idle,idle);
+        fsm.AddState(GoblinState.Sit, sit);
+        fsm.AddState(GoblinState.Walk, walk);
     }
-    private void OnTriggerExit2D(Collider2D collision)
+    protected override void Start()
     {
-        if (collision.gameObject.layer == layerMask)
-            target = null;
+        fsm.Start(GoblinState.Idle);
     }
+
 }

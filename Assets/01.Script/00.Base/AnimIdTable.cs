@@ -43,6 +43,7 @@ public class AnimIdTable
     public readonly int  SummonId;
     public readonly int  UperSlashId;
     public readonly int  WakeUpId;
+    public readonly int  AtckId;
     private AnimIdTable() 
     {
         IdleId = Animator.StringToHash("Idle");
@@ -74,6 +75,7 @@ public class AnimIdTable
         SummonId = Animator.StringToHash("Summon");
         UperSlashId = Animator.StringToHash("UperSlash");
         WakeUpId = Animator.StringToHash("WakeUp");
+        AtckId = Animator.StringToHash("Atck");
     }
 
 }
