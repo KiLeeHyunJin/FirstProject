@@ -15,8 +15,8 @@ public class Sit : PlayerBaseState<PlayerState>
         isTransition = false;
         isReady = false;
         if(coroutine != null)
-            owner.StopCoroutine(coroutine);
-        coroutine = owner.StartCoroutine(WaitCo());
+            playerOwner.StopCoroutine(coroutine);
+        coroutine = playerOwner.StartCoroutine(WaitCo());
         anim.Play(AnimIdTable.GetInstance.SitId);
     }
     Coroutine coroutine = null;
@@ -34,25 +34,25 @@ public class Sit : PlayerBaseState<PlayerState>
     public override void Exit()
     {
         if (coroutine != null)
-            owner.StopCoroutine(coroutine);
+            playerOwner.StopCoroutine(coroutine);
     }
     public override void Transition()
     {
         if (isTransition)
         {
-            owner.SetState = PlayerState.Idle;
+            playerOwner.SetState = PlayerState.Idle;
         }
         else if (isReady)
         {
             if (
-                owner.keys.ContainLayer(KeyManager.Key.Move))
-                owner.SetState = PlayerState.Walk;
+                playerOwner.keys.ContainLayer(KeyManager.Key.Move))
+                playerOwner.SetState = PlayerState.Walk;
             else if (
-                owner.keys.ContainLayer(KeyManager.Key.C))
-                owner.SetState = PlayerState.JumpUp;
+                playerOwner.keys.ContainLayer(KeyManager.Key.C))
+                playerOwner.SetState = PlayerState.JumpUp;
             else if (
-                owner.keys.ContainLayer(KeyManager.Key.X))
-                owner.SetState = PlayerState.Interaction;
+                playerOwner.keys.ContainLayer(KeyManager.Key.X))
+                playerOwner.SetState = PlayerState.Interaction;
         }
 
     }

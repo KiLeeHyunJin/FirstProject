@@ -9,7 +9,7 @@ public class BasicAttack : PlayerBaseState<PlayerState>
     [SerializeField] float jumpLimitYPos;
     public override void Enter()
     {
-        owner.OnStartAlert();
+        playerOwner.OnStartAlert();
     }
     public override void FixedUpdate()
     {
@@ -20,18 +20,18 @@ public class BasicAttack : PlayerBaseState<PlayerState>
     {
         if (pos.yState() == TransformAddForce.YState.None)
         {
-            if (owner.WalkType == PlayerState.Run)
-                owner.SetState = PlayerState.RunAtck;
+            if (playerOwner.WalkType == PlayerState.Run)
+                playerOwner.SetState = PlayerState.RunAtck;
             else
-                owner.SetState = PlayerState.LandAtck;
-            owner.WalkType = PlayerState.Idle;
+                playerOwner.SetState = PlayerState.LandAtck;
+            playerOwner.WalkType = PlayerState.Idle;
         }
         else
         {
             if (pos.Y > jumpLimitYPos)
-                owner.SetState = PlayerState.JumpAtck;
+                playerOwner.SetState = PlayerState.JumpAtck;
             else
-                owner.SetState = PlayerState.JumpUp;
+                playerOwner.SetState = PlayerState.JumpUp;
         }
     }
 }

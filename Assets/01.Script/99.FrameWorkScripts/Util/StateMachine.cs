@@ -6,9 +6,9 @@ using UnityEngine.InputSystem;
 
 public class StateMachine<T> where T : Enum
 {
-    private Dictionary<T, PlayerBaseState<T>> stateDic = new Dictionary<T, PlayerBaseState<T>>();
-    private PlayerBaseState<T> curState;
-
+    private Dictionary<T, BaseState<T>> stateDic = new Dictionary<T, BaseState<T>>();
+    private BaseState<T> curState;
+    
     //public bool IsValueType(T state)
     //{
     //    if(stateDic.ContainsKey(state))
@@ -51,12 +51,13 @@ public abstract class BaseState<T> where T : Enum
     protected Animator anim;
     protected TransformPos pos;
     protected SpriteRenderer renderer;
-
-    public void Setting(Animator _anim, TransformPos _transform, SpriteRenderer _renderer)
+    protected BaseController<T> owner;
+    public void Setting(Animator _anim, TransformPos _transform, SpriteRenderer _renderer, BaseController<T> _owner)
     {
         anim = _anim;
         pos = _transform;
         renderer = _renderer;
+        owner = _owner;
     }
     public void SetStateMachine(StateMachine<T> stateMachine) => this.stateMachine = stateMachine;
 
@@ -76,14 +77,24 @@ public abstract class BaseState<T> where T : Enum
 [Serializable]
 public abstract class PlayerBaseState<T> : BaseState<T> where T : Enum
 {
-    protected PlayerController owner;
+    //protected PlayerController owner;
     protected AttackController attack;
-    public void Setting(PlayerController _controller, Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer)
+    protected PlayerController playerOwner;
+    public void SettingAttackData(AttackController _atckCon)
     {
-        anim = _anim;
-        pos = _transform;
         attack = _atckCon;
-        renderer = _renderer;
-        owner = _controller;
+        PlayerController player = owner as PlayerController;
+        if (player != null)
+        {
+            playerOwner = player;
+        }
     }
+    //public void Setting(PlayerController _controller, Animator _anim, TransformPos _transform, AttackController _atckCon, SpriteRenderer _renderer)
+    //{
+    //    anim = _anim;
+    //    pos = _transform;
+    //    attack = _atckCon;
+    //    renderer = _renderer;
+    //    owner = _controller;
+    //}
 }

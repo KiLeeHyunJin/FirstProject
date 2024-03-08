@@ -14,9 +14,9 @@ public class Hit : PlayerBaseState<PlayerState>
         isTransition = false;
 
         if (coroutine != null)
-            owner.StopCoroutine(coroutine);
-        coroutine = owner.StartCoroutine(WaitCoroutine());
-        owner.OnStartAlert();
+            playerOwner.StopCoroutine(coroutine);
+        coroutine = playerOwner.StartCoroutine(WaitCoroutine());
+        playerOwner.OnStartAlert();
         int idx = UnityEngine.Random.Range(0, 2);
         if (idx == 1)
             anim.Play(AnimIdTable.GetInstance.Hit1Id);
@@ -36,12 +36,12 @@ public class Hit : PlayerBaseState<PlayerState>
     public override void Exit()
     {
         if (coroutine != null)
-            owner.StopCoroutine(coroutine);
+            playerOwner.StopCoroutine(coroutine);
     }
 
     public override void Transition()
     {
         if(isTransition)
-            owner.SetState = PlayerState.Idle;
+            playerOwner.SetState = PlayerState.Idle;
     }
 }

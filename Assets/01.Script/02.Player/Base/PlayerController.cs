@@ -21,7 +21,6 @@ public enum PlayerState
 }
 public class PlayerController : BaseController<PlayerState>
 {
-
     [field: SerializeField] public PlayerState WalkType { get; set; }
 
     [SerializeField] float alertTime;
@@ -30,7 +29,7 @@ public class PlayerController : BaseController<PlayerState>
     [Header("¸µÅ©")]
     [SerializeField] AttackController atkController;
 
-    [SerializeField] public KeyManager keys { get; private set; }
+    [field: SerializeField] public KeyManager keys { get; private set; }
     public bool isAlert { get; private set; }
     [field : SerializeField] public Vector2 moveValue { get; private set; }
 
@@ -63,10 +62,9 @@ public class PlayerController : BaseController<PlayerState>
     ShortAirSlash shortAirSlash;
 
 
-    public void Awake()
+    protected override void Awake()
     {
-        fsm = new StateMachine<State>();
-        transformPos = GetComponent<TransformPos>();
+        base.Awake();
         keys = GetComponent<KeyManager>();
         SetStateData(walk);
         SetStateData(run);
@@ -109,15 +107,15 @@ public class PlayerController : BaseController<PlayerState>
     public void Start()
     {
         GetSkill();
-        anim = GetComponentInChildren<Animator>();
+        //anim = GetComponentInChildren<Animator>();
         fsm.Start(PlayerState.Idle);
-
     }
 
     void SetStateData(PlayerBaseState<PlayerState> state)
     {
-        state.Setting(this, anim, transformPos, atkController, renderer);
+        state.Setting(anim, transformPos, renderer, this );
         state.SetStateMachine(fsm);
+        state.SettingAttackData(atkController);
         transformPos.direction = TransformPos.Direction.Right;
         AttackState attack = state as AttackState;
         if (attack != null)
@@ -131,13 +129,12 @@ public class PlayerController : BaseController<PlayerState>
         shortAirSlash = GetComponent<ShortAirSlash>();
     }
 
-    private void Update()
+    protected override void Update()
     {
-        fsm.Update();
+        base.Update();
         keys.ResetLayer();
     }
 
-    private void FixedUpdate() => fsm.FixedUpdate();
 
     public void OnStartAlert()
     {
@@ -161,21 +158,8 @@ public class PlayerController : BaseController<PlayerState>
             keys.OnMoveLayer();
     }
 
-    public void FlipCheck()
-    {
-        if (moveValue.x == 0)
-            return;
-        TransformPos.Direction before = transformPos.direction;
-        if (moveValue.x < 0)
-            transformPos.direction = TransformPos.Direction.Left;
-        else
-            transformPos.direction = TransformPos.Direction.Right;
-
-        if (before != transformPos.direction)
-            renderer.flipX = !renderer.flipX;
-    }
     public void CallDown()
     {
-        SetState = State.Fall;
+        SetState = PlayerState.Fall;
     }
 }

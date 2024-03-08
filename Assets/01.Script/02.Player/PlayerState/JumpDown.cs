@@ -14,17 +14,17 @@ public class JumpDown : PlayerBaseState<PlayerState>
     public override void Transition()
     {
         if (isTransition)
-            owner.SetState = PlayerState.Land;
-        else if (owner.keys.ContainLayer(KeyManager.Key.X))
+            playerOwner.SetState = PlayerState.Land;
+        else if (playerOwner.keys.ContainLayer(KeyManager.Key.X))
             if(pos.Y > 0.5f)
-                owner.SetState = PlayerState.Interaction;
+                playerOwner.SetState = PlayerState.Interaction;
     }
 
     public override void Enter()
     {
         anim.Play(AnimIdTable.GetInstance.JumpDownId);
         isTransition = false;
-        if (owner.WalkType == PlayerState.Walk)
+        if (playerOwner.WalkType == PlayerState.Walk)
             speed = moveWalkSpeed;
         else
             speed = moveRunSpeed;
@@ -32,9 +32,9 @@ public class JumpDown : PlayerBaseState<PlayerState>
 
     public override void Update()
     {
-        Vector2 moveValue = owner.moveValue;
-        owner.FlipCheck();
-        pos.AddForceMove(moveValue * speed);
+        Vector2 dir = playerOwner.moveValue;
+        playerOwner.FlipCheck(dir);
+        pos.AddForceMove(dir * speed);
     }
     public override void FixedUpdate()
     {

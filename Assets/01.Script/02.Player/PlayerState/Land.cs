@@ -14,8 +14,8 @@ public class Land : PlayerBaseState<PlayerState>
     {
         isTransition = false;
         if (coroutine != null)
-            owner.StopCoroutine(coroutine);
-        coroutine = owner.StartCoroutine(DelayCo());
+            playerOwner.StopCoroutine(coroutine);
+        coroutine = playerOwner.StartCoroutine(DelayCo());
         pos.ForceZero();
     }
     Coroutine coroutine = null;
@@ -32,19 +32,19 @@ public class Land : PlayerBaseState<PlayerState>
     public override void Exit()
     {
         if (coroutine != null)
-            owner.StopCoroutine(coroutine);
+            playerOwner.StopCoroutine(coroutine);
     }
 
     public override void Transition()
     {
         if (isTransition)
         {
-            if(owner.WalkType == PlayerState.Run)
-                owner.SetState = PlayerState.Run;
-            else if(owner.WalkType == PlayerState.Walk)
-                owner.SetState = PlayerState.Walk;
+            if(playerOwner.WalkType == PlayerState.Run)
+                playerOwner.SetState = PlayerState.Run;
+            else if(playerOwner.WalkType == PlayerState.Walk)
+                playerOwner.SetState = PlayerState.Walk;
             else
-                owner.SetState = PlayerState.Idle;
+                playerOwner.SetState = PlayerState.Idle;
 
         }
     }

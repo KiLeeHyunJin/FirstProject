@@ -18,7 +18,7 @@ public class JumpUp : PlayerBaseState<PlayerState>
         isTransition = false;
         if (pos.yState() == TransformAddForce.YState.None || pos.Y <= 0)
             pos.AddForce(new Vector3(0, jumpPower, 0));
-        if (owner.WalkType == PlayerState.Walk)
+        if (playerOwner.WalkType == PlayerState.Walk)
             speed = moveWalkSpeed;
         else
             speed = moveRunSpeed;
@@ -27,8 +27,8 @@ public class JumpUp : PlayerBaseState<PlayerState>
 
     public override void Update()
     {
-        Vector2 moveValue = owner.moveValue;
-        owner.FlipCheck();
+        Vector2 moveValue = playerOwner.moveValue;
+        playerOwner.FlipCheck(moveValue);
         pos.AddForceMove(moveValue * speed);
     }
 
@@ -41,10 +41,10 @@ public class JumpUp : PlayerBaseState<PlayerState>
     public override void Transition()
     {
         if (isTransition)
-            owner.SetState = PlayerState.JumpDown;
-        else if (owner.keys.ContainLayer(KeyManager.Key.X))
+            playerOwner.SetState = PlayerState.JumpDown;
+        else if (playerOwner.keys.ContainLayer(KeyManager.Key.X))
             if (pos.Y > 0.5f)
-                owner.SetState = PlayerState.Interaction;
+                playerOwner.SetState = PlayerState.Interaction;
     }
 
 

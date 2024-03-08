@@ -28,15 +28,13 @@ public class BaseController<T> : MonoBehaviour where T : Enum
     protected virtual void Awake()
     {
         transformPos = GetComponent<TransformPos>();
-        fsm = GetComponent<StateMachine<T>>();
+        fsm = new StateMachine<T>();
     }
     void SetStateData(BaseState<T> state)
     {
         state.SetStateMachine(fsm);
-        state.Setting(anim, transformPos, renderer);
+        state.Setting(anim, transformPos, renderer,this);
     }
-
-
 
     // Update is called once per frame
     protected virtual void Update()
@@ -47,17 +45,18 @@ public class BaseController<T> : MonoBehaviour where T : Enum
     {
         fsm.FixedUpdate();
     }
-    public void FlipCheck()
-    {
-        //if (.x == 0)
-        //    return;
-        //TransformPos.Direction before = transformPos.direction;
-        //if (moveValue.x < 0)
-        //    transformPos.direction = TransformPos.Direction.Left;
-        //else
-        //    transformPos.direction = TransformPos.Direction.Right;
 
-        //if (before != transformPos.direction)
-        //    renderer.flipX = !renderer.flipX;
+    public void FlipCheck(Vector2 moveValue)
+    {
+        if (moveValue.x == 0)
+            return;
+        TransformPos.Direction before = transformPos.direction;
+        if (moveValue.x < 0)
+            transformPos.direction = TransformPos.Direction.Left;
+        else
+            transformPos.direction = TransformPos.Direction.Right;
+
+        if (before != transformPos.direction)
+            renderer.flipX = !renderer.flipX;
     }
 }

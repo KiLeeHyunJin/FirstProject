@@ -9,21 +9,21 @@ public class Idle : PlayerBaseState<PlayerState>
     bool isAlerted;
     public override void Enter() 
     {
-        isAlerted = owner.isAlert;
+        isAlerted = playerOwner.isAlert;
         if (isAlerted)
         {
             anim.Play(AnimIdTable.GetInstance.AlertId);
         }
         else
             anim.Play(AnimIdTable.GetInstance.IdleId);
-        owner.WalkType = PlayerState.Idle;
+        playerOwner.WalkType = PlayerState.Idle;
     }
     public override void Update()
     {
-        if(isAlerted != owner.isAlert)
+        if(isAlerted != playerOwner.isAlert)
         {
             anim.Play(AnimIdTable.GetInstance.IdleId);
-            isAlerted = owner.isAlert;
+            isAlerted = playerOwner.isAlert;
         }
     }
     public override void FixedUpdate()
@@ -33,13 +33,13 @@ public class Idle : PlayerBaseState<PlayerState>
 
     public override void Transition()
     {
-        if (owner.keys.ContainLayer(KeyManager.Key.Move))
-            owner.SetState = PlayerState.Walk;
+        if (playerOwner.keys.ContainLayer(KeyManager.Key.Move))
+            playerOwner.SetState = PlayerState.Walk;
         else if
-            (owner.keys.ContainLayer(KeyManager.Key.C))
-            owner.SetState = PlayerState.JumpUp;
+            (playerOwner.keys.ContainLayer(KeyManager.Key.C))
+            playerOwner.SetState = PlayerState.JumpUp;
         else if
-            (owner.keys.ContainLayer(KeyManager.Key.X))
-            owner.SetState = PlayerState.Interaction;
+            (playerOwner.keys.ContainLayer(KeyManager.Key.X))
+            playerOwner.SetState = PlayerState.Interaction;
     }
 }

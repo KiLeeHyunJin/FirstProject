@@ -15,17 +15,17 @@ public class Walk : PlayerBaseState<PlayerState>
         float beforeEnterTime = enterTime;
         enterTime = Time.time;
         if(enterTime - beforeEnterTime < term)
-            owner.SetState = PlayerState.Run;
+            playerOwner.SetState = PlayerState.Run;
         else
         {
             anim.Play(AnimIdTable.GetInstance.WalkId);
-            owner.WalkType = PlayerState.Walk;
+            playerOwner.WalkType = PlayerState.Walk;
         }
     }
     public override void Update()
     {
-        Vector2 moveValue = owner.moveValue;
-        owner.FlipCheck();
+        Vector2 moveValue = playerOwner.moveValue;
+        playerOwner.FlipCheck(moveValue);
         pos.AddForceMove(moveValue * Speed);
     }
     public override void FixedUpdate()
@@ -39,13 +39,13 @@ public class Walk : PlayerBaseState<PlayerState>
 
     public override void Transition()
     {
-        if (owner.keys.ContainLayer(KeyManager.Key.C))
-            owner.SetState = PlayerState.JumpUp;
+        if (playerOwner.keys.ContainLayer(KeyManager.Key.C))
+            playerOwner.SetState = PlayerState.JumpUp;
         else if (
-            owner.keys.ContainLayer(KeyManager.Key.X))
-            owner.SetState = PlayerState.BasicAtck;
+            playerOwner.keys.ContainLayer(KeyManager.Key.X))
+            playerOwner.SetState = PlayerState.BasicAtck;
         else if (
-            owner.keys.ContainLayer(KeyManager.Key.Move) == false)
-            owner.SetState = PlayerState.Idle;
+            playerOwner.keys.ContainLayer(KeyManager.Key.Move) == false)
+            playerOwner.SetState = PlayerState.Idle;
     }
 }

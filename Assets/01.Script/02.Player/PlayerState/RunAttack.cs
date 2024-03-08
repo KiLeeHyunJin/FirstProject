@@ -10,7 +10,7 @@ public class RunAttack : AttackState
     public override void Transition()
     {
         if (isTransition)
-            owner.SetState = PlayerState.Idle;
+            playerOwner.SetState = PlayerState.Idle;
     }
     public override void Enter()
     {
