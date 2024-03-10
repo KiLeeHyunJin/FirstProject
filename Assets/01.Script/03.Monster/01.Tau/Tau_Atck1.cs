@@ -21,9 +21,14 @@ public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
     LayerMask layerMask;
     Collider2D[] colliders = new Collider2D[1];
     float checkLength;
+    int direction;
     public override void Enter()
     {
         checkLength = AttackSize.x > AttackSize.y ? AttackPower.x : AttackPower.y;
+        if (pos.direction == TransformPos.Direction.Right)
+            direction = 1;
+        else
+            direction = -1;
         isTransition = false;
         anim.Play(AnimIdTable.GetInstance.Atck1Id);
         if(coroutine != null)
@@ -42,20 +47,24 @@ public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
         {
             if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= AttackTime)
             {
+                Vector2 Offset = new Vector2(AttackOffset.x * direction, AttackOffset.y);
                 int targetCount = Physics2D.OverlapCircleNonAlloc(
-           new Vector2(pos.X + AttackOffset.x, pos.Z + pos.Y + AttackOffset.y)
+           new Vector2(pos.X, pos.Z + pos.Y) + Offset
            , checkLength, colliders, layerMask);
+                
                 if (targetCount > 0)
                 {
+                    int dir = colliders[0].transform.position.x - (pos.X + Offset.x) > 0 ? 1 : -1;
+
                     IDamagable damagable = colliders[0].GetComponent<IDamagable>();
                     if (damagable != null)
                     {
                         //damagable.IGetDamage(value);
                         damagable.ISetKnockback(
-                            AttackPower,
+                            new Vector2(AttackPower.x * dir, AttackPower.y),
                             pos.Pose,
                             AttackSize,
-                            AttackOffset
+                            Offset
                             );
                     }
                 }

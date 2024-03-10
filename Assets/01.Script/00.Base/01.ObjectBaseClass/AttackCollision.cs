@@ -61,18 +61,29 @@ public class AttackCollision
     /// </summary>
     /// <returns></returns>
     private bool SideCollision()
-    {       //오너 우측 변 >= 타겟 좌측 변
-            //오너 우측 변 <= 상대 우측 변
-        if (ownerPos.X + ownerPos.Size.x + ownerPos.Offset.x >= targetPos.Pos.x - targetPos.Range.x + targetPos.Offset.x &&
-            ownerPos.X + ownerPos.Size.x + ownerPos.Offset.x <= targetPos.Pos.x + targetPos.Range.x + targetPos.Offset.x) //우측
+    {
+        float ownerX = ownerPos.X + ownerPos.Offset.x;
+        float targetX = targetPos.Pos.x + targetPos.Offset.x;
+        //오너 우측 변 >= 타겟 좌측 변
+        //오너 우측 변 <= 상대 우측 변
+        if (ownerX + ownerPos.Size.x >= targetX - targetPos.Range.x &&
+            ownerX + ownerPos.Size.x <= targetX + targetPos.Range.x) //우측
         {
             return TopDownCollision();
         }
             //오너 좌측 변 <= 상대 우측 변
             //오너 좌측 변 >= 상대 좌측 변
         else if
-            (ownerPos.X - ownerPos.Size.x + ownerPos.Offset.x <= targetPos.Pos.x + targetPos.Range.x + targetPos.Offset.x &&
-             ownerPos.X - ownerPos.Size.x + ownerPos.Offset.x >= targetPos.Pos.x - targetPos.Range.x + targetPos.Offset.x) //좌측
+            (ownerX - ownerPos.Size.x <= targetX + targetPos.Range.x &&
+             ownerX - ownerPos.Size.x >= targetX - targetPos.Range.x) //좌측
+        {
+            return TopDownCollision();
+        }
+        //타겟이 오너 영역에 속해있는 경우
+        else if
+            (
+            targetX + targetPos.Range.x >= ownerX - ownerPos.Size.x &&
+            targetX + targetPos.Range.x <= ownerX + ownerPos.Size.x)
         {
             return TopDownCollision();
         }
@@ -81,18 +92,29 @@ public class AttackCollision
 
     bool TopDownCollision()
     {
+        float ownerZ = ownerPos.Z + ownerPos.Offset.y;
+        float targetZ = targetPos.Pos.z + ownerPos.Offset.y;
             //오너 하단 변 >= 상대 하단 변
             //오너 하단 변 <= 상대 상단 변
-        if (ownerPos.Z - ownerPos.Size.z + ownerPos.Offset.y >= targetPos.Pos.z - targetPos.Range.z + targetPos.Offset.y &&
-            ownerPos.Z - ownerPos.Size.z + ownerPos.Offset.y <= targetPos.Pos.z + targetPos.Range.z + targetPos.Offset.y) 
+            //오너의 하단이 타겟에 속해있는 경우
+        if (ownerZ - ownerPos.Size.z >= targetZ - targetPos.Range.z  &&
+            ownerZ - ownerPos.Size.z <= targetZ + targetPos.Range.z ) 
         {
             return true;
         }
             //오너 상단 변 <= 상대 상단 변
             //오너 상단 변 >= 상대 상단 변
+            //오너의 상단이 타겟에 속해있는 경우
         else if (
-            ownerPos.Z + ownerPos.Size.z + ownerPos.Offset.y <= targetPos.Pos.z + targetPos.Range.z + targetPos.Offset.y &&
-            ownerPos.Z + ownerPos.Size.z + ownerPos.Offset.y >= targetPos.Pos.z - targetPos.Range.z + targetPos.Offset.y)
+            ownerZ + ownerPos.Size.z <= targetZ + targetPos.Range.z  &&
+            ownerZ + ownerPos.Size.z >= targetZ - targetPos.Range.z )
+        {
+            return true;
+        }
+        //타겟 상단이 오너 영역 안에 속해있는 경우
+        else if (
+            targetZ + targetPos.Range.z >= ownerZ - ownerPos.Size.z &&
+            targetZ + targetPos.Range.z <= ownerZ + ownerPos.Size.z)
         {
             return true;
         }

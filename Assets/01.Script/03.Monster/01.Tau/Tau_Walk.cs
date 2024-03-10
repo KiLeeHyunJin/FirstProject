@@ -127,9 +127,9 @@ public class Tau_Walk : MonsterState<TauState>
     {
         if (isTransition)
         {
-            if (type == WalkType.Chase)
-                owner.SetState = TauState.Atck1;
-            else
+            //if (type == WalkType.Chase)
+            //    owner.SetState = TauState.Atck1;
+            //else
                 owner.SetState = TauState.Idle;
         }
     }

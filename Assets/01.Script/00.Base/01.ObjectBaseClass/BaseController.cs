@@ -5,6 +5,10 @@ using UnityEngine;
 
 public abstract class BaseController<T> : MonoBehaviour, IConnectController where T : Enum
 {
+    public enum StandingState
+    {
+        Stand, Fall, Down, Sit
+    }
     public StateMachine<T> fsm;
     [field : SerializeField]
     public T CurrentState 
@@ -18,6 +22,18 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
         { 
             CurrentState = value; 
             fsm.ChangeState(value); 
+        } 
+    }
+    public StandingState StandState 
+    { 
+        get; 
+        private set; 
+    }
+    public StandingState SetStandState 
+    { 
+        set 
+        { 
+            StandState = value; 
         } 
     }
 
@@ -57,12 +73,11 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
             return;
         TransformPos.Direction before = transformPos.direction;
         if (moveValue.x < 0)
-            transformPos.direction = TransformPos.Direction.Left;
+            transformPos.SetDirection = TransformPos.Direction.Left;
         else
-            transformPos.direction = TransformPos.Direction.Right;
-
-        if (before != transformPos.direction)
-            renderer.flipX = !renderer.flipX;
+            transformPos.SetDirection = TransformPos.Direction.Right;
+        //if (before != transformPos.direction)
+        //    renderer.flipX = !renderer.flipX;
     }
 
     public virtual void ISetDamage(float damage)

@@ -1066,6 +1066,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 329399786470704085, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.57
+      objectReference: {fileID: 0}
     - target: {fileID: 2800061284756386381, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.8415782
@@ -1105,6 +1109,50 @@ PrefabInstance:
     - target: {fileID: 2800061284756386381, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022676833443762153, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: size.x
+      value: 2.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022676833443762153, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: size.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022676833443762153, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: size.z
+      value: 0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022676833443762153, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: offset.x
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022676833443762153, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: atck1.AttackSize.x
+      value: 2.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022676833443762153, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: atck1.AttackSize.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022676833443762153, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: atck1.AttackSize.z
+      value: 0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022676833443762153, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: atck1.AttackOffset.x
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022676833443762153, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: atck1.layerMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 5895089936867726898, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367175944826442684, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
+      propertyPath: m_Radius
+      value: 2.79
       objectReference: {fileID: 0}
     - target: {fileID: 6374858519161240178, guid: d6bad20bb8bb72548b23e179ce45b69e, type: 3}
       propertyPath: m_Name
@@ -1167,6 +1215,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin
       objectReference: {fileID: 0}
+    - target: {fileID: 4719915068444086467, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1183,6 +1235,14 @@ PrefabInstance:
     - target: {fileID: 3130121568690916168, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804155392506494598, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: run.Speed.x
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804155392506494598, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: run.Speed.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6724800781046239343, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
       propertyPath: m_LocalPosition.x

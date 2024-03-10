@@ -77,10 +77,10 @@ public class AttackController : MonoBehaviour
             new Vector2(size.x, size.z) * temp * 2);
 
         //≥Ù¿Ã
-        Gizmos.color = Color.yellow;
+        //Gizmos.color = Color.yellow;
         float realYPos =
             (pos.Z  + pos.Y) + (gizmoSize.y * temp * 0.5f);
-        Gizmos.DrawWireSphere(new Vector2(pos.X , realYPos) + offset, checkLength * temp);
+        //Gizmos.DrawWireSphere(new Vector2(pos.X , realYPos) + offset, checkLength * temp);
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(new Vector2(pos.X , realYPos) + offset, 

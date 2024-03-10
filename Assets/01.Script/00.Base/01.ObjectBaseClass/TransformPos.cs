@@ -6,8 +6,22 @@ using UnityEngine;
 public class TransformPos : MonoBehaviour
 {
     public enum Direction { Left, Right }
-    public Direction direction { get; set; }
-
+    public Direction direction 
+    { 
+        get; 
+        private set; 
+    }
+    public Direction SetDirection
+    {
+        set 
+        {
+            direction = value; 
+            if(value == Direction.Left)
+                renderer.flipX = true;
+            else
+                renderer.flipX = false;
+        }
+    }
 
     [SerializeField] Transform xPosTarget;
     [SerializeField] Transform yPosTarget;
@@ -30,7 +44,7 @@ public class TransformPos : MonoBehaviour
     }
     private void Update()
     {
-        renderer.sortingOrder = (int) -(xPosTarget.position.y * 10);
+        renderer.sortingOrder = (int) (xPosTarget.position.y * -10);
     }
 
     public void ChangeGravity(float value) => AddForceClass.SetGravity(value);

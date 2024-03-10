@@ -117,7 +117,6 @@ public class PlayerController : BaseController<PlayerState>
         state.SetStateMachine(fsm);
         state.SetController(this);
         state.SettingAttackData(atkController);
-        transformPos.direction = TransformPos.Direction.Right;
         AttackState attack = state as AttackState;
         if (attack != null)
             attack.SettingAttack();

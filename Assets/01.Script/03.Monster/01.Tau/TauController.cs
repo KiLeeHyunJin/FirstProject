@@ -61,6 +61,7 @@ public class TauController : MonsterController<TauState>
     public override void ISetDamage(float damage)
     {
         SetState = TauState.Fall;
+        Debug.Log("Falling");
     }
     public override void ISetType()
     {
@@ -73,20 +74,21 @@ public class TauController : MonsterController<TauState>
     {
         Vector2 gizmoSize = size;
         float checkLength = gizmoSize.x > gizmoSize.y ? gizmoSize.x : gizmoSize.y;
+        int dir = transformPos.direction == TransformPos.Direction.Left ? -1 : 1;
         float temp = isStart ? 1 : 0.5f;
         //범위
         Gizmos.color = UnityEngine.Color.red;
         Gizmos.DrawWireCube(
-        new Vector2(transformPos.X, transformPos.Z) + new Vector2(offset.x, 0),
+        new Vector2(transformPos.X, transformPos.Z) + new Vector2(offset.x * dir, 0),
             new Vector2(size.x, size.z) * temp * 2);
         //높이
-        Gizmos.color = UnityEngine.Color.yellow;
+        //Gizmos.color = UnityEngine.Color.yellow;
         float realYPos =
             (transformPos.Z + transformPos.Y) + (gizmoSize.y * temp * 0.5f);
-        Gizmos.DrawWireSphere(new Vector2(transformPos.X, realYPos) + offset, checkLength * temp);
+        //Gizmos.DrawWireSphere(new Vector2(transformPos.X, realYPos) + new Vector2(offset.x * dir, offset.y), checkLength * temp);
 
         Gizmos.color = UnityEngine.Color.green;
-        Gizmos.DrawWireCube(new Vector2(transformPos.X, realYPos) + offset,
+        Gizmos.DrawWireCube(new Vector2(transformPos.X, realYPos) + new Vector2(offset.x * dir , offset.y),
         new Vector2(size.x * temp * 2, size.y * temp));
 
     }
