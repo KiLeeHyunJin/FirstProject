@@ -14,6 +14,7 @@ public class Tau_Fall : MonsterState<TauState>
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(FallingCo());
+        owner.SetStandState = BaseController<TauState>.StandingState.Fall;
     }
     Coroutine coroutine = null;
     IEnumerator FallingCo()

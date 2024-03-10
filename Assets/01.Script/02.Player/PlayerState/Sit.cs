@@ -44,6 +44,7 @@ public class Sit : PlayerBaseState<PlayerState>
         }
         else if (isReady)
         {
+            owner.SetStandState = BaseController<PlayerState>.StandingState.Stand;
             if (
                 owner.keys.ContainLayer(KeyManager.Key.Move))
                 owner.SetState = PlayerState.Walk;

@@ -15,6 +15,7 @@ public class Tau_Down : MonsterState<TauState>
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(WaitCo());
+        owner.SetStandState = BaseController<TauState>.StandingState.Down;
     }
     Coroutine coroutine = null;
     IEnumerator WaitCo()
@@ -31,6 +32,9 @@ public class Tau_Down : MonsterState<TauState>
     public override void Transition()
     {
         if (isTransition)
+        {
             owner.SetState = TauState.Idle;
+            owner.SetStandState = BaseController<TauState>.StandingState.Stand;
+        }
     }
 }

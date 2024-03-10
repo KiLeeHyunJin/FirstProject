@@ -16,6 +16,7 @@ public class Fall : PlayerBaseState<PlayerState>
         owner.OnStartAlert();
         coroutine = owner.StartCoroutine(FallingCo());
         anim.Play(AnimIdTable.GetInstance.FallingId);
+        owner.SetStandState = BaseController<PlayerState>.StandingState.Fall;
     }
     public override void Exit()
     {
