@@ -69,7 +69,7 @@ public class TauController : MonsterController<TauState>
         fsm.Start(TauState.Idle);
     }
 
-    public override void ISetDamage(float damage, AttackEffectType effectType)
+    public override void ISetDamage(int damage, AttackEffectType effectType)
     {
         if (
             CurrentState == TauState.Fall ||
@@ -92,6 +92,7 @@ public class TauController : MonsterController<TauState>
             default:
                 break;
         }
+        MinusHp = damage;
     }
     public override void ISetType()
     {

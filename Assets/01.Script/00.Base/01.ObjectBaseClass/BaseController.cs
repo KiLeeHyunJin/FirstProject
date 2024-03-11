@@ -9,6 +9,8 @@ public enum StandingState
 public abstract class BaseController<T> : MonoBehaviour, IConnectController where T : Enum
 {
 
+    public int MinusHp { set { Hp -= value; } }
+
     public StateMachine<T> fsm;
     [field : SerializeField]
     public T CurrentState 
@@ -40,11 +42,11 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
     [SerializeField] protected new SpriteRenderer renderer;
     [SerializeField] protected Animator anim;
 
-    [SerializeField] protected TransformPos transformPos;
+     protected TransformPos transformPos;
+    [field: SerializeField] public int Hp { get; protected set; }
 
     protected virtual void Awake()
     {
-        if(transformPos == null)
             transformPos = GetComponent<TransformPos>();
         fsm = new StateMachine<T>();
     }
@@ -60,6 +62,12 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
     // Update is called once per frame
     protected virtual void Update()
     {
+        if (Hp <= 0)
+        {
+            if (coroutine == null)
+                Die();
+            return;
+        }
         fsm.Update();
     }
     protected virtual void FixedUpdate()
@@ -76,13 +84,27 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
             transformPos.SetDirection = TransformPos.Direction.Left;
         else
             transformPos.SetDirection = TransformPos.Direction.Right;
-        //if (before != transformPos.direction)
-        //    renderer.flipX = !renderer.flipX;
+    }
+    Coroutine coroutine = null;
+    void Die()
+    {
+        coroutine = StartCoroutine(Disappear());
+    }
+    IEnumerator Disappear()
+    {
+        Color color = renderer.color;
+        float alphaValue = color.a;
+        while (color.a > 0)
+        {
+            alphaValue -= Time.deltaTime * 2;
+            color = new Color(color.r, color.g, color.b, alphaValue);
+            renderer.color = color;
+            yield return new WaitForFixedUpdate();
+        }
     }
 
-    public virtual void ISetDamage(float damage, AttackEffectType effectType)
+    public virtual void ISetDamage(int damage, AttackEffectType effectType)
     {
-
     }
 
     public virtual void ISetType()

@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Timeline;
-using static AttackSkill;
-using static AttackState;
 
 [Serializable]
 
@@ -66,7 +64,6 @@ public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
                             pos.Pose,
                             AttackSize,
                             Offset,
-                            owner.GetAtckData(0).AttackType,
                             owner.GetAtckData(0).pushTime[0]
                             );
                     }

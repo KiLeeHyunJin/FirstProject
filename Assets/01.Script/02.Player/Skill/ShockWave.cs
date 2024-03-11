@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class ShortAirSlash : AttackState
+public class ShockWave : AttackState
 {
     public override void Transition()
     {
@@ -17,7 +17,6 @@ public class ShortAirSlash : AttackState
     }
     public override void Enter()
     {
-        pos.SetDirection = owner.moveValue.x == 1 ? TransformPos.Direction.Right : TransformPos.Direction.Left;
         isTransition = false;
         Attack();
     }

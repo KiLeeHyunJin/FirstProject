@@ -43,27 +43,27 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
         public string AnimName;
         [Range(0, 1)]
         public float delay;
-        public float damage;
-        public float mana;
+        public int damage;
+        public int mana;
         public AttackSize attackSize;
         public MoveData move;
         public AttackCount[] attackCounts;
     }
-    public enum AttackPlaceType
-    {   JumpAction, Action, }
-    public enum AttackActiveType
-    {   Sky,Run,Land,   }
-    [SerializeField] AttackPlaceType placeType;
     [SerializeField] protected float coolTime;
-    [SerializeField] protected AttackActiveType activeType;
     [SerializeField] bool hasCoolTime;
-    [SerializeField] float[] mana;
     [SerializeField] protected AttackData[] attackData;
 
     protected float time;
     protected int[] animId;
     protected int inputCount;
     protected bool isTransition;
+    public AttackType SpaceType 
+    { 
+        get 
+        { 
+            return attackData[0].attackCounts[0].type; 
+        } 
+    }
     public bool Ready
     {
         get
@@ -73,6 +73,18 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
             return time <= 0;
         }
     }
+    public bool EnoughMana
+    {
+        get
+        {
+            if (hasCoolTime)
+                return owner.Mp >= attackData[0].mana;
+            else
+                return true;
+        }
+    }
+
+
     public void SettingAttack()
     {
         animId = new int[attackData.Length];
@@ -156,6 +168,13 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
     {
         if (animId.Length > 1)
         {
+            if(hasCoolTime)
+            {
+                if (owner.Mp < attackData[inputCount].mana)
+                    return;
+                else
+                    owner.MinusMp = attackData[inputCount].mana;
+            }
             if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[inputCount].AnimName)) //현재 재생중인 클립 이름 확인
             {
                 if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].delay) // 입력 제한 시간 확인
@@ -221,6 +240,7 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
         inputCount = 0;
         atckCount = 0;
         moveCount = 0;
+        ResetCoolTime();
         if (animCo != null)
             owner.StopCoroutine(animCo);
     }

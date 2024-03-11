@@ -18,7 +18,7 @@ public class AttackController : MonoBehaviour
     Vector2 knockbackPower;
     int targetCount;
     float per;
-    float damage;
+    int damage;
     bool isStart;
     float pushTime;
     public void Awake()
@@ -45,7 +45,7 @@ public class AttackController : MonoBehaviour
         pushTime = _pushTime;
     }
 
-    public void SetDamage(float _perDamage, float _damage)
+    public void SetDamage(float _perDamage, int _damage)
     {
         per = _perDamage;
         damage = _damage;
@@ -93,7 +93,7 @@ public class AttackController : MonoBehaviour
     }
     IEnumerator AttackCo()
     {
-        float value = damage * per;
+        int value = (int)(damage * per);
         Vector2 returnKnockback = knockbackPower;
         Vector3 returnPos = pos.Pose;
         Vector3 returnSize = size;
@@ -114,7 +114,6 @@ public class AttackController : MonoBehaviour
                     returnPos,
                     returnSize,
                     returnOffset,
-                    atckType,
                     pushTime
                     );
             }

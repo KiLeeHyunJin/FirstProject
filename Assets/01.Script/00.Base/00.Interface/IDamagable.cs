@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface IDamagable
 {
-    void IGetDamage(float damage, AttackEffectType effectType);
+    void IGetDamage(int damage, AttackEffectType effectType);
     /// <summary>
     /// 
     /// </summary>
@@ -13,7 +13,7 @@ public interface IDamagable
     /// <param name="pos"> 캐릭터 위치 </param>
     /// <param name="size"> 공격 범위</param>
     /// <param name="offset"> 오차 범위</param>
-    void ISetKnockback(Vector2 power, Vector3 pos, Vector3 size, Vector2 offset, AttackType attackType, float pushTime);
+    void ISetKnockback(Vector2 power, Vector3 pos, Vector3 size, Vector2 offset, float pushTime);
     bool ICollision(Vector2 size, Vector3 pos, Vector2 offset);
 
     StandingState IGetStandType();

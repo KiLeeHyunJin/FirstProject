@@ -54,7 +54,7 @@ public class AttackObj : MonoBehaviour
         if (target.ICollision(size, currentPos, offset))
         {
             target.IGetDamage(0, AttackEffectType.Stun);
-            target.ISetKnockback(power, currentPos, size, offset,AttackType.Stand, pushTime);
+            target.ISetKnockback(power, currentPos, size, offset, pushTime);
             Destroy(gameObject);
         }
     }

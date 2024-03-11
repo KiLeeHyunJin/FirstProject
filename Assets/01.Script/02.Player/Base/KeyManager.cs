@@ -1,9 +1,11 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static KeyManager;
 
 public class KeyManager : MonoBehaviour
 {
@@ -14,7 +16,11 @@ public class KeyManager : MonoBehaviour
         Move, C, X,
         A, S, D, F, G, Q, W, E, R, T,
     }
-
+    Key[] QuickKeys = new Key[] { Key.A, Key.S, Key.D, Key.F, Key.G, Key.Q, Key.W, Key.E, Key.R, Key.T };
+    public Key[] QuickKey { get { return QuickKeys; } }
+    private void Awake()
+    {
+    }
     private void Start()
     {
         //    InputActionMap allKeysMap = inputActionAsset.FindActionMap("Player");
@@ -37,6 +43,8 @@ public class KeyManager : MonoBehaviour
         //allKeysMap.Enable();
     }
 
+
+
     void OnX(InputValue value)
     {
         if (value.isPressed)
@@ -47,7 +55,16 @@ public class KeyManager : MonoBehaviour
         if (value.isPressed)
             Layer |= 1 << (int)Key.C;
     }
-
+    void OnA(InputValue value)
+    {
+        if (value.isPressed)
+            Layer |= 1 << (int)Key.A;
+    }    
+    void OnS(InputValue value)
+    {
+        if (value.isPressed)
+            Layer |= 1 << (int)Key.S;
+    }
     public void OnMoveLayer()
     {
         Layer |= 1 << (int)Key.Move;

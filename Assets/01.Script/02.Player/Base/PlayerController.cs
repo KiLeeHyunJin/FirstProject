@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public enum PlayerState
     Interaction, BasicAtck, ItemPick,
 
     Action,
+    A,S,D,F,G,Q,W,E,R,T
 }
 public enum AttackType
 { 
@@ -30,7 +32,12 @@ public enum AttackEffectType
 
 public class PlayerController : BaseController<PlayerState>
 {
-    [field: SerializeField] public PlayerState WalkType { get; set; }
+    [field: SerializeField] public int Mp { get; private set; }
+    public int MinusMp { set { Mp -= value; } }
+    public int AddHp { set { Hp += value; } }
+    public int AddMp { set { Mp += value; } }
+
+    public PlayerState WalkType { get; set; }
 
     [SerializeField] float alertTime;
 
@@ -38,9 +45,9 @@ public class PlayerController : BaseController<PlayerState>
     [Header("¸µÅ©")]
     [SerializeField] AttackController atkController;
 
-    [field: SerializeField] public KeyManager keys { get; private set; }
+    public KeyManager keys { get; private set; }
     public bool isAlert { get; private set; }
-    [field : SerializeField] public Vector2 moveValue { get; private set; }
+    public Vector2 moveValue { get; private set; }
 
     public AttackState currentSkill;
     [SerializeField] Idle idle;
@@ -63,18 +70,15 @@ public class PlayerController : BaseController<PlayerState>
     [SerializeField] JumpAttack jumpAtck;
     [SerializeField] LandAttack landAtck;
     [SerializeField] RunAttack runAtck;
-
-
-
-    //NormalAttack attack;
-    //ShockDownAttack shockDownAttack;
-    //ShortAirSlash shortAirSlash;
-
+    AttackContainer attackContainer;
+    Dictionary<KeyManager.Key, AttackState> SkillDic = new Dictionary<KeyManager.Key, AttackState>();
 
     protected override void Awake()
     {
         base.Awake();
+        //SkillDic ;
         keys = GetComponent<KeyManager>();
+        attackContainer = GetComponent<AttackContainer>();
         SetStateData(walk);
         SetStateData(run);
         SetStateData(jumpUp);
@@ -115,9 +119,9 @@ public class PlayerController : BaseController<PlayerState>
     }
     protected override void Start()
     {
-        GetSkill();
-        //anim = GetComponentInChildren<Animator>();
         fsm.Start(PlayerState.Idle);
+        attackContainer.AddSkill("shockDown", KeyManager.Key.A);
+        attackContainer.AddSkill("airSlash", KeyManager.Key.S);
     }
 
     void SetStateData(PlayerBaseState<PlayerState> state)
@@ -131,17 +135,55 @@ public class PlayerController : BaseController<PlayerState>
             attack.SettingAttack();
     }
 
-    void GetSkill()
-    {
-        //attack = GetComponent<NormalAttack>();
-        //shockDownAttack = GetComponent<ShockDownAttack>();
-        //shortAirSlash = GetComponent<ShortAirSlash>();
-    }
-
     protected override void Update()
     {
         base.Update();
+        AroundCheckQuickKey();
         keys.ResetLayer();
+    }
+
+    public void AroundCheckQuickKey()
+    {
+        if (CurrentState == PlayerState.Hit || 
+            CurrentState == PlayerState.Fall || 
+            CurrentState == PlayerState.Fall)
+            return;
+
+        foreach (KeyManager.Key key in keys.QuickKey)
+        {
+            if(keys.ContainLayer(key))
+            {
+                AttackState atckState = TryGetKey(key);
+                if (atckState == null)
+                    continue;
+
+                if (CurrentState == PlayerState.JumpUp ||
+                    CurrentState == PlayerState.JumpDown )
+                    if(atckState.SpaceType != AttackType.Jump)
+                    continue;
+                PlayerState state = EnumUtil<PlayerState>.Parse(key.ToString());
+                if (CurrentState == state)
+                    atckState.Enter();
+                else
+                    SetState = state;
+                return;
+            }
+        }
+    }
+
+    public void SetKeyDic(AttackState atckState, KeyManager.Key key)
+    {
+        if(atckState == null)
+            return;
+        PlayerState state = EnumUtil<PlayerState>.Parse(key.ToString());
+        SetStateData(atckState);
+        SkillDic.Add(key, atckState);
+        fsm.AddState( state, atckState);
+    }
+    public AttackState TryGetKey(KeyManager.Key checkKey)
+    {
+        SkillDic.TryGetValue(checkKey, out var element);
+        return element;
     }
 
     public void OnStartAlert()
@@ -157,6 +199,7 @@ public class PlayerController : BaseController<PlayerState>
         yield return new WaitForSeconds(alertTime);
         isAlert = false;
     }
+
     void OnMove(InputValue value)
     {
         moveValue = value.Get<Vector2>();
@@ -166,7 +209,7 @@ public class PlayerController : BaseController<PlayerState>
             keys.OnMoveLayer();
     }
 
-    public override void ISetDamage(float damage, AttackEffectType effectType)
+    public override void ISetDamage(int damage, AttackEffectType effectType)
     {
         if (CurrentState == PlayerState.Fall ||
             CurrentState == PlayerState.Down)
@@ -188,6 +231,14 @@ public class PlayerController : BaseController<PlayerState>
             default:
                 break;
         }
+        MinusHp = damage;
         
+    }
+}
+public static class EnumUtil<T>
+{
+    public static T Parse(string s)
+    {
+        return (T)Enum.Parse(typeof(T), s);
     }
 }

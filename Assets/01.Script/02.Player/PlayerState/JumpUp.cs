@@ -24,7 +24,6 @@ public class JumpUp : PlayerBaseState<PlayerState>
             speed = moveRunSpeed;
     }
 
-
     public override void Update()
     {
         Vector2 moveValue = owner.moveValue;
@@ -45,6 +44,7 @@ public class JumpUp : PlayerBaseState<PlayerState>
         else if (owner.keys.ContainLayer(KeyManager.Key.X))
             if (pos.Y > 0.5f)
                 owner.SetState = PlayerState.Interaction;
+        
     }
 
 
