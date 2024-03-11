@@ -15,7 +15,7 @@ public class Goblin_Down : MonsterState<GoblinState>
         if(coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(WaitCo());
-        owner.SetStandState = BaseController<GoblinState>.StandingState.Down;
+        owner.SetStandState = StandingState.Down;
     }
     Coroutine coroutine = null;
     IEnumerator WaitCo()

@@ -14,7 +14,7 @@ public class Goblin_Fall : MonsterState<GoblinState>
         if(coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(FallingCo());
-        owner.SetStandState = BaseController<GoblinState>.StandingState.Fall;
+        owner.SetStandState = StandingState.Fall;
     }
     Coroutine coroutine = null;
     IEnumerator FallingCo()

@@ -186,7 +186,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0c3bd5cbb1878df4987ad3ead8e224d7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1.4, y: 1.64}
@@ -287,30 +287,63 @@ MonoBehaviour:
   renderer: {fileID: 5895089936867726898}
   anim: {fileID: 5404751986585456317}
   transformPos: {fileID: 3150831208459916965}
+  <layerMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 128
+  moveSpeed: {x: 2, y: 1.2}
   sensor: {fileID: 2472301566280020505}
-  atck1:
-    AttackSize: {x: 3.33, y: 4.66, z: 1.29}
-    AttackOffset: {x: 0.81, y: 0}
+  Atck_Data:
+  - Atck_CoolTime: 10
+    optimumRange: {x: 1, y: 0.5}
+    AttackSize: {x: 2.62, y: 4, z: 0.76}
+    AttackOffset: {x: 0.94, y: 0}
     AttackPower: {x: 2, y: 5}
-    AttackTime: 0.624
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 0
+    AttackTimming:
+    - 0.352
+  - Atck_CoolTime: 20
+    optimumRange: {x: 3, y: 1}
+    AttackSize: {x: 1.83, y: 3.34, z: 0.69}
+    AttackOffset: {x: 0.99, y: 0}
+    AttackPower: {x: 5, y: 6}
+    AttackTimming:
+    - 0.083
+    - 0.371
+    - 0.629
+    - 0.894
+  - Atck_CoolTime: 15
+    optimumRange: {x: 2, y: 1}
+    AttackSize: {x: 2.15, y: 3.34, z: 0.9}
+    AttackOffset: {x: 0.65, y: 0}
+    AttackPower: {x: 1, y: 3}
+    AttackTimming:
+    - 0
+    - 0.179
+    - 0.372
+    - 0.607
+    - 0.8
+    - 0.966
+  atck2:
+    duringTime: 2
+    atckSpeed: 5
+  atck3:
+    duringTime: 4
+  atckFinish:
+    waitingTime: 1
   atckReady:
     reayTime: 1
+  atckReady1:
+    reayTime: 0.5
   down:
     downTime: 1
   hit:
     stunTime: 0.3
   idle:
     duringTime: {x: 0.5, y: 5}
-  walk:
-    moveSpeed: {x: 1.2, y: 1}
-    optimumRange: {x: 2, y: 0.5}
-    randomMovingTime: {x: 0.5, y: 6}
-    changeTime: {x: 0.5, y: 2}
-  offset: {x: 0.81, y: 0}
-  size: {x: 3.33, y: 4.66, z: 1.29}
+  around:
+    randomMovingTime: {x: 2, y: 5}
+    changeTime: {x: 1, y: 3}
+  offset: {x: 0.99, y: 0}
+  size: {x: 1.83, y: 3.34, z: 0.9}
 --- !u!50 &3195353417357399248
 Rigidbody2D:
   serializedVersion: 4
@@ -402,7 +435,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.03, z: 0}
-  m_LocalScale: {x: 1, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 0.57, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2800061284756386381}
@@ -493,7 +526,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2.5
+  m_Radius: 2.79
 --- !u!114 &2472301566280020505
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,6 +17,9 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
         public float AttackTime;
         public float Percent;
         public Vector2 power;
+        public float pushTime;
+        public AttackType type;
+        public AttackEffectType effectType;
     }
     [Serializable]
     public struct MoveData
@@ -122,7 +125,11 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
                     attack.SetKnockBack(
                         new Vector2(
                             attackData[inputCount].attackCounts[atckCount].power.x * direction,
-                            attackData[inputCount].attackCounts[atckCount].power.y));
+                            attackData[inputCount].attackCounts[atckCount].power.y),
+                            attackData[inputCount].attackCounts[atckCount].type,
+                            attackData[inputCount].attackCounts[atckCount].effectType,
+                            attackData[inputCount].attackCounts[atckCount].pushTime
+                        );
 
                     attack.SetDamage(attackData[inputCount].attackCounts[atckCount].Percent, attackData[inputCount].damage);
                     attack.OnAttackEnable();
@@ -194,7 +201,7 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
         {
             if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[checkId].AnimName))
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.2f)
                 {
                     break;
                 }

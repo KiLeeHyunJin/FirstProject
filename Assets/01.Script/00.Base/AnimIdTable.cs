@@ -48,6 +48,7 @@ public class AnimIdTable
     public readonly int  Atck2Id;
     public readonly int  Atck3Id;
     public readonly int  AtckReadyId;
+    public readonly int  AtckReady1Id;
     public readonly int  AtckFinishId;
     private AnimIdTable() 
     {
@@ -85,6 +86,7 @@ public class AnimIdTable
         Atck2Id = Animator.StringToHash("Atck2");
         Atck3Id = Animator.StringToHash("Atck3");
         AtckReadyId = Animator.StringToHash("AtckReady");
+        AtckReady1Id = Animator.StringToHash("AtckReady1");
         AtckFinishId = Animator.StringToHash("AtckFinish");
     }
 

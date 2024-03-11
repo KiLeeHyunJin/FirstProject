@@ -19,6 +19,15 @@ public enum PlayerState
 
     Action,
 }
+public enum AttackType
+{ 
+    Stand, Down, Jump,
+}
+public enum AttackEffectType
+{
+    Little, Stun, Down
+}
+
 public class PlayerController : BaseController<PlayerState>
 {
     [field: SerializeField] public PlayerState WalkType { get; set; }
@@ -57,9 +66,9 @@ public class PlayerController : BaseController<PlayerState>
 
 
 
-    NormalAttack attack;
-    ShockDownAttack shockDownAttack;
-    ShortAirSlash shortAirSlash;
+    //NormalAttack attack;
+    //ShockDownAttack shockDownAttack;
+    //ShortAirSlash shortAirSlash;
 
 
     protected override void Awake()
@@ -124,9 +133,9 @@ public class PlayerController : BaseController<PlayerState>
 
     void GetSkill()
     {
-        attack = GetComponent<NormalAttack>();
-        shockDownAttack = GetComponent<ShockDownAttack>();
-        shortAirSlash = GetComponent<ShortAirSlash>();
+        //attack = GetComponent<NormalAttack>();
+        //shockDownAttack = GetComponent<ShockDownAttack>();
+        //shortAirSlash = GetComponent<ShortAirSlash>();
     }
 
     protected override void Update()
@@ -157,8 +166,28 @@ public class PlayerController : BaseController<PlayerState>
             keys.OnMoveLayer();
     }
 
-    public override void ISetDamage(float damage)
+    public override void ISetDamage(float damage, AttackEffectType effectType)
     {
-        SetState = PlayerState.Fall;
+        if (CurrentState == PlayerState.Fall ||
+            CurrentState == PlayerState.Down)
+        {
+            if (effectType != AttackEffectType.Down)
+                return;
+        }
+        switch (effectType)
+        {
+            case AttackEffectType.Little:
+                SetState = PlayerState.Hit;
+                break;
+            case AttackEffectType.Stun:
+                SetState = PlayerState.Hit;
+                break;
+            case AttackEffectType.Down:
+                SetState = PlayerState.Fall;
+                break;
+            default:
+                break;
+        }
+        
     }
 }

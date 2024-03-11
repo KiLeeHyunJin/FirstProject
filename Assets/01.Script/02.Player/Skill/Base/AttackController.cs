@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
-
+    [SerializeField] AttackType atckType;
+    AttackEffectType effectType;
     [SerializeField] int maxAttack;
     [SerializeField] TransformPos pos;
     [SerializeField] LayerMask layerMask;
@@ -19,7 +20,7 @@ public class AttackController : MonoBehaviour
     float per;
     float damage;
     bool isStart;
-
+    float pushTime;
     public void Awake()
     {
         if(maxAttack < 1)
@@ -36,9 +37,12 @@ public class AttackController : MonoBehaviour
         size = _size * 0.5f;
     }
 
-    public void SetKnockBack(Vector3 power)
+    public void SetKnockBack(Vector3 power, AttackType _attackType, AttackEffectType _effectType, float _pushTime)
     {
-        knockbackPower = power; 
+        knockbackPower = power;
+        atckType = _attackType;
+        effectType = _effectType;
+        pushTime = _pushTime;
     }
 
     public void SetDamage(float _perDamage, float _damage)
@@ -99,18 +103,54 @@ public class AttackController : MonoBehaviour
             IDamagable damagable = colliders[i].GetComponent<IDamagable>();
             if (damagable != null)
             {
-                damagable.IGetDamage(value);
+                //if (AttackPossibleCheck(damagable.IGetStandType()) == false)
+                //    continue;
+
+                damagable.IGetDamage(
+                    value,
+                    effectType);
                 damagable.ISetKnockback(
                     returnKnockback,
                     returnPos,
                     returnSize,
-                    returnOffset
+                    returnOffset,
+                    atckType,
+                    pushTime
                     );
             }
             yield return new WaitForSeconds(0.01f);
         }
         //SetttingReset();
     }
+
+    //bool AttackPossibleCheck(StandingState standingState)
+    //{
+    //    bool answerd = false;
+    //    switch (standingState)
+    //    {
+    //        case StandingState.Stand:
+    //            jumpPower = 1;
+    //            answerd = true; 
+    //            break;
+    //        case StandingState.Fall:
+    //            jumpPower = 0.8f;
+    //            answerd = true;
+    //            break;
+    //        case StandingState.Down:
+    //            if (atckType == AttackType.Down)
+    //            {
+    //                answerd = true;
+    //                jumpPower = 0.5f;
+    //            }
+    //            else
+    //                answerd = false;
+    //            break;
+    //        case StandingState.Sit:
+    //            answerd = false;
+    //            break;
+    //    }
+    //    return answerd;
+    //}
 
     private void SetttingReset()
     {

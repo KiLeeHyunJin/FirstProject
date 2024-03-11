@@ -20,7 +20,7 @@ public abstract class AttackSkill : MonoBehaviour
     [SerializeField] protected AttackType type;
     [SerializeField] bool hasCoolTime;
     [SerializeField] float[] mana;
-    [SerializeField] protected AttackData[] attackData;
+    [SerializeField] protected AttackState.AttackData[] attackData;
     protected float time;
     protected int[] animId;
     protected Animator anim;
@@ -75,26 +75,26 @@ public abstract class AttackSkill : MonoBehaviour
 
     public abstract void InputKeyCount();
 
-    protected void Attack(int count)
-    {
-        //controller.currentSkill = this;
-        int direction = 1;
-        if (pos.direction == TransformPos.Direction.Left)
-            direction = -1;
-        atkData.SetPosition(
-            new Vector2(attackData[count].offset.x * direction, attackData[count].offset.y), 
-            attackData[count].size);
-        atkData.SetKnockBack(new Vector2(attackData[count].power.x * direction, attackData[count].power.y));
-        atkData.SetDamage(attackData[count].damage, attackData[count].attackCount);
-    }
+    //protected void Attack(int count, int atck)
+    //{
+    //    //controller.currentSkill = this;
+    //    int direction = 1;
+    //    if (pos.direction == TransformPos.Direction.Left)
+    //        direction = -1;
+    //    atkData.SetPosition(
+    //        new Vector2(attackData[count].offset.x * direction, attackData[count].offset.y), 
+    //        attackData[count].size);
+    //    atkData.SetKnockBack(new Vector2(attackData[count].power.x * direction, attackData[count].power.y), attackData[count].);
+    //    atkData.SetDamage(attackData[count].damage, attackData[count].attackCount);
+    //}
 
-    public void moveMethod()
-    {
-        Vector2 movePos = attackData[inputCount].move;
-        if (pos.direction == TransformPos.Direction.Left)
-            movePos.x *= -1;
-        pos.AddForce(movePos, attackData[inputCount].moveTime);
-    }
+    //public void moveMethod()
+    //{
+    //    Vector2 movePos = attackData[inputCount].move;
+    //    if (pos.direction == TransformPos.Direction.Left)
+    //        movePos.x *= -1;
+    //    pos.AddForce(movePos, attackData[inputCount].moveTime);
+    //}
     //void FirstAttack()
     //{
     //    atkData.SetData(new Vector2(4f, 5), 100);

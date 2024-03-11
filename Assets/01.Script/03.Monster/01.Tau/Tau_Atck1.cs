@@ -2,29 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
+using static AttackSkill;
+using static AttackState;
 
 [Serializable]
 
 public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
 {
     bool isTransition;
-    [SerializeField]
     Vector3 AttackSize;
-    [SerializeField]
     Vector2 AttackOffset;
-    [SerializeField]
     Vector2 AttackPower;
-    [Range(0, 1)]
-    [SerializeField]
     float AttackTime;
-    [SerializeField]
-    LayerMask layerMask;
     Collider2D[] colliders = new Collider2D[1];
     float checkLength;
     int direction;
     public override void Enter()
     {
-        checkLength = AttackSize.x > AttackSize.y ? AttackPower.x : AttackPower.y;
+        AttackSize = owner.GetAtckData(0).AttackSize;
+        AttackOffset = owner.GetAtckData(0).AttackOffset;
+        AttackPower = owner.GetAtckData(0).AttackPower;
+        AttackTime = owner.GetAtckData(0).AttackTimming[0];
+        checkLength = AttackSize.x > AttackSize.y ? AttackSize.x : AttackSize.y;
         if (pos.direction == TransformPos.Direction.Right)
             direction = 1;
         else
@@ -35,6 +35,7 @@ public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(Attack());
     }
+
     public override void Update()
     {
         if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
@@ -45,13 +46,13 @@ public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
     {
         while(true)
         {
-            if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= AttackTime)
+            if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= AttackTime)
             {
                 Vector2 Offset = new Vector2(AttackOffset.x * direction, AttackOffset.y);
                 int targetCount = Physics2D.OverlapCircleNonAlloc(
-           new Vector2(pos.X, pos.Z + pos.Y) + Offset
-           , checkLength, colliders, layerMask);
-                
+                new Vector2(pos.X, pos.Z + pos.Y) + Offset
+                , checkLength, colliders, owner.layerMask);
+
                 if (targetCount > 0)
                 {
                     int dir = colliders[0].transform.position.x - (pos.X + Offset.x) > 0 ? 1 : -1;
@@ -59,16 +60,17 @@ public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
                     IDamagable damagable = colliders[0].GetComponent<IDamagable>();
                     if (damagable != null)
                     {
-                        //damagable.IGetDamage(value);
+                        damagable.IGetDamage(0, owner.GetAtckData(0).AttackEffect);
                         damagable.ISetKnockback(
                             new Vector2(AttackPower.x * dir, AttackPower.y),
                             pos.Pose,
                             AttackSize,
-                            Offset
+                            Offset,
+                            owner.GetAtckData(0).AttackType,
+                            owner.GetAtckData(0).pushTime[0]
                             );
                     }
                 }
-                  
                 break;
             }
             yield return new WaitForFixedUpdate();
@@ -83,6 +85,7 @@ public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
 
     public override void Exit()
     {
+        owner.ResetCoolTime(MonsterController<TauState>.AtckEnum.Atck1);
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
     }

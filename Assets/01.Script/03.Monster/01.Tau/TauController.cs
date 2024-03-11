@@ -7,24 +7,29 @@ using static UnityEditor.PlayerSettings;
 public enum TauState
 {
     Idle, Walk,
-    AtckReady, AtckFinish,
+    Around, Chase,
+    AtckReady, AtckReady1,
+    AtckFinish,
     Atck1,Atck2, Atck3,
     Hit,
     Fall, Down,
-
 }
 public class TauController : MonsterController<TauState>
 {
+
     [SerializeField] Tau_Atck1 atck1;
     [SerializeField] Tau_Atck2 atck2;
     [SerializeField] Tau_Atck3 atck3;
     [SerializeField] Tau_AtckFinish atckFinish;
     [SerializeField] Tau_AtckReady atckReady;
+    [SerializeField] Tau_AtckReady1 atckReady1;
     [SerializeField] Tau_Down down;
     [SerializeField] Tau_Hit hit;
     [SerializeField] Tau_Fall fall;
     [SerializeField] Tau_Idle idle;
     [SerializeField] Tau_Walk walk;
+    [SerializeField] Tau_Around around;
+    [SerializeField] Tau_Chase chase;
 
     protected override void Awake()
     {
@@ -38,11 +43,14 @@ public class TauController : MonsterController<TauState>
         SetStateClass(atck3);
         SetStateClass(atckFinish);
         SetStateClass(atckReady);
+        SetStateClass(atckReady1);
         SetStateClass(down);
         SetStateClass(hit);
         SetStateClass(fall);
         SetStateClass(idle);
         SetStateClass(walk);
+        SetStateClass(around);
+        SetStateClass(chase);
 
         fsm.AddState(TauState.Atck1, atck1);
         fsm.AddState(TauState.Atck2, atck2);
@@ -53,15 +61,37 @@ public class TauController : MonsterController<TauState>
         fsm.AddState(TauState.Idle, idle);
         fsm.AddState(TauState.AtckFinish, atckFinish);
         fsm.AddState(TauState.AtckReady, atckReady);
+        fsm.AddState(TauState.AtckReady1, atckReady1);
         fsm.AddState(TauState.Walk, walk);
+        fsm.AddState(TauState.Around, around);
+        fsm.AddState(TauState.Chase, chase);
 
         fsm.Start(TauState.Idle);
     }
 
-    public override void ISetDamage(float damage)
+    public override void ISetDamage(float damage, AttackEffectType effectType)
     {
-        SetState = TauState.Fall;
-        Debug.Log("Falling");
+        if (
+            CurrentState == TauState.Fall ||
+            CurrentState == TauState.Down)
+        {
+            if (effectType != AttackEffectType.Down)
+                return;
+        }
+        switch (effectType)
+        {
+            case AttackEffectType.Little:
+                SetState = TauState.Hit;
+                break;
+            case AttackEffectType.Stun:
+                SetState = TauState.Hit;
+                break;
+            case AttackEffectType.Down:
+                SetState = TauState.Fall;
+                break;
+            default:
+                break;
+        }
     }
     public override void ISetType()
     {
@@ -69,6 +99,8 @@ public class TauController : MonsterController<TauState>
     }
     [SerializeField] Vector2 offset;
     [SerializeField] Vector3 size;
+
+
     bool isStart;
     private void OnDrawGizmos()
     {

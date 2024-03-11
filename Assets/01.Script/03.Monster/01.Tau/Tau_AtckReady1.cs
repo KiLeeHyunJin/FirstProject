@@ -4,37 +4,41 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Tau_Fall : MonsterState<TauState>
+public class Tau_AtckReady1 : MonsterState<TauState>
 {
+    [SerializeField]
+    float reayTime;
     bool isTransition;
     public override void Enter()
     {
-        anim.Play(AnimIdTable.GetInstance.FallingId, 0, 0);
         isTransition = false;
+        anim.Play(AnimIdTable.GetInstance.AtckReady1Id);
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
-        coroutine = owner.StartCoroutine(FallingCo());
-        owner.SetStandState = StandingState.Fall;
+        owner.StartCoroutine(WaitCo());
     }
     Coroutine coroutine = null;
-    IEnumerator FallingCo()
+    IEnumerator WaitCo()
     {
-        while (pos.Velocity().y > 0)
-            yield return new WaitForFixedUpdate();
-
-        while (pos.Y > 0 || pos.yState() != TransformAddForce.YState.None)
-            yield return new WaitForFixedUpdate();
+        yield return new WaitForSeconds(reayTime);
         isTransition = true;
     }
+
+    public override void FixedUpdate()
+    {
+        pos.Synchro();
+    }
+
     public override void Exit()
     {
-        base.Exit();
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
     }
+
     public override void Transition()
     {
         if (isTransition)
-            owner.SetState = TauState.Down;
+            owner.SetState = TauState.Atck3;
     }
+
 }

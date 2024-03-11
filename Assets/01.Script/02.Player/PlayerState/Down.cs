@@ -15,7 +15,7 @@ public class Down : PlayerBaseState<PlayerState>
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(WaitTime());
-        owner.SetStandState = BaseController<PlayerState>.StandingState.Down;
+        owner.SetStandState = StandingState.Down;
     }
     Coroutine coroutine = null;
     IEnumerator WaitTime()
@@ -38,7 +38,7 @@ public class Down : PlayerBaseState<PlayerState>
     {
         if (isTransition)
         {
-            owner.SetStandState = BaseController<PlayerState>.StandingState.Sit;
+            owner.SetStandState = StandingState.Sit;
             owner.SetState = PlayerState.Sit;
         }
     }

@@ -15,7 +15,7 @@ public class Goblin_Sit : MonsterState<GoblinState>
         if(coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(WaitCo());
-        owner.SetStandState = BaseController<GoblinState>.StandingState.Sit;
+        owner.SetStandState = StandingState.Sit;
     }
     public override void FixedUpdate()
     {
@@ -38,7 +38,7 @@ public class Goblin_Sit : MonsterState<GoblinState>
         if(isTransition)
         {
             owner.SetState = GoblinState.Idle;
-            owner.SetStandState = BaseController<GoblinState>.StandingState.Stand;
+            owner.SetStandState = StandingState.Stand;
         }
     }
 }

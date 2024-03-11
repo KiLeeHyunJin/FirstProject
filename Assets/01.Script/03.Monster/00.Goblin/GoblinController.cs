@@ -5,6 +5,7 @@ using UnityEngine;
 public enum GoblinState
 {
     Idle, Walk,
+    Chase, Around,
     Hit, Fall, Down,
     Sit,
     Atck
@@ -18,6 +19,8 @@ public class GoblinController : MonsterController<GoblinState>
     [SerializeField] Goblin_Idle idle;
     [SerializeField] Goblin_Sit sit;
     [SerializeField] Goblin_Walk walk;
+    [SerializeField] Goblin_Around around;
+    [SerializeField] Goblin_Chase chase;
 
     protected override void Awake()
     {
@@ -29,6 +32,8 @@ public class GoblinController : MonsterController<GoblinState>
         SetStateClass(idle);
         SetStateClass(sit);
         SetStateClass(walk);
+        SetStateClass(around);
+        SetStateClass(chase);
 
         fsm.AddState(GoblinState.Atck,atck);
         fsm.AddState(GoblinState.Down,down);
@@ -37,6 +42,8 @@ public class GoblinController : MonsterController<GoblinState>
         fsm.AddState(GoblinState.Idle,idle);
         fsm.AddState(GoblinState.Sit, sit);
         fsm.AddState(GoblinState.Walk, walk);
+        fsm.AddState(GoblinState.Around, around);
+        fsm.AddState(GoblinState.Chase, chase);
     }
     protected override void Start()
     {
@@ -44,9 +51,30 @@ public class GoblinController : MonsterController<GoblinState>
         fsm.Start(GoblinState.Idle);
     }
 
-    public override void ISetDamage(float damage)
+    public override void ISetDamage(float damage, AttackEffectType effectType)
     {
-        SetState = GoblinState.Fall;
+        if (
+            CurrentState == GoblinState.Fall ||
+            CurrentState == GoblinState.Down)
+        {
+            if (effectType != AttackEffectType.Down)
+                return;
+        }
+
+        switch (effectType)
+        {
+            case AttackEffectType.Little:
+                SetState = GoblinState.Hit;
+                break;
+            case AttackEffectType.Stun:
+                SetState = GoblinState.Hit;
+                break;
+            case AttackEffectType.Down:
+                SetState = GoblinState.Fall;
+                break;
+            default:
+                break;
+        }
     }
     public override void ISetType()
     {

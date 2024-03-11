@@ -2,13 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum StandingState
+{
+    Stand, Fall, Down, Sit
+}
 public abstract class BaseController<T> : MonoBehaviour, IConnectController where T : Enum
 {
-    public enum StandingState
-    {
-        Stand, Fall, Down, Sit
-    }
+
     public StateMachine<T> fsm;
     [field : SerializeField]
     public T CurrentState 
@@ -80,11 +80,17 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
         //    renderer.flipX = !renderer.flipX;
     }
 
-    public virtual void ISetDamage(float damage)
+    public virtual void ISetDamage(float damage, AttackEffectType effectType)
     {
+
     }
 
     public virtual void ISetType()
     {
+    }
+
+    public StandingState IGetStandingType()
+    {
+        return StandState;
     }
 }

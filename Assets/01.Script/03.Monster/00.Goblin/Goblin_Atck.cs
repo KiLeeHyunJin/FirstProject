@@ -6,15 +6,17 @@ using UnityEngine;
 [Serializable]
 public class Goblin_Atck : MonsterState<GoblinState>
 {
-    [SerializeField] GameObject prefab;
-    [Range(0, 1)]
-    [SerializeField] float attackTime;
-    [SerializeField] float speed;
+    [SerializeField] AttackObj prefab;
+    float attackTime;
+    int dir;
     bool isTransition;
     public override void Enter()
     {
         anim.Play(AnimIdTable.GetInstance.AtckId);
         isTransition = false;
+        owner.ResetCoolTime(MonsterController<GoblinState>.AtckEnum.Atck1);
+        attackTime = owner.GetAtckData(0).AttackTimming[0];
+        dir = pos.direction == TransformPos.Direction.Right ? 1 : -1;
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(Attack());
@@ -30,18 +32,19 @@ public class Goblin_Atck : MonsterState<GoblinState>
         {
             if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackTime)
             {
-                //int dir =  pos.direction == TransformPos.Direction.Right ? 1 : -1;
-                //GameObject obj = GameObject.Instantiate(prefab);
-               break;
+                if (prefab == null)
+                    break;
+                AttackObj obj = GameObject.Instantiate(prefab);
+                obj.transform.position = new Vector2(pos.X, pos.Z);
+                obj.SetData(new Vector2(1, 1), pos.Pose, dir);
+                break;
             }
             yield return new WaitForFixedUpdate();
         }
         while(true)
         {
             if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
-            {
                 break;
-            }
             yield return new WaitForFixedUpdate();
         }
         isTransition = true;
