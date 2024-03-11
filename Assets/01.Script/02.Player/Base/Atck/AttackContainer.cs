@@ -10,11 +10,13 @@ public class AttackContainer : MonoBehaviour
     Dictionary<string, AttackState> skillTree = new Dictionary<string, AttackState>();
     [SerializeField] ShockWave shockWave;
     [SerializeField] ShortAirSlash airSlash;
+    [SerializeField] HeatWaveSlash heatWave;
     public void Awake()
     {
         controller = GetComponent<PlayerController>();
         skillTree.Add("shockDown", shockWave);
         skillTree.Add("airSlash", airSlash);
+        skillTree.Add("heatWave", heatWave);
     }
     public AttackState GetSkill(string name)
     {

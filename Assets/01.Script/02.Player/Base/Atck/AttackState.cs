@@ -52,7 +52,7 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
     [SerializeField] protected float coolTime;
     [SerializeField] bool hasCoolTime;
     [SerializeField] protected AttackData[] attackData;
-
+    [SerializeField] bool repeatAnim;
     protected float time;
     protected int[] animId;
     protected int inputCount;
@@ -220,10 +220,23 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
         {
             if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[checkId].AnimName))
             {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.2f)
+                if (repeatAnim)
                 {
-                    break;
+                    if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+                    {
+                        if (inputCount >= attackData.Length - 1)
+                            break;
+                        else
+                            Attack();
+                    }
                 }
+                else
+                    {
+                        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.2f)
+                        {
+                            break;
+                        }
+                    }
             }
             //else
             //{

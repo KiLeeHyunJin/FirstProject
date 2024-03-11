@@ -87,13 +87,19 @@ public class AttackCollision
         {
             return TopDownCollision();
         }
+        else if(
+            ownerX + ownerPos.Size.x >= targetX - targetPos.Range.x &&
+            ownerX + ownerPos.Size.x <= targetX + targetPos.Range.x)
+        {
+            return TopDownCollision();
+        }
         return false;
     }
 
     bool TopDownCollision()
     {
         float ownerZ = ownerPos.Z + ownerPos.Offset.y;
-        float targetZ = targetPos.Pos.z + ownerPos.Offset.y;
+        float targetZ = targetPos.Pos.z + targetPos.Offset.y;
             //오너 하단 변 >= 상대 하단 변
             //오너 하단 변 <= 상대 상단 변
             //오너의 하단이 타겟에 속해있는 경우

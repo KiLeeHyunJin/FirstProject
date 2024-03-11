@@ -64,6 +64,21 @@ public class KeyManager : MonoBehaviour
     {
         if (value.isPressed)
             Layer |= 1 << (int)Key.S;
+    }    
+    void OnD(InputValue value)
+    {
+        if (value.isPressed)
+            Layer |= 1 << (int)Key.D;
+    }
+    void OnF(InputValue value)
+    {
+        if (value.isPressed)
+            Layer |= 1 << (int)Key.F;
+    }    
+    void OnG(InputValue value)
+    {
+        if (value.isPressed)
+            Layer |= 1 << (int)Key.G;
     }
     public void OnMoveLayer()
     {

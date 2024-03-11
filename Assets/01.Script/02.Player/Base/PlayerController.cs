@@ -122,6 +122,7 @@ public class PlayerController : BaseController<PlayerState>
         fsm.Start(PlayerState.Idle);
         attackContainer.AddSkill("shockDown", KeyManager.Key.A);
         attackContainer.AddSkill("airSlash", KeyManager.Key.S);
+        attackContainer.AddSkill("heatWave", KeyManager.Key.D);
     }
 
     void SetStateData(PlayerBaseState<PlayerState> state)

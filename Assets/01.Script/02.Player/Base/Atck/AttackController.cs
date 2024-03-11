@@ -24,7 +24,7 @@ public class AttackController : MonoBehaviour
     public void Awake()
     {
         if(maxAttack < 1)
-            maxAttack = 5;
+            maxAttack = 15;
         colliders = new Collider2D[maxAttack];
         isStart = true;
         offset = Vector3.zero;

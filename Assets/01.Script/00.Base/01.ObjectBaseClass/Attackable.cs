@@ -20,14 +20,14 @@ public class Attackable : MonoBehaviour, IDamagable
         attackEffectType = effectType;
     }
 
-    public void ISetKnockback(Vector2 power, Vector3 pos, Vector3 size, Vector2 offset, float pushTime = 0)
+    public void ISetKnockback(Vector3 power, Vector3 pos, Vector3 size, Vector2 offset, float pushTime = 0)
     {
         if (transformPos.attackCheck.CheckAttackCollision(pos, size, offset))
         {
             if (AttackPowerCheck(attackEffectType) == false)
                 return;
 
-            Vector2 force = new Vector2(power.x, power.y * jumpPower);
+            Vector3 force = new Vector3(power.x, power.y * jumpPower, power.z);
             transformPos.AddForce(force);
             if (controller != null)
                 controller.ISetDamage(dam, attackEffectType);
