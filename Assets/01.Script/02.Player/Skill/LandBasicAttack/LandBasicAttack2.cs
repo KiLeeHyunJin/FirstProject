@@ -14,6 +14,7 @@ public class LandBasicAttack2 : SkillState
 
     protected override void ExitAction()
     {
+        skillController.Out();
     }
 
     protected override PlayerState NextAnim()

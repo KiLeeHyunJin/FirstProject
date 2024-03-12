@@ -20,6 +20,7 @@ public class AttackController : MonoBehaviour
     int damage;
     bool isStart;
     float pushTime;
+    bool gather;
     public void Awake()
     {
         if(maxAttack < 1)
@@ -30,10 +31,11 @@ public class AttackController : MonoBehaviour
         size = Vector3.zero;
     }
 
-    public void SetPosition(Vector2 _position, Vector3 _size)
+    public void SetPosition(Vector2 _position, Vector3 _size, bool _gather = false)
     {
         offset = _position;
         size = _size * 0.5f;
+        gather = _gather;
     }
 
     public void SetKnockBack(Vector3 power, AttackEffectType _effectType, float _pushTime)
@@ -92,10 +94,11 @@ public class AttackController : MonoBehaviour
     IEnumerator AttackCo()
     {
         int value = (int)(damage * per);
-        Vector2 returnKnockback = knockbackPower;
+        Vector3 returnKnockback = knockbackPower;
         Vector3 returnPos = pos.Pose;
         Vector3 returnSize = size;
         Vector2 returnOffset = offset;
+        
         for (int i = 0; i < targetCount; i++)
         {
             IDamagable damagable = colliders[i].GetComponent<IDamagable>();
@@ -103,7 +106,14 @@ public class AttackController : MonoBehaviour
             {
                 //if (AttackPossibleCheck(damagable.IGetStandType()) == false)
                 //    continue;
-
+                if(gather)
+                {
+                    Vector2 sour =(
+                            (new Vector2(pos.X,pos.Z) + offset) - damagable.IGetPos()
+                        ).normalized;
+                    Vector3 temp = new Vector3(sour.x, returnKnockback.y, sour.y);
+                    returnKnockback = temp;
+                }
                 damagable.IGetDamage(
                     value,
                     effectType);

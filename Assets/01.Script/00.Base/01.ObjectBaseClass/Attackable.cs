@@ -66,7 +66,10 @@ public class Attackable : MonoBehaviour, IDamagable
         }
         return answerd;
     }
-
+    public Vector2 IGetPos()
+    {
+        return new Vector2(transformPos.X, transformPos.Z);
+    }
     public bool ICollision(Vector2 size, Vector3 pos, Vector2 offset)
     {
         return transformPos.attackCheck.CheckAttackCollision(pos, size, offset);

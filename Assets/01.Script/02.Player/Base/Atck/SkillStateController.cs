@@ -6,13 +6,13 @@ using static AttackState;
 public abstract class SkillStateController : PlayerBaseState<PlayerState>
 {
     [HideInInspector] public KeyManager.QuickKey currentSkillKey;
-    [field: SerializeField] public GameObject projectile { get; private set; }
+    [field: SerializeField] public ProjectileObj projectile { get; private set; }
     [field :SerializeField] public float objectSpeed { get; private set; }
     [field : SerializeField] public AttackType AttackType { get; private set;}
     [SerializeField] private bool hasCoolTime;
     [SerializeField] protected float coolTime;
     [SerializeField] protected AttackData[] attackData;
-    public bool On { get; private set; }
+    [field: SerializeField] public bool On { get; private set; }
     [HideInInspector] public bool Click;
     protected bool isTransition;
 
@@ -74,6 +74,7 @@ public abstract class SkillStateController : PlayerBaseState<PlayerState>
     {
         On = false;
         Click = false;
+        owner.activeType = ActiveType.Normal;
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(CoolDown());

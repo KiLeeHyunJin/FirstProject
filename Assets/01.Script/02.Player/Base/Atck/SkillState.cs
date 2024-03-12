@@ -13,7 +13,7 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
     protected bool nextAnim;
     int moveIdx;
     int attackIdx;
-    int direction;
+    protected int direction;
 
     Collider2D[] colliders;
     public void SetSkillData(SkillStateController _skillController, AttackData _attackData, int _animId, bool _chaingAnim)
@@ -76,7 +76,8 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
                 new Vector2(
                     attackData.attackSize.offset.x * direction,
                     attackData.attackSize.offset.y),
-                attackData.attackSize.size);
+                attackData.attackSize.size,
+                attackData.attackCounts[attackIdx].gather);
 
             attack.SetKnockBack(
                 new Vector2(
@@ -136,4 +137,8 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
         }
     }
     protected abstract PlayerState NextAnim();
+    public void EmergencyEscape()
+    {
+        skillController.Out();
+    }
 }

@@ -27,9 +27,17 @@ public class LunaSlashAttack0 : SkillState
 
     protected override void ExitAction()
     {
-        LunaSlashController controller = skillController as LunaSlashController;
-        if(controller != null)
-            controller.ChargeTime = time;
+        if (owner.CurrentState == PlayerState.LunaSlashAttack1)
+        {
+            LunaSlashController controller = skillController as LunaSlashController;
+            if (controller != null)
+                controller.ChargeTime = time;
+        }
+        else
+        {
+            skillController.Out();
+        }
+
     }
 
     protected override PlayerState NextAnim()

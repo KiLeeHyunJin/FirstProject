@@ -15,11 +15,11 @@ public class ShockWaveAttack : SkillState
 
     protected override void ExitAction()
     {
+        skillController.Out();
     }
 
     protected override PlayerState NextAnim()
     {
-        skillController.Out();
         return PlayerState.Idle;
     }
 

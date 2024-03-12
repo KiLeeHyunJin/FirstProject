@@ -16,6 +16,7 @@ public class JumpBasicAttack : SkillState
 
     protected override void ExitAction()
     {
+        skillController.Out();
     }
 
     protected override PlayerState NextAnim()
@@ -30,7 +31,6 @@ public class JumpBasicAttack : SkillState
         }
         else
             state = PlayerState.Idle;
-        skillController.Out();
         return state;
     }
 

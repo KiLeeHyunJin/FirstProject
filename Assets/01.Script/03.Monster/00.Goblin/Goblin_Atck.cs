@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class Goblin_Atck : MonsterState<GoblinState>
 {
-    [SerializeField] AttackObj prefab;
+    [SerializeField] ProjectileObj prefab;
     float attackTime;
     int dir;
     bool isTransition;
@@ -34,7 +34,7 @@ public class Goblin_Atck : MonsterState<GoblinState>
             {
                 if (prefab == null)
                     break;
-                AttackObj obj = GameObject.Instantiate(prefab);
+                ProjectileObj obj = GameObject.Instantiate(prefab);
                 obj.transform.position = new Vector2(pos.X, pos.Z);
                 obj.SetData(new Vector2(1, 1), pos.Pose, dir);
                 break;

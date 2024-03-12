@@ -16,6 +16,8 @@ public class LandBasicAttack0 : SkillState
 
     protected override void ExitAction()
     {
+        if (owner.CurrentState != PlayerState.LandAtck1)
+            skillController.Out();
     }
 
     protected override PlayerState NextAnim()

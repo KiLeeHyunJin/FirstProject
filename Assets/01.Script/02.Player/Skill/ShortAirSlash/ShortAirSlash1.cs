@@ -15,6 +15,10 @@ public class ShortAirSlash1 : SkillState
 
     protected override void ExitAction()
     {
+        if (owner.CurrentState != PlayerState.AirSlash2)
+        {
+            skillController.Out();
+        }
     }
 
     protected override PlayerState NextAnim()

@@ -13,6 +13,7 @@ public struct AttackCount
     public Vector2 power;
     public float pushTime;
     public float stunTime;
+    public bool gather;
     public AttackEffectType effectType;
 }
 [Serializable]

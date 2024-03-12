@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class AttackObj : MonoBehaviour
+public class ProjectileObj : MonoBehaviour
 {
     [SerializeField] float speed;
     Attackable target;
@@ -19,20 +19,34 @@ public class AttackObj : MonoBehaviour
     [SerializeField] int layer;
     [SerializeField] bool isDestroy;
     [SerializeField] AttackEffectType attackType;
+    float destroyTime;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         circleCollider = GetComponent<CircleCollider2D>();
         isStart = true;
+        gameObject.SetActive(false);
     }
     public void SetData(Vector2 _power, Vector3 _pos,int _dir)
     {
+        if (_dir > 0)
+            GetComponent<SpriteRenderer>().flipX = false;
+        else
+            GetComponent<SpriteRenderer>().flipX = true;
         direc = new Vector2(_dir * speed, 0);
         power = _power;
         pos = _pos;
         size = Vector3.one * circleCollider.radius;
         offset = new Vector2(0, 0.5f);
         transform.position = new Vector2(_pos.x, _pos.z) + offset;
+        if(coroutine != null)
+            StopCoroutine(coroutine);
+        coroutine = StartCoroutine(DestroyCo());
+    }
+    public void SetData(float _destroyTime)
+    {
+        destroyTime = _destroyTime;
+        gameObject.SetActive(true);
     }
     bool isStart = false;
     private void OnDrawGizmos()
@@ -63,7 +77,12 @@ public class AttackObj : MonoBehaviour
                 Destroy(gameObject);
         }
     }
-
+    Coroutine coroutine = null;
+    IEnumerator DestroyCo()
+    {
+        yield return new WaitForSeconds(destroyTime);
+        gameObject.SetActive (false);
+    }
     private void FixedUpdate()
     {
         rigid.velocity = direc;

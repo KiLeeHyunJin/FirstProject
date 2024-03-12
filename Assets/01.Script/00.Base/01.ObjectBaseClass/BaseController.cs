@@ -18,10 +18,11 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
         get;
         private set; 
     }
+    public T NextState { get; protected set; }
     public T SetState 
     { 
         set 
-        { 
+        {
             CurrentState = value; 
             fsm.ChangeState(value); 
         } 

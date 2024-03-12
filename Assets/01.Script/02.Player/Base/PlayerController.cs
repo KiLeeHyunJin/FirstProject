@@ -45,6 +45,10 @@ public enum AttackEffectType
 {
     Little, Stun, Down
 }
+public enum ActiveType
+{
+    Normal, Skill,
+}
 
 public class PlayerController : BaseController<PlayerState>
 {
@@ -54,6 +58,7 @@ public class PlayerController : BaseController<PlayerState>
     public int AddMp { set { Mp += value; } }
 
     public PlayerState WalkType { get; set; }
+    public ActiveType activeType { get; set; }
 
     [SerializeField] float alertTime;
 
@@ -65,7 +70,6 @@ public class PlayerController : BaseController<PlayerState>
     public bool isAlert { get; private set; }
     public Vector2 moveValue { get; private set; }
 
-    public AttackState currentSkill;
     [SerializeField] Idle idle;
     [SerializeField] Walk walk;
     [SerializeField] Run run;
@@ -207,7 +211,8 @@ public class PlayerController : BaseController<PlayerState>
             CurrentState == PlayerState.Fall || 
             CurrentState == PlayerState.Fall)
             return;
-
+        if (activeType == ActiveType.Skill)
+            return;
         foreach (KeyManager.QuickKey key in keys.QuickKeys)
         {
             if(keys.ContainLayer(key))
@@ -221,6 +226,7 @@ public class PlayerController : BaseController<PlayerState>
                     CurrentState == PlayerState.JumpDown )
                     if(atckState.AttackType != AttackType.Jump)
                     continue;
+
                 PlayerState state = EnumUtil<PlayerState>.Parse(key.ToString());
                 if (atckState.On)
                     atckState.Click = true;
