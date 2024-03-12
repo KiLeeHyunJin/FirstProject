@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -29,6 +30,7 @@ public class ProjectileObj : MonoBehaviour
     }
     public void SetData(Vector2 _power, Vector3 _pos,int _dir)
     {
+        gameObject.SetActive(true);
         if (_dir > 0)
             GetComponent<SpriteRenderer>().flipX = false;
         else
@@ -39,14 +41,17 @@ public class ProjectileObj : MonoBehaviour
         size = Vector3.one * circleCollider.radius;
         offset = new Vector2(0, 0.5f);
         transform.position = new Vector2(_pos.x, _pos.z) + offset;
-        if(coroutine != null)
-            StopCoroutine(coroutine);
-        coroutine = StartCoroutine(DestroyCo());
+
     }
-    public void SetData(float _destroyTime)
+    public void SetData(float _destroyTime, Vector3 pos, Vector3 Size, Vector2 offset)
     {
         destroyTime = _destroyTime;
-        gameObject.SetActive(true);
+        size = Size * 0.5f;
+        this.offset = offset;
+        this.pos = pos;
+        if (coroutine != null)
+            StopCoroutine(coroutine);
+        coroutine = StartCoroutine(DestroyCo());
     }
     bool isStart = false;
     private void OnDrawGizmos()
@@ -55,7 +60,7 @@ public class ProjectileObj : MonoBehaviour
         Gizmos.color = UnityEngine.Color.red;
         Gizmos.DrawWireCube(
         new Vector2(transform.position.x, pos.z),
-            new Vector2(size.x, size.y) * temp * 2);
+            new Vector2(size.x, size.z) * temp * 2);
 
         float realYPos =
         (pos.z + offset.y) + (size.x * temp * 0.5f);

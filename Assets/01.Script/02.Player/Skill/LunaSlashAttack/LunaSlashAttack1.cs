@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class LunaSlashAttack1 : SkillState
 {
@@ -15,18 +16,26 @@ public class LunaSlashAttack1 : SkillState
         LunaSlashController controller = skillController as LunaSlashController;
         if (controller == null)
             return;
+        owner.StartCoroutine(LunaShootCo());
+    }
+    IEnumerator LunaShootCo()
+    {
+        LunaSlashController controller = skillController as LunaSlashController;
+        if (controller == null)
+            yield break;
+        yield return new WaitForSeconds(attackData.attackCounts[0].AttackTime);
         float scale = 0.7f + (controller.ChargeTime * 0.3f);
         if (scale > 1.5f)
             scale = 1.5f;
-        controller.luna.SetData(controller.ChargeTime * 2);
-        controller.luna.SetData(attackData.attackCounts[0].power, pos.Pose, direction);
+        Vector3 position = pos.Pose + new Vector3(0.5f * direction, 0, 0);
+        controller.luna.SetData(attackData.attackCounts[0].power, position, direction);
+        controller.luna.SetData(
+            controller.ChargeTime * 3,
+            pos.Pose,
+            attackData.attackSize.size * scale,
+            attackData.attackSize.offset * scale);
         controller.luna.transform.localScale = Vector3.one * scale;
-
-
-        
-        //controller. projectile. 
     }
-
     protected override void ExitAction()
     {
         skillController.Out();

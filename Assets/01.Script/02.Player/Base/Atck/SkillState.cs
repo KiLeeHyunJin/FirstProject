@@ -27,7 +27,7 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
 
     public override void Enter()
     {
-        EnterAction();
+        SetEnter();
         direction = pos.direction == TransformPos.Direction.Left ? -1 : 1;
         attackIdx = 0;
         moveIdx = 0;
@@ -35,7 +35,12 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
         anim.Play(animId);
         nextAnim = false;
         isTransition = false;
+        EnterAction();
+
     }
+    protected virtual void SetEnter()
+    { }
+
     public override void Exit()
     {
         base.Exit();

@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class ShortAirSlash2 : SkillState
 {
+    protected override void SetEnter()
+    {
+        pos.SetDirection =
+    owner.moveValue.x > 0 ?
+    TransformPos.Direction.Right : TransformPos.Direction.Left;
+    }
     protected override void EnterAction()
     {
-        pos.SetDirection = owner.moveValue.x > 0 ? TransformPos.Direction.Right : TransformPos.Direction.Left;
     }
     protected override void Attack(float normalTime)
     {

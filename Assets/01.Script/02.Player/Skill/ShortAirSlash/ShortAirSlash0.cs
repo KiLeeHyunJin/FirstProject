@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class ShortAirSlash0 : SkillState
 {
-    protected override void EnterAction()
+    protected override void SetEnter()
     {
-        pos.SetDirection = owner.moveValue.x > 0 ? TransformPos.Direction.Right : TransformPos.Direction.Left;
+        pos.SetDirection =
+        owner.moveValue.x > 0 ?
+        TransformPos.Direction.Right : TransformPos.Direction.Left;
     }
     protected override void Attack(float normalTime)
     {
@@ -24,5 +26,9 @@ public class ShortAirSlash0 : SkillState
     protected override PlayerState NextAnim()
     {
         return PlayerState.AirSlash1;
+    }
+
+    protected override void EnterAction()
+    {
     }
 }

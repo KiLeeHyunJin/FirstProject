@@ -49,8 +49,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  offset: {x: 1.79, y: 0}
-  size: {x: 3.13, y: 3.95, z: 1.42}
+  offset: {x: 0, y: 0}
+  size: {x: 1.2, y: 3.1, z: 0.75}
 --- !u!1 &1869268936595389443
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,7 +607,7 @@ MonoBehaviour:
       charging: 0
       attackSize:
         offset: {x: 0, y: 0}
-        size: {x: 0, y: 0, z: 0}
+        size: {x: 1.2, y: 3.1, z: 1.8}
       move: []
       attackCounts:
       - AttackTime: 0
