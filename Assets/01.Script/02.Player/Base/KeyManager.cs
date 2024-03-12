@@ -11,13 +11,19 @@ public class KeyManager : MonoBehaviour
 {
     [SerializeField] InputActionAsset inputActionAsset;
     [field: SerializeField] public int Layer { get; private set; }
-    public enum Key
+    [field: SerializeField] public int DefaultLayer { get; private set; }
+    public QuickKey[] QuickKeys { get { return QuickKeyArray; } }
+    public DefaultKey[] DefaultKeys { get { return DefaultArray; } }
+    public enum QuickKey
     {
-        Move, C, X,
-        A, S, D, F, G, Q, W, E, R, T,
+        A, S, D, F, G, Q, W, E, R, T, Non
     }
-    Key[] QuickKeys = new Key[] { Key.A, Key.S, Key.D, Key.F, Key.G, Key.Q, Key.W, Key.E, Key.R, Key.T };
-    public Key[] QuickKey { get { return QuickKeys; } }
+    public enum DefaultKey
+    {
+        Move, C, X, Non
+    }
+    QuickKey[] QuickKeyArray = new QuickKey[] { QuickKey.A, QuickKey.S, QuickKey.D, QuickKey.F, QuickKey.G, QuickKey.Q, QuickKey.W, QuickKey.E, QuickKey.R, QuickKey.T };
+    DefaultKey[] DefaultArray = new DefaultKey[] { DefaultKey.Move, DefaultKey.C, DefaultKey.X };
     private void Awake()
     {
     }
@@ -48,70 +54,80 @@ public class KeyManager : MonoBehaviour
     void OnX(InputValue value)
     {
         if (value.isPressed)
-            Layer |= 1 << (int)Key.X;
+            DefaultLayer |= 1 << (int)DefaultKey.X;
     }
     void OnC(InputValue value)
     {
         if (value.isPressed)
-            Layer |= 1 << (int)Key.C;
+            DefaultLayer |= 1 << (int)DefaultKey.C;
     }
     void OnA(InputValue value)
     {
         if (value.isPressed)
-            Layer |= 1 << (int)Key.A;
-    }    
+            Layer |= 1 << (int)QuickKey.A;
+    }
     void OnS(InputValue value)
     {
         if (value.isPressed)
-            Layer |= 1 << (int)Key.S;
-    }    
+            Layer |= 1 << (int)QuickKey.S;
+    }
     void OnD(InputValue value)
     {
         if (value.isPressed)
-            Layer |= 1 << (int)Key.D;
+            Layer |= 1 << (int)QuickKey.D;
     }
     void OnF(InputValue value)
     {
         if (value.isPressed)
-            Layer |= 1 << (int)Key.F;
-    }    
+            Layer |= 1 << (int)QuickKey.F;
+    }
     void OnG(InputValue value)
     {
         if (value.isPressed)
-            Layer |= 1 << (int)Key.G;
-    }
-    public void OnMoveLayer()
-    {
-        Layer |= 1 << (int)Key.Move;
+            Layer |= 1 << (int)QuickKey.G;
     }
     public void OffMoveLayer()
     {
-        OffLayer(Key.Move);
+        OffLayer(DefaultKey.Move);
+    }
+    public void OnMoveLayer()
+    {
+        DefaultLayer |= 1 << (int)DefaultKey.Move;
+    }
+    public void OffLayer(DefaultKey checkKey)
+    {
+        int offLayer = 1 << (int)checkKey;
+        DefaultLayer &= ~offLayer;
     }
 
-    public void Call(InputAction.CallbackContext context)
-    { Layer |= 1 << 5; }
-
-public void ResetLayer() => Layer &= (1 << (int)Key.Move);
-    public void OnLayer(Key checkKey)
+    public void ResetLayer()
+    {
+        Layer = 0;
+        DefaultLayer &= (1 << (int)DefaultKey.Move);
+    }
+    public void OnLayer(QuickKey checkKey)
     {
         int addLayer = 1 << (int)Layer;
         Layer |= addLayer;
     }
-    public bool ContainLayer(Key checkKey)
+    public bool ContainLayer(QuickKey checkKey)
     {
         int checkLayer = 1 << (int)checkKey;
-        checkLayer &= Layer & checkLayer;
+        checkLayer = Layer & checkLayer;
         if (checkLayer > 0)
             return true;
         return false;
     }
-    public void OffLayer(Key checkKey)
+    public bool ContainLayer(DefaultKey checkKey)
     {
-        int offLayer = 1 << (int)checkKey;
-        Layer &= ~offLayer;
+        int checkLayer = 1 << (int)checkKey;
+        checkLayer &= DefaultLayer & checkLayer;
+        if (checkLayer > 0)
+            return true;
+        return false;
     }
-    public bool[] CheckLayers(params Key[] checkKeys)
+
+    public bool[] CheckLayers(params QuickKey[] checkKeys)
     {
         bool[] checkLayers = new bool[checkKeys.Length];
         for (int i = 0; i < checkKeys.Length; i++)

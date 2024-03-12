@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
-    [SerializeField] AttackType atckType;
     AttackEffectType effectType;
     [SerializeField] int maxAttack;
     [SerializeField] TransformPos pos;
@@ -37,10 +36,9 @@ public class AttackController : MonoBehaviour
         size = _size * 0.5f;
     }
 
-    public void SetKnockBack(Vector3 power, AttackType _attackType, AttackEffectType _effectType, float _pushTime)
+    public void SetKnockBack(Vector3 power, AttackEffectType _effectType, float _pushTime)
     {
         knockbackPower = power;
-        atckType = _attackType;
         effectType = _effectType;
         pushTime = _pushTime;
     }

@@ -3,19 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static AttackState;
-
 public abstract class SkillStateController : PlayerBaseState<PlayerState>
 {
-    [HideInInspector] public KeyManager.Key currentSkillKey;
-
+    [HideInInspector] public KeyManager.QuickKey currentSkillKey;
+    [field: SerializeField] public GameObject projectile { get; private set; }
+    [field :SerializeField] public float objectSpeed { get; private set; }
+    [field : SerializeField] public AttackType AttackType { get; private set;}
+    [SerializeField] private bool hasCoolTime;
     [SerializeField] protected float coolTime;
     [SerializeField] protected AttackData[] attackData;
-    [SerializeField] bool repeatAnim;
-    [SerializeField] bool hasCoolTime;
-
+    public bool On { get; private set; }
+    [HideInInspector] public bool Click;
     protected bool isTransition;
 
-    public SkillState[] skillStates { get; private set; }
+    SkillState[] skillStates;
+    public SkillState GetState
+    {
+        get
+        {
+            if (skillStates.Length <= inputCount)
+                return null;
+            return skillStates[inputCount];
+        }
+    }
     public int inputCount { get; set; }
     public bool isCool { get; private set; }
     bool returnState;
@@ -28,17 +38,18 @@ public abstract class SkillStateController : PlayerBaseState<PlayerState>
             return;
         
         if (skillStates == null)
+        {
             skillStates = new SkillState[attackData.Length];
+        }
 
-        state.skillController = this;
-        state.attackData = attackData[idx];
-        state.animId = Animator.StringToHash(attackData[idx].AnimName);
-        state.chaingAnim = attackData[idx].chaingAnim;
+        state.SetSkillData(this, attackData[idx], Animator.StringToHash(attackData[idx].AnimName), attackData[idx].chainAnim);
         skillStates[idx] = state;
     }
 
     public override void Enter()
     {
+        On = true;
+        inputCount = 0;
         returnState = false;
         isTransition = false;
         if (ReadyCheck() == false)
@@ -51,25 +62,38 @@ public abstract class SkillStateController : PlayerBaseState<PlayerState>
         if (isTransition)
             EnterState();
         else if (returnState)
+        {
+            Out();
             owner.SetState = PlayerState.Idle;
+        }
     }
+
     protected abstract void EnterState();
-    public void FinishSkill()
+
+    public void Out()
     {
-        isCool = true;
+        On = false;
+        Click = false;
+        if (coroutine != null)
+            owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(CoolDown());
     }
     Coroutine coroutine = null;
     IEnumerator CoolDown()
     {
+        isCool = true;
         yield return new WaitForSeconds(coolTime);
         isCool = false;
     }
+
     bool ReadyCheck()
     {
         if (owner.Mp >= attackData[0].mana && 
             isCool == false)
+        {
+            owner.MinusMp = attackData[0].mana;
             return true;
+        }
         return false;
     }
 }

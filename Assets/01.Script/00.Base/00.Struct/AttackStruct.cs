@@ -4,3 +4,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+[Serializable]
+public struct AttackCount
+{
+    [Range(0, 1)]
+    public float AttackTime;
+    public float Percent;
+    public Vector2 power;
+    public float pushTime;
+    public float stunTime;
+    public AttackEffectType effectType;
+}
+[Serializable]
+public struct MoveData
+{
+    [Range(0, 1)]
+    public float moveTime;
+    public Vector2 move;
+    public float movingTime;
+}
+[Serializable]
+public struct AttackSize
+{
+    public Vector2 offset;
+    public Vector3 size;
+
+}
+
+[Serializable]
+public struct AttackData
+{
+    public string AnimName;
+    [Range(0, 1)]
+    public float delay;
+    public int damage;
+    public int mana;
+    public bool chainAnim;
+    public bool charging;
+    public AttackSize attackSize;
+    public MoveData[] move;
+    public AttackCount[] attackCounts;
+}

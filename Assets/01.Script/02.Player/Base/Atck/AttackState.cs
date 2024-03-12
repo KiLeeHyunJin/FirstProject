@@ -45,9 +45,9 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
         public float delay;
         public int damage;
         public int mana;
-        public bool chaingAnim;
+        public bool chainAnim;
         public AttackSize attackSize;
-        public MoveData move;
+        public MoveData[] move;
         public AttackCount[] attackCounts;
     }
     [SerializeField] protected float coolTime;
@@ -113,104 +113,104 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
 
     protected abstract void AttackEffect();
 
-    int atckCount;
-    int moveCount;
+    //int atckCount;
+    //int moveCount;
     public override void Update()
     {
-        if (inputCount >= attackData.Length)
-            return;
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[inputCount].AnimName))
-        {
-            if (atckCount <= attackData[inputCount].attackCounts.Length - 1)
-            {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].attackCounts[atckCount].AttackTime)
-                {
-                    owner.currentSkill = this;
-                    int direction =
-                        pos.direction == TransformPos.Direction.Left ? -1 : 1;
+        //if (inputCount >= attackData.Length)
+        //    return;
+        //if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[inputCount].AnimName))
+        //{
+        //    if (atckCount <= attackData[inputCount].attackCounts.Length - 1)
+        //    {
+        //        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].attackCounts[atckCount].AttackTime)
+        //        {
+        //            owner.currentSkill = this;
+        //            int direction =
+        //                pos.direction == TransformPos.Direction.Left ? -1 : 1;
 
-                    attack.SetPosition(
-                        new Vector2(
-                            attackData[inputCount].attackSize.offset.x * direction,
-                            attackData[inputCount].attackSize.offset.y),
-                        attackData[inputCount].attackSize.size);
+        //            attack.SetPosition(
+        //                new Vector2(
+        //                    attackData[inputCount].attackSize.offset.x * direction,
+        //                    attackData[inputCount].attackSize.offset.y),
+        //                attackData[inputCount].attackSize.size);
 
-                    attack.SetKnockBack(
-                        new Vector2(
-                            attackData[inputCount].attackCounts[atckCount].power.x * direction,
-                            attackData[inputCount].attackCounts[atckCount].power.y),
-                            attackData[inputCount].attackCounts[atckCount].type,
-                            attackData[inputCount].attackCounts[atckCount].effectType,
-                            attackData[inputCount].attackCounts[atckCount].pushTime
-                        );
+        //            attack.SetKnockBack(
+        //                new Vector2(
+        //                    attackData[inputCount].attackCounts[atckCount].power.x * direction,
+        //                    attackData[inputCount].attackCounts[atckCount].power.y),
+        //                    attackData[inputCount].attackCounts[atckCount].type,
+        //                    attackData[inputCount].attackCounts[atckCount].effectType,
+        //                    attackData[inputCount].attackCounts[atckCount].pushTime
+        //                );
 
-                    attack.SetDamage(attackData[inputCount].attackCounts[atckCount].Percent, attackData[inputCount].damage);
-                    attack.OnAttackEnable();
-                    AttackEffect();
-                    atckCount++;
-                }
-            }
-            if(moveCount < 1)
-            {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].move.moveTime)
-                {
-                    Vector2 movePos = attackData[inputCount].move.move;
-                    if (pos.direction == TransformPos.Direction.Left)
-                        movePos.x *= -1;
-                    pos.AddForce(movePos, attackData[inputCount].move.movingTime);
-                    moveCount++;
-                }
-            }
+        //            attack.SetDamage(attackData[inputCount].attackCounts[atckCount].Percent, attackData[inputCount].damage);
+        //            attack.OnAttackEnable();
+        //            AttackEffect();
+        //            atckCount++;
+        //        }
+        //    }
+        //    if(moveCount < 1)
+        //    {
+        //        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].move.moveTime)
+        //        {
+        //            Vector2 movePos = attackData[inputCount].move.move;
+        //            if (pos.direction == TransformPos.Direction.Left)
+        //                movePos.x *= -1;
+        //            pos.AddForce(movePos, attackData[inputCount].move.movingTime);
+        //            moveCount++;
+        //        }
+        //    }
 
-        }
+        //}
     }
 
     protected void Attack()
     {
-        if (animId.Length > 1)
-        {
-            if(hasCoolTime)
-            {
-                if (owner.Mp < attackData[inputCount].mana)
-                    return;
-                else
-                    owner.MinusMp = attackData[inputCount].mana;
-            }
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[inputCount].AnimName)) //현재 재생중인 클립 이름 확인
-            {
-                if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].delay) // 입력 제한 시간 확인
-                {
-                    inputCount++;
-                    if (animId.Length <= inputCount) //배열을 벗어난지 확인
-                    {
-                        inputCount = 0;
-                    }
-                }
-                else
-                {
-                    return;
-                }
-            }
-            else
-            {
-                inputCount = 0;
-            }
-            atckCount = 0;
-            moveCount = 0;
-            anim.Play(animId[inputCount]);
-            if (animCo != null)
-                owner.StopCoroutine(animCo);
-            animCo = owner.StartCoroutine(AnimationInputSensor(inputCount));
+        //if (animId.Length > 1)
+        //{
+        //    if(hasCoolTime)
+        //    {
+        //        if (owner.Mp < attackData[inputCount].mana)
+        //            return;
+        //        else
+        //            owner.MinusMp = attackData[inputCount].mana;
+        //    }
+        //    if (anim.GetCurrentAnimatorStateInfo(0).IsName(attackData[inputCount].AnimName)) //현재 재생중인 클립 이름 확인
+        //    {
+        //        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackData[inputCount].delay) // 입력 제한 시간 확인
+        //        {
+        //            inputCount++;
+        //            if (animId.Length <= inputCount) //배열을 벗어난지 확인
+        //            {
+        //                inputCount = 0;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        inputCount = 0;
+        //    }
+        //    atckCount = 0;
+        //    moveCount = 0;
+        //    anim.Play(animId[inputCount]);
+        //    if (animCo != null)
+        //        owner.StopCoroutine(animCo);
+        //    animCo = owner.StartCoroutine(AnimationInputSensor(inputCount));
             
-        }
-        else
-        {
-            inputCount = 0;
-            atckCount = 0;
-            moveCount = 0;
-            anim.Play(animId[0]);
-            animCo = owner.StartCoroutine(AnimationInputSensor(0));
-        }
+        //}
+        //else
+        //{
+        //    inputCount = 0;
+        //    atckCount = 0;
+        //    moveCount = 0;
+        //    anim.Play(animId[0]);
+        //    animCo = owner.StartCoroutine(AnimationInputSensor(0));
+        //}
     }
 
     protected Coroutine animCo = null;
@@ -252,8 +252,8 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
     public override void Exit()
     {
         inputCount = 0;
-        atckCount = 0;
-        moveCount = 0;
+        //atckCount = 0;
+        //moveCount = 0;
         ResetCoolTime();
         if (animCo != null)
             owner.StopCoroutine(animCo);
@@ -261,9 +261,9 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
 
     public void moveMethod()
     {
-        Vector2 movePos = attackData[inputCount].move.move;
-        if (pos.direction == TransformPos.Direction.Left)
-            movePos.x *= -1;
-        pos.AddForce(movePos, attackData[inputCount].move.moveTime);
+        //Vector2 movePos = attackData[inputCount].move.move;
+        //if (pos.direction == TransformPos.Direction.Left)
+        //    movePos.x *= -1;
+        //pos.AddForce(movePos, attackData[inputCount].move.moveTime);
     }
 }

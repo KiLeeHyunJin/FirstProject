@@ -32,13 +32,13 @@ public class Run : PlayerBaseState<PlayerState>
 
     public override void Transition()
     {
-        if (owner.keys.ContainLayer(KeyManager.Key.C))
+        if (owner.keys.ContainLayer(KeyManager.DefaultKey.C))
             owner.SetState = PlayerState.JumpUp;
         else if (
-            owner.keys.ContainLayer(KeyManager.Key.X))
+            owner.keys.ContainLayer(KeyManager.DefaultKey.X))
             owner.SetState = PlayerState.BasicAtck;
         else if (
-            owner.keys.ContainLayer(KeyManager.Key.Move) == false)
+            owner.keys.ContainLayer(KeyManager.DefaultKey.Move) == false)
             owner.SetState = PlayerState.Idle;
     }
 }

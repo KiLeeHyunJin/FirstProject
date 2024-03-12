@@ -5,16 +5,8 @@ using UnityEngine;
 [Serializable]
 public class ShortAirSlashController : SkillStateController
 {
-
-    public override void Enter()
+    protected override void EnterState()
     {
-
-    }
-    public override void Update()
-    {
-    }
-
-    public override void Transition()
-    {
+        owner.SetState = PlayerState.AirSlash0;
     }
 }

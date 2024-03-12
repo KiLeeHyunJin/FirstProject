@@ -41,9 +41,9 @@ public class JumpUp : PlayerBaseState<PlayerState>
     {
         if (isTransition)
             owner.SetState = PlayerState.JumpDown;
-        else if (owner.keys.ContainLayer(KeyManager.Key.X))
+        else if (owner.keys.ContainLayer(KeyManager.DefaultKey.X))
             if (pos.Y > 0.5f)
-                owner.SetState = PlayerState.Interaction;
+                owner.SetState = PlayerState.X;
         
     }
 

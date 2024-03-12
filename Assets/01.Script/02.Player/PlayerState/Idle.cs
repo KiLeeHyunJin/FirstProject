@@ -33,13 +33,13 @@ public class Idle : PlayerBaseState<PlayerState>
 
     public override void Transition()
     {
-        if (owner.keys.ContainLayer(KeyManager.Key.Move))
+        if (owner.keys.ContainLayer(KeyManager.DefaultKey.Move))
             owner.SetState = PlayerState.Walk;
         else if
-            (owner.keys.ContainLayer(KeyManager.Key.C))
+            (owner.keys.ContainLayer(KeyManager.DefaultKey.C))
             owner.SetState = PlayerState.JumpUp;
         else if
-            (owner.keys.ContainLayer(KeyManager.Key.X))
-            owner.SetState = PlayerState.Interaction;
+            (owner.keys.ContainLayer(KeyManager.DefaultKey.X))
+            owner.SetState = PlayerState.X;
     }
 }

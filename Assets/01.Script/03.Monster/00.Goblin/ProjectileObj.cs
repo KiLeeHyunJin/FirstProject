@@ -7,14 +7,18 @@ public class AttackObj : MonoBehaviour
 {
     [SerializeField] float speed;
     Attackable target;
+    int damage;
     Vector3 size;
     Vector2 power;
     Vector2 offset;
     Vector3 pos;
     CircleCollider2D circleCollider;
     Rigidbody2D rigid;
-    [SerializeField] Vector2 direc;
+    Vector2 direc;
     [SerializeField] float pushTime;
+    [SerializeField] int layer;
+    [SerializeField] bool isDestroy;
+    [SerializeField] AttackEffectType attackType;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -53,9 +57,10 @@ public class AttackObj : MonoBehaviour
         Vector3 currentPos = new Vector3(transform.position.x, 0, pos.z);
         if (target.ICollision(size, currentPos, offset))
         {
-            target.IGetDamage(0, AttackEffectType.Stun);
+            target.IGetDamage(damage, attackType);
             target.ISetKnockback(power, currentPos, size, offset, pushTime);
-            Destroy(gameObject);
+            if(isDestroy)
+                Destroy(gameObject);
         }
     }
 
@@ -66,7 +71,7 @@ public class AttackObj : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == 7)
+        if(collision.gameObject.layer == layer)
         {
            target = collision.GetComponent<Attackable>();
         }

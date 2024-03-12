@@ -21,15 +21,15 @@ public class BasicAttack : PlayerBaseState<PlayerState>
         if (pos.yState() == TransformAddForce.YState.None)
         {
             if (owner.WalkType == PlayerState.Run)
-                owner.SetState = PlayerState.RunAtck;
+                owner.SetState = PlayerState.RunAtckControll;
             else
-                owner.SetState = PlayerState.LandAtck;
+                owner.SetState = PlayerState.LandAtckControll;
             owner.WalkType = PlayerState.Idle;
         }
         else
         {
             if (pos.Y > jumpLimitYPos)
-                owner.SetState = PlayerState.JumpAtck;
+                owner.SetState = PlayerState.JumpAtckControll;
             else
                 owner.SetState = PlayerState.JumpUp;
         }
