@@ -45,6 +45,7 @@ public abstract class AttackState : PlayerBaseState<PlayerState>
         public float delay;
         public int damage;
         public int mana;
+        public bool chaingAnim;
         public AttackSize attackSize;
         public MoveData move;
         public AttackCount[] attackCounts;
