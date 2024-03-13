@@ -42,16 +42,17 @@ public class BaseProjectile : MonoBehaviour
         else
             GetComponent<SpriteRenderer>().flipX = true;
         direc = new Vector2(_dir * speed, 0);
-        size = Vector3.one * circleCollider.radius;
-        offset = new Vector2(0, 0.5f);
     }
 
-    public void SetPosition(Vector3 _pos, Vector3 Size, Vector2 _offset)
+    public void SetPosition(Vector3 _pos, Vector3 Size, Vector2 _offset, Vector2 _posOffset)
     {
-        size = Size;
+        if(Size.sqrMagnitude == 0)
+            size = Vector3.one * circleCollider.radius;
+        else
+            size = Size;
         this.offset = _offset;
         this.pos = _pos;
-        transform.position = new Vector2(_pos.x, _pos.z) + _offset;
+        transform.position = new Vector2(_pos.x, _pos.z) + _posOffset;
     }
     public void SetAttackData(Vector2 _power,int _damage, AttackEffectType _attackType, float _stunTime, float _pushTime)
     {
@@ -91,19 +92,7 @@ public class BaseProjectile : MonoBehaviour
         Gizmos.DrawWireCube(new Vector2(transform.position.x, realYPos),
         new Vector2(size.x * temp * 2, size.y * temp));
     }
-    //private void Update()
-    //{
-    //    if (isRepeater)
-    //        return;
-    //    if (target == null)
-    //        return;
-    //    Vector3 currentPos = new Vector3(transform.position.x, 0, pos.z);
-    //    if (target.ICollision(size, currentPos, offset))
-    //    {
-    //        target.IGetDamage(damage, attackType);
-    //        target.ISetKnockback(power, currentPos, size, offset, pushTime);
-    //    }
-    //}
+
     Coroutine attackCoroutine = null;
     IEnumerator RepeatAtckCo()
     {

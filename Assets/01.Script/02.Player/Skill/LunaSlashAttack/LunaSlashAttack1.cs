@@ -30,6 +30,8 @@ public class LunaSlashAttack1 : SkillState
         Vector3 position = pos.Pose + new Vector3(0.5f * direction, 0, 0);
         Vector2 power = attackData.attackCounts[0].power;
         power.x *= direction;
+
+
         controller.luna.SetData(power, position, direction);
         controller.luna.SetData(
             controller.ChargeTime * 3,

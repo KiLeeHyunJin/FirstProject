@@ -22,7 +22,7 @@ public class Attackable : MonoBehaviour, IDamagable
 
     public void ISetKnockback(Vector3 power, Vector3 pos, Vector3 size, Vector2 offset, float pushTime = 0)
     {
-        if (transformPos.attackCheck.CheckAttackCollision(pos, size, offset))
+        if (ICollision(size,pos, offset))
         {
             if (AttackPowerCheck(attackEffectType) == false)
                 return;
@@ -70,7 +70,7 @@ public class Attackable : MonoBehaviour, IDamagable
     {
         return new Vector2(transformPos.X, transformPos.Z);
     }
-    public bool ICollision(Vector2 size, Vector3 pos, Vector2 offset)
+    public bool ICollision(Vector3 size, Vector3 pos, Vector2 offset)
     {
         return transformPos.attackCheck.CheckAttackCollision(pos, size, offset);
     }

@@ -6,6 +6,8 @@ public class ShortAirSlash1 : SkillState
 {
     protected override void SetEnter()
     {
+        if (owner.moveValue.x == 0)
+            return;
         pos.SetDirection =
     owner.moveValue.x > 0 ?
     TransformPos.Direction.Right : TransformPos.Direction.Left;

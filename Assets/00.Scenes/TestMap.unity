@@ -1454,6 +1454,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: slashController.hasCoolTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: slashController.attackData.Array.data[0].delay
+      value: 0.639
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
       propertyPath: lunaSlashController.attackData.Array.data[1].attackCounts.Array.data[0].gather
       value: 0
       objectReference: {fileID: 0}

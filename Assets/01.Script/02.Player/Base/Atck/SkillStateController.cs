@@ -75,6 +75,8 @@ public abstract class SkillStateController : PlayerBaseState<PlayerState>
         On = false;
         Click = false;
         owner.activeType = ActiveType.Normal;
+        if (hasCoolTime == false)
+            return;
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(CoolDown());

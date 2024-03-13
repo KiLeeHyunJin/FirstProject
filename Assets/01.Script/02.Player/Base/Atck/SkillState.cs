@@ -29,6 +29,7 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
     {
         SetEnter();
         direction = pos.direction == TransformPos.Direction.Left ? -1 : 1;
+        owner.activeType = ActiveType.Skill;
         attackIdx = 0;
         moveIdx = 0;
         skillController.inputCount++;
@@ -100,30 +101,34 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
 
     private void CheckTransition(float normalTime)
     {
-        if (skillController.Click) //키가 눌렸다.
+        if(chaingAnim == false)
         {
-            if (normalTime >= attackData.delay) //제한 시간 지나고 눌렸다.
+            if(owner.activeType == ActiveType.Skill)
             {
-                skillController.inputCount++;
-                nextAnim = true;
-            }
-            skillController.Click = false;
-        }
-        else if (normalTime >= 1)
-        {
-            if (attackData.charging)
-                return;
-            if (chaingAnim)
-            {
-                skillController.inputCount++;
-                nextAnim = true;
+                if (normalTime >= attackData.delay)
+                    owner.activeType = ActiveType.Normal;
+                else
+                    return;
             }
             else
             {
-                isTransition = true;
+                if (skillController.Click)
+                {
+                    skillController.inputCount++;
+                    nextAnim = true;
+                }
+                if (normalTime >= 1)
+                    isTransition = true;
             }
         }
-       
+        else
+        {
+            if (normalTime >= 1)
+            {
+                skillController.inputCount++;
+                nextAnim = true;
+            }
+        }
     }
     /// <summary>
     /// Update
