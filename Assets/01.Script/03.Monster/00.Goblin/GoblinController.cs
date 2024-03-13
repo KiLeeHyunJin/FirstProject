@@ -50,7 +50,11 @@ public class GoblinController : MonsterController<GoblinState>
         base.Start();
         fsm.Start(GoblinState.Idle);
     }
-
+    protected override void Die()
+    {
+        base.Die();
+        SetState = GoblinState.Fall;
+    }
     public override void ISetDamage(int damage, AttackEffectType effectType, float stunTime)
     {
         base.ISetDamage(damage,effectType,stunTime);

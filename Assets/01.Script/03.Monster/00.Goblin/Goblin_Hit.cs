@@ -6,13 +6,14 @@ using UnityEngine;
 [Serializable]
 public class Goblin_Hit : MonsterState<GoblinState>
 {
-    [SerializeField] float stundTime;
+    float stunTime;
     bool isTransition;
     public override void Enter()
     {
         anim.Play(AnimIdTable.GetInstance.Hit1Id);
         isTransition = false;
-        if(coroutine != null)
+        stunTime = owner.StunTime;
+        if (coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(WaitCo());
     }
@@ -20,7 +21,7 @@ public class Goblin_Hit : MonsterState<GoblinState>
     IEnumerator WaitCo()
     {
         owner.FlipCheck(pos.Velocity2D());
-        yield return new WaitForSeconds(stundTime);
+        yield return new WaitForSeconds(stunTime);
         isTransition = true;
     }
     public override void Exit()

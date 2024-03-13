@@ -9,6 +9,7 @@ public struct AttackCount
 {
     [Range(0, 1)]
     public float AttackTime;
+    [Range(0,2)]
     public float Percent;
     public Vector2 power;
     public float pushTime;

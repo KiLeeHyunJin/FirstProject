@@ -43,8 +43,7 @@ public class MonsterController<T> : BaseController<T> where T : Enum
     }
     protected void SetStateClass(MonsterState<T> state)
     {
-        state.SetStateMachine(fsm);
-        state.Setting(anim, transformPos, renderer);
+        base.SetStateData(state);
         state.SetController(this);
     }
     public void ResetCoolTime(AtckEnum idx)
@@ -65,5 +64,24 @@ public class MonsterController<T> : BaseController<T> where T : Enum
         if (check)
             AtckType = idx;
         return check;
+    }
+    protected override void Die()
+    {
+        base.Die();
+        coroutine = StartCoroutine(Disappear());
+    }
+    Coroutine coroutine = null;
+    IEnumerator Disappear()
+    {
+        Color color = renderer.color;
+        float alphaValue = color.a;
+        while (color.a > 0)
+        {
+            alphaValue -= Time.deltaTime;
+            color = new Color(color.r, color.g, color.b, alphaValue);
+            renderer.color = color;
+            yield return new WaitForFixedUpdate();
+        }
+        Destroy(this.gameObject);
     }
 }

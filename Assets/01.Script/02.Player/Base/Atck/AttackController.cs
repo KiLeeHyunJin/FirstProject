@@ -53,10 +53,7 @@ public class AttackController : MonoBehaviour
         damage = _damage;
     }
 
-    public void OnAttackEnable()
-    {
-        GetCollisionObject();
-    }
+    public void OnAttackEnable() => GetCollisionObject();
 
     private void GetCollisionObject()
     {
@@ -106,9 +103,7 @@ public class AttackController : MonoBehaviour
             IDamagable damagable = colliders[i].GetComponent<IDamagable>();
             if (damagable != null)
             {
-                //if (AttackPossibleCheck(damagable.IGetStandType()) == false)
-                //    continue;
-                if(gather)
+                if (gather)
                 {
                     Vector2 sour =(
                             (new Vector2(pos.X,pos.Z) + offset) - damagable.IGetPos()
@@ -130,37 +125,7 @@ public class AttackController : MonoBehaviour
             }
             yield return new WaitForSeconds(0.01f);
         }
-        //SetttingReset();
     }
-
-    //bool AttackPossibleCheck(StandingState standingState)
-    //{
-    //    bool answerd = false;
-    //    switch (standingState)
-    //    {
-    //        case StandingState.Stand:
-    //            jumpPower = 1;
-    //            answerd = true; 
-    //            break;
-    //        case StandingState.Fall:
-    //            jumpPower = 0.8f;
-    //            answerd = true;
-    //            break;
-    //        case StandingState.Down:
-    //            if (atckType == AttackType.Down)
-    //            {
-    //                answerd = true;
-    //                jumpPower = 0.5f;
-    //            }
-    //            else
-    //                answerd = false;
-    //            break;
-    //        case StandingState.Sit:
-    //            answerd = false;
-    //            break;
-    //    }
-    //    return answerd;
-    //}
 
     private void SetttingReset()
     {

@@ -94,6 +94,12 @@ public class TauController : MonsterController<TauState>
         }
         MinusHp = damage;
     }
+
+    protected override void Die()
+    {
+        base.Die();
+        SetState = TauState.Fall;
+    }
     public override void ISetType()
     {
         base.ISetType();

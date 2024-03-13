@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 public enum StandingState
 {
@@ -10,7 +11,7 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
 {
     public float StunTime { get; private set; }
     public int MinusHp { set { Hp -= value; } }
-
+    public bool isDie { get; protected set; }
     public StateMachine<T> fsm;
     [field : SerializeField]
     public T CurrentState 
@@ -48,10 +49,11 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
 
     protected virtual void Awake()
     {
+        isDie = false;
             transformPos = GetComponent<TransformPos>();
         fsm = new StateMachine<T>();
     }
-    void SetStateData(BaseState<T> state)
+    protected virtual void SetStateData(BaseState<T> state)
     {
         state.SetStateMachine(fsm);
         state.Setting(anim, transformPos, renderer);
@@ -63,12 +65,6 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (Hp <= 0)
-        {
-            if (coroutine == null)
-                Die();
-            return;
-        }
         fsm.Update();
     }
     protected virtual void FixedUpdate()
@@ -86,27 +82,20 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
         else
             transformPos.SetDirection = TransformPos.Direction.Right;
     }
-    Coroutine coroutine = null;
-    void Die()
+    protected virtual void Die()
     {
-        coroutine = StartCoroutine(Disappear());
+        isDie = true;
+        transformPos.AddForce(transformPos.Velocity() + (Vector3.up * 6));
     }
-    IEnumerator Disappear()
-    {
-        Color color = renderer.color;
-        float alphaValue = color.a;
-        while (color.a > 0)
-        {
-            alphaValue -= Time.deltaTime * 2;
-            color = new Color(color.r, color.g, color.b, alphaValue);
-            renderer.color = color;
-            yield return new WaitForFixedUpdate();
-        }
-    }
+ 
 
     public virtual void ISetDamage(int damage, AttackEffectType effectType, float stunTime)
     {
         StunTime = stunTime;
+        MinusHp = damage;
+
+        if (isDie == false && Hp <= 0)
+                Die();
     }
 
     public virtual void ISetType()

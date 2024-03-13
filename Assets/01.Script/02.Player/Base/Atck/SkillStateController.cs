@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static AttackState;
 public abstract class SkillStateController : PlayerBaseState<PlayerState>
 {
     [HideInInspector] public KeyManager.QuickKey currentSkillKey;

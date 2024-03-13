@@ -8,7 +8,7 @@ public class ProjectileObj : MonoBehaviour
 {
     [SerializeField] float speed;
     Attackable target;
-    int damage;
+    [SerializeField] int damage;
     Vector3 size;
     Vector2 power;
     Vector2 offset;
@@ -43,22 +43,6 @@ public class ProjectileObj : MonoBehaviour
         offset = new Vector2(0, 0.5f);
         transform.position = new Vector2(_pos.x, _pos.z) + offset;
     }
-    public void SetData(float _destroyTime, Vector3 _pos, Vector3 Size, Vector2 _offset,AttackEffectType _attackType)
-    {
-        destroyTime = _destroyTime;
-        size = Size;
-        this.offset = _offset;
-        this.pos = _pos;
-        attackType = _attackType;
-        if (coroutine != null)
-            StopCoroutine(coroutine);
-        coroutine = StartCoroutine(DestroyCo());
-        isRepeater = true;
-        if (attackCoroutine != null)
-            StopCoroutine(attackCoroutine);
-        attackCoroutine = StartCoroutine(AttackRepeatCo());
-    }
-    bool isRepeater = false;
     //bool isStart = false;
     private void OnDrawGizmos()
     {
@@ -77,8 +61,7 @@ public class ProjectileObj : MonoBehaviour
     }
     private void Update()
     {
-        if (isRepeater)
-            return;
+
         if (target == null)
             return;
         Vector3 currentPos = new Vector3(transform.position.x, 0, pos.z);
@@ -90,32 +73,11 @@ public class ProjectileObj : MonoBehaviour
                 Destroy(gameObject);
         }
     }
-    Coroutine attackCoroutine = null;
-    IEnumerator AttackRepeatCo()
-    {
-        while(true)
-        {
-            if(target != null)
-            {
-                Vector3 currentPos = new Vector3(transform.position.x, 0, pos.z);
-                if (target.ICollision(size, currentPos, offset))
-                {
-                    target.IGetDamage(damage, attackType);
-                    target.ISetKnockback(power, currentPos, size, offset, pushTime);
-                    if (isDestroy)
-                        Destroy(gameObject);
-                }
-            }
-
-            yield return new WaitForSeconds(0.15f);
-        }
-    }
+   
     Coroutine coroutine = null;
     IEnumerator DestroyCo()
     {
         yield return new WaitForSeconds(destroyTime);
-        if (attackCoroutine != null)
-            StopCoroutine(attackCoroutine);
         gameObject.SetActive (false);
     }
     private void FixedUpdate()

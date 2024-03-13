@@ -1482,6 +1482,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7423350229670089030, guid: eb66935a057b1db4caeb8bd9b64582d2, type: 3}
     - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: landBasicController.attackData.Array.data[0].damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: landBasicController.attackData.Array.data[1].damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: landBasicController.attackData.Array.data[2].damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
       propertyPath: heatWaveAttackController.attackData.Array.data[1].attackSize.size.y
       value: 1.59
       objectReference: {fileID: 0}
@@ -1490,12 +1502,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: landBasicController.attackData.Array.data[0].attackCounts.Array.data[0].Percent
+      value: 0.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: landBasicController.attackData.Array.data[1].attackCounts.Array.data[0].Percent
+      value: 0.821
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: landBasicController.attackData.Array.data[2].attackCounts.Array.data[0].Percent
+      value: 0.686
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
       propertyPath: lunaSlashController.attackData.Array.data[1].attackCounts.Array.data[0].power.x
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
       propertyPath: lunaSlashController.attackData.Array.data[1].attackCounts.Array.data[0].power.y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: landBasicController.attackData.Array.data[1].attackCounts.Array.data[0].stunTime
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
       propertyPath: lunaSlashController.attackData.Array.data[1].attackCounts.Array.data[0].pushTime

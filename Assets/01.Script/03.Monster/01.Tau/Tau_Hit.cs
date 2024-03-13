@@ -6,13 +6,13 @@ using UnityEngine;
 [Serializable]
 public class Tau_Hit : MonsterState<TauState>
 {
-    [SerializeField]
     float stunTime;
     bool isTransition;
     public override void Enter()
     {
         isTransition = false;
-        if(coroutine != null)
+        stunTime = owner.StunTime;
+        if (coroutine != null)
             owner.StopCoroutine(coroutine);
         coroutine = owner.StartCoroutine(WaitCo());
     }

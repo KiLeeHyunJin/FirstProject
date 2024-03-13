@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -165,13 +166,9 @@ public class PlayerController : BaseController<PlayerState>
 
     void SetStateData(PlayerBaseState<PlayerState> state)
     {
-        state.Setting(anim, transformPos, renderer );
-        state.SetStateMachine(fsm);
+        base.SetStateData(state);
         state.SetController(this);
         state.SettingAttackData(atkController);
-        AttackState attack = state as AttackState;
-        if (attack != null)
-            attack.SettingAttack();
     }
 
     void GetSkill(string str, KeyManager.QuickKey setKey, params PlayerState[] enums)
@@ -204,7 +201,11 @@ public class PlayerController : BaseController<PlayerState>
         keys.ResetLayer();
         //keys.Re();
     }
-
+    protected override void Die()
+    {
+        base.Die();
+        SetState = PlayerState.Fall;
+    }
     public void AroundCheckQuickKey()
     {
         if (CurrentState == PlayerState.Hit || 

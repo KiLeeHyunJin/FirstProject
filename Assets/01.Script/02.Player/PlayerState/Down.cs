@@ -36,6 +36,8 @@ public class Down : PlayerBaseState<PlayerState>
 
     public override void Transition()
     {
+        if (owner.isDie)
+            return;
         if (isTransition)
         {
             owner.SetStandState = StandingState.Sit;

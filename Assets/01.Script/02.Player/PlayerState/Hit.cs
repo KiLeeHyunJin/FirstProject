@@ -6,8 +6,7 @@ using UnityEngine;
 [Serializable]
 public class Hit : PlayerBaseState<PlayerState>
 {
-    [SerializeField] public float delay;
-    public void SetDelayTime(float time) => delay = time;
+    float delay;
     bool isTransition;
     public override void Enter()
     {
@@ -18,6 +17,7 @@ public class Hit : PlayerBaseState<PlayerState>
         coroutine = owner.StartCoroutine(WaitCoroutine());
         owner.OnStartAlert();
         int idx = UnityEngine.Random.Range(0, 2);
+        delay = owner.StunTime;
         if (idx == 1)
             anim.Play(AnimIdTable.GetInstance.Hit1Id);
         else
