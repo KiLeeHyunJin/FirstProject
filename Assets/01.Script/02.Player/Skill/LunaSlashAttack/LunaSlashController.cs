@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class LunaSlashController : SkillStateController
 {
-    public ProjectileObj luna;
+    public BaseProjectile luna;
     public float ChargeTime { get; set; }
     protected override void EnterState()
     {

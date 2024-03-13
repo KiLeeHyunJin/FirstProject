@@ -8,7 +8,7 @@ public enum StandingState
 }
 public abstract class BaseController<T> : MonoBehaviour, IConnectController where T : Enum
 {
-
+    public float StunTime { get; private set; }
     public int MinusHp { set { Hp -= value; } }
 
     public StateMachine<T> fsm;
@@ -104,8 +104,9 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
         }
     }
 
-    public virtual void ISetDamage(int damage, AttackEffectType effectType)
+    public virtual void ISetDamage(int damage, AttackEffectType effectType, float stunTime)
     {
+        StunTime = stunTime;
     }
 
     public virtual void ISetType()

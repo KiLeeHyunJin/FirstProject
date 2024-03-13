@@ -20,7 +20,7 @@ public class Attackable : MonoBehaviour, IDamagable
         attackEffectType = effectType;
     }
 
-    public void ISetKnockback(Vector3 power, Vector3 pos, Vector3 size, Vector2 offset, float pushTime = 0)
+    public void ISetKnockback(Vector3 power, Vector3 pos, Vector3 size, Vector2 offset, float stunTime,float pushTime = 0)
     {
         if (ICollision(size,pos, offset))
         {
@@ -30,7 +30,7 @@ public class Attackable : MonoBehaviour, IDamagable
             Vector3 force = new Vector3(power.x, power.y * jumpPower, power.z);
             transformPos.AddForce(force);
             if (controller != null)
-                controller.ISetDamage(dam, attackEffectType);
+                controller.ISetDamage(dam, attackEffectType,stunTime);
             transformPos.AddForce(force, pushTime);
 
             Debug.Log("Ãæµ¹");

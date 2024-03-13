@@ -32,5 +32,6 @@ public class ShortAirSlash0 : SkillState
 
     protected override void EnterAction()
     {
+
     }
 }

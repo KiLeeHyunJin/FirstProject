@@ -19,6 +19,7 @@ public class BaseProjectile : MonoBehaviour
     int damage;
     float stunTime;
     float pushTime;
+    float time;
     AttackEffectType attackType;
 
     bool isRepeater = false;
@@ -49,7 +50,7 @@ public class BaseProjectile : MonoBehaviour
         if(Size.sqrMagnitude == 0)
             size = Vector3.one * circleCollider.radius;
         else
-            size = Size;
+            size = Size * 0.5f;
         this.offset = _offset;
         this.pos = _pos;
         transform.position = new Vector2(_pos.x, _pos.z) + _posOffset;
@@ -62,12 +63,13 @@ public class BaseProjectile : MonoBehaviour
         stunTime = _stunTime;
         pushTime = _pushTime;
     }
-    public void SetState(bool repeatState, float _destroyTime = 0)
+    public void SetState(bool repeatState, float timing,float _destroyTime = 0)
     {
         if (repeatState == false && _destroyTime == 0)
             _destroyTime = 10;
         destroyTime = _destroyTime;
         isRepeater = repeatState;
+        time = timing;
         gameObject.SetActive(true);
         if (disableCoroutine != null)
             StopCoroutine(disableCoroutine);
@@ -118,7 +120,7 @@ public class BaseProjectile : MonoBehaviour
                     }
                 }
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(time);
         }
     }
     Coroutine disableCoroutine = null;

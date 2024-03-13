@@ -6,7 +6,7 @@ using static AttackState;
 public abstract class SkillStateController : PlayerBaseState<PlayerState>
 {
     [HideInInspector] public KeyManager.QuickKey currentSkillKey;
-    [field: SerializeField] public ProjectileObj projectile { get; private set; }
+    [field: SerializeField] public BaseProjectile projectile { get; private set; }
     [field :SerializeField] public float objectSpeed { get; private set; }
     [field : SerializeField] public AttackType AttackType { get; private set;}
     [SerializeField] private bool hasCoolTime;
@@ -28,7 +28,7 @@ public abstract class SkillStateController : PlayerBaseState<PlayerState>
     }
     public int inputCount { get; set; }
     public bool isCool { get; private set; }
-    bool returnState;
+    //bool returnState;
 
     public void SetSkillData(SkillState state, int idx)
     {
@@ -50,22 +50,22 @@ public abstract class SkillStateController : PlayerBaseState<PlayerState>
     {
         On = true;
         inputCount = 0;
-        returnState = false;
-        isTransition = false;
-        if (ReadyCheck() == false)
-            returnState = true;
-        else 
-            isTransition = true;
+        isTransition = true;
+        //returnState = false;
+        //isTransition = false;
+        //if (ReadyCheck() == false)
+        //returnState = true;
+        //else 
     }
     public override void Transition()
     {
-        if (isTransition)
+        //if (isTransition)
             EnterState();
-        else if (returnState)
-        {
-            Out();
-            owner.SetState = PlayerState.Idle;
-        }
+        //else if (returnState)
+        //{
+        //    Out();
+        //    owner.SetState = PlayerState.Idle;
+        //}
     }
 
     protected abstract void EnterState();
@@ -89,12 +89,19 @@ public abstract class SkillStateController : PlayerBaseState<PlayerState>
         isCool = false;
     }
 
-    bool ReadyCheck()
+    public bool ReadyCheck()
     {
-        if (owner.Mp >= attackData[0].mana && 
+        int checkNum = 0;
+        if(On == true)
+        {
+            checkNum = inputCount;
+            if (inputCount >= attackData.Length)
+                return false;
+        }
+        if (owner.Mp >= attackData[checkNum].mana && 
             isCool == false)
         {
-            owner.MinusMp = attackData[0].mana;
+            //owner.MinusMp = attackData[checkNum].mana;
             return true;
         }
         return false;

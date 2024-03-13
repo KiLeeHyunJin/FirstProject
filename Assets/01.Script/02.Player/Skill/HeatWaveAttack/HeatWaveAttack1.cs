@@ -44,6 +44,7 @@ public class HeatWaveAttack1 : SkillState
                     returnPos,
                     returnSize,
                     returnOffset,
+                    attackData.attackCounts[0].stunTime,
                     0
                     );
             }

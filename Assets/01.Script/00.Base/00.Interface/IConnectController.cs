@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IConnectController 
 {
-    public void ISetDamage(int damage, AttackEffectType effectType);
+    public void ISetDamage(int damage, AttackEffectType effectType, float stunTime);
     public void ISetType();
     public StandingState IGetStandingType();
 }

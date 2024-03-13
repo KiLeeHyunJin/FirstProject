@@ -19,6 +19,7 @@ public class AttackController : MonoBehaviour
     float per;
     int damage;
     bool isStart;
+    float stunTime;
     float pushTime;
     bool gather;
     public void Awake()
@@ -38,11 +39,12 @@ public class AttackController : MonoBehaviour
         gather = _gather;
     }
 
-    public void SetKnockBack(Vector3 power, AttackEffectType _effectType, float _pushTime)
+    public void SetKnockBack(Vector3 power, AttackEffectType _effectType, float _pushTime, float _stunTime)
     {
         knockbackPower = power;
         effectType = _effectType;
         pushTime = _pushTime;
+        stunTime = _stunTime;
     }
 
     public void SetDamage(float _perDamage, int _damage)
@@ -122,6 +124,7 @@ public class AttackController : MonoBehaviour
                     returnPos,
                     returnSize,
                     returnOffset,
+                    stunTime,
                     pushTime
                     );
             }

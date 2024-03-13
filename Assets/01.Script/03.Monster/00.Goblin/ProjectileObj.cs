@@ -25,7 +25,7 @@ public class ProjectileObj : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         circleCollider = GetComponent<CircleCollider2D>();
-        isStart = true;
+        //isStart = true;
         gameObject.SetActive(false);
     }
     public void SetData(Vector2 _power, Vector3 _pos,int _dir)
@@ -59,7 +59,7 @@ public class ProjectileObj : MonoBehaviour
         attackCoroutine = StartCoroutine(AttackRepeatCo());
     }
     bool isRepeater = false;
-    bool isStart = false;
+    //bool isStart = false;
     private void OnDrawGizmos()
     {
         float temp = 0.5f;

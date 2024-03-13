@@ -51,8 +51,9 @@ public class GoblinController : MonsterController<GoblinState>
         fsm.Start(GoblinState.Idle);
     }
 
-    public override void ISetDamage(int damage, AttackEffectType effectType)
+    public override void ISetDamage(int damage, AttackEffectType effectType, float stunTime)
     {
+        base.ISetDamage(damage,effectType,stunTime);
         if (
             CurrentState == GoblinState.Fall ||
             CurrentState == GoblinState.Down)

@@ -227,6 +227,9 @@ public class PlayerController : BaseController<PlayerState>
                     if(atckState.AttackType != AttackType.Jump)
                     continue;
 
+                if (atckState.ReadyCheck() == false)
+                    continue;
+
                 PlayerState state = EnumUtil<PlayerState>.Parse(key.ToString());
                 if (atckState.On)
                     atckState.Click = true;
@@ -282,8 +285,9 @@ public class PlayerController : BaseController<PlayerState>
             keys.OnMoveLayer();
     }
 
-    public override void ISetDamage(int damage, AttackEffectType effectType)
+    public override void ISetDamage(int damage, AttackEffectType effectType, float stunTime)
     {
+        base.ISetDamage(damage, effectType, stunTime);
         if (CurrentState == PlayerState.Fall ||
             CurrentState == PlayerState.Down)
         {

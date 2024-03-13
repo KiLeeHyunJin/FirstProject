@@ -14,6 +14,7 @@ public class ShortAirSlash2 : SkillState
     }
     protected override void EnterAction()
     {
+
     }
     protected override void Attack(float normalTime)
     {

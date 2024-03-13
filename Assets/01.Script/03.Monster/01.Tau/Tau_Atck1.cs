@@ -64,6 +64,7 @@ public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
                             pos.Pose,
                             AttackSize,
                             Offset,
+                            owner.GetAtckData(0).stunTime,
                             owner.GetAtckData(0).pushTime[0]
                             );
                     }

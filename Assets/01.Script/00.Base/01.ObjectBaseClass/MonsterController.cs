@@ -15,8 +15,11 @@ public class MonsterController<T> : BaseController<T> where T : Enum
         public Vector3 AttackSize;
         public Vector2 AttackOffset;
         public Vector2 AttackPower;
+        [Range(0, 1)]
+        public float stunTime;
         [Range(0,1)]
-        public float[] AttackTimming;
+        public float[] AttackTimming;        
+
         public float[] pushTime;
         public AttackEffectType AttackEffect;
     }

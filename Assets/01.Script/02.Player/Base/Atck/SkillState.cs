@@ -27,6 +27,14 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
 
     public override void Enter()
     {
+        if (owner.Mp >= attackData.mana)
+            owner.MinusMp = attackData.mana;
+        else
+        {
+            isTransition = true;
+            return;
+        }
+
         SetEnter();
         direction = pos.direction == TransformPos.Direction.Left ? -1 : 1;
         owner.activeType = ActiveType.Skill;
@@ -90,6 +98,7 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
                     attackData.attackCounts[attackIdx].power.x * direction,
                     attackData.attackCounts[attackIdx].power.y),
                     attackData.attackCounts[attackIdx].effectType,
+                    attackData.attackCounts[attackIdx].stunTime,
                     attackData.attackCounts[attackIdx].pushTime
                 );
 
@@ -101,6 +110,8 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
 
     private void CheckTransition(float normalTime)
     {
+        if (attackData.charging)
+            return;
         if(chaingAnim == false)
         {
             if(owner.activeType == ActiveType.Skill)
