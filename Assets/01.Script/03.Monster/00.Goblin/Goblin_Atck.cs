@@ -15,7 +15,7 @@ public class Goblin_Atck : MonsterState<GoblinState>
         anim.Play(AnimIdTable.GetInstance.AtckId);
         isTransition = false;
         owner.ResetCoolTime(MonsterController<GoblinState>.AtckEnum.Atck1);
-        attackTime = owner.GetAtckData(0).AttackTimming[0];
+        attackTime = owner.GetAtckData(0).AttckType[0].AttackTimming;
         dir = pos.direction == TransformPos.Direction.Right ? 1 : -1;
         if (coroutine != null)
             owner.StopCoroutine(coroutine);

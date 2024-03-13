@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseData : MonoBehaviour
+public class InventorySystem : MonoBehaviour
 {
-    [SerializeField] int hp;
+    
 }

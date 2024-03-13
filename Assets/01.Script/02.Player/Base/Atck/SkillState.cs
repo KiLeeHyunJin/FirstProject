@@ -26,13 +26,20 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
 
     public override void Enter()
     {
-        if (owner.Mp >= attackData.mana)
-            owner.MinusMp = attackData.mana;
-        else
+        if(attackData.mana > 0)
         {
-            isTransition = true;
-            return;
+            if (owner.Mp >= attackData.mana)
+            {
+                owner.MinusMp = attackData.mana;
+                owner.mpEvent?.Invoke();
+            }
+            else
+            {
+                isTransition = true;
+                return;
+            }
         }
+
 
         SetEnter();
         direction = pos.direction == TransformPos.Direction.Left ? -1 : 1;

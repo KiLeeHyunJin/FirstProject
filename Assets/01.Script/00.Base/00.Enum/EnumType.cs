@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class EnumType : MonoBehaviour
 {
-
+    public enum ItemType { Equip,Consume,Gold,}
 }

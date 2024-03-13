@@ -8,19 +8,26 @@ using static TauController;
 public class MonsterController<T> : BaseController<T> where T : Enum
 {
     [Serializable]
+    public struct AtckCount
+    {
+        [Range(0,1)]
+        public float AttackTimming;
+        [Range(0,1)]
+        public float pushTime;
+    }
+
+    [Serializable]
     public struct AtckData
     {
         public float Atck_CoolTime;
+        public int damage;
         public Vector2 optimumRange;
         public Vector3 AttackSize;
         public Vector2 AttackOffset;
         public Vector2 AttackPower;
         [Range(0, 1)]
         public float stunTime;
-        [Range(0,1)]
-        public float[] AttackTimming;        
-
-        public float[] pushTime;
+        public AtckCount[] AttckType;       
         public AttackEffectType AttackEffect;
     }
     public enum AtckEnum

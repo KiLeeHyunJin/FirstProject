@@ -298,27 +298,30 @@ MonoBehaviour:
     AttackSize: {x: 2.62, y: 4, z: 0.76}
     AttackOffset: {x: 0.94, y: 0}
     AttackPower: {x: 2, y: 5}
+    stunTime: 0
     AttackTimming:
     - 0.352
     pushTime: []
-    AttackEffect: 0
+    AttackEffect: 2
   - Atck_CoolTime: 20
     optimumRange: {x: 3, y: 1}
     AttackSize: {x: 1.83, y: 3.34, z: 0.69}
     AttackOffset: {x: 0.99, y: 0}
     AttackPower: {x: 5, y: 6}
+    stunTime: 0
     AttackTimming:
     - 0.083
     - 0.371
     - 0.629
     - 0.894
     pushTime: []
-    AttackEffect: 0
+    AttackEffect: 2
   - Atck_CoolTime: 15
     optimumRange: {x: 2, y: 1}
     AttackSize: {x: 2.15, y: 3.34, z: 0.9}
     AttackOffset: {x: 0.65, y: 0}
     AttackPower: {x: 1, y: 3}
+    stunTime: 0
     AttackTimming:
     - 0
     - 0.179
@@ -326,8 +329,13 @@ MonoBehaviour:
     - 0.607
     - 0.8
     - 0.966
-    pushTime: []
-    AttackEffect: 0
+    pushTime:
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    AttackEffect: 1
   atck2:
     duringTime: 2
     atckSpeed: 5
@@ -341,8 +349,6 @@ MonoBehaviour:
     reayTime: 0.5
   down:
     downTime: 1
-  hit:
-    stunTime: 0.3
   idle:
     duringTime: {x: 0.5, y: 5}
   around:

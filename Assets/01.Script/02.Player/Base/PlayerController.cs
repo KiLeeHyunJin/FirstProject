@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
@@ -53,7 +54,12 @@ public enum ActiveType
 
 public class PlayerController : BaseController<PlayerState>
 {
+    [SerializeField] UnityEvent hpEvent;
+    [SerializeField] public UnityEvent mpEvent;
+    [field: SerializeField] public int MaxMp { get; private set; }
+    [field: SerializeField] public int MaxHp { get; private set; }
     [field: SerializeField] public int Mp { get; private set; }
+
     public int MinusMp { set { Mp -= value; } }
     public int AddHp { set { Hp += value; } }
     public int AddMp { set { Mp += value; } }
@@ -309,8 +315,7 @@ public class PlayerController : BaseController<PlayerState>
             default:
                 break;
         }
-        MinusHp = damage;
-        
+        hpEvent?.Invoke();
     }
 }
 public static class EnumUtil<T>

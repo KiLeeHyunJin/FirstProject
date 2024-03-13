@@ -111,6 +111,7 @@ public class TauController : MonsterController<TauState>
     bool isStart;
     private void OnDrawGizmos()
     {
+        transformPos = GetComponent<TransformPos>();
         Vector2 gizmoSize = size;
         float checkLength = gizmoSize.x > gizmoSize.y ? gizmoSize.x : gizmoSize.y;
         int dir = transformPos.direction == TransformPos.Direction.Left ? -1 : 1;

@@ -21,11 +21,11 @@ public class Tau_Atck2 : MonsterState<TauState> //돌진
         AttackSize = owner.GetAtckData(1).AttackSize;
         AttackOffset = owner.GetAtckData(1).AttackOffset;
         AttackPower = owner.GetAtckData(1).AttackPower;
-        int length = owner.GetAtckData(1).AttackTimming.Length;
+        int length = owner.GetAtckData(1).AttckType.Length;
         AttackTime = new float[length];
 
         for (int i = 0; i < length; i++)
-            AttackTime[i] = duringTime * owner.GetAtckData(1).AttackTimming[i];
+            AttackTime[i] = duringTime * owner.GetAtckData(1).AttckType[i].AttackTimming;
 
         checkLength = AttackSize.x > AttackSize.y ? AttackSize.x : AttackSize.y;
         if (pos.direction == TransformPos.Direction.Right)
@@ -64,14 +64,14 @@ public class Tau_Atck2 : MonsterState<TauState> //돌진
                         IDamagable damagable = colliders[0].GetComponent<IDamagable>();
                         if (damagable != null)
                         {
-                            damagable.IGetDamage(0, owner.GetAtckData(1).AttackEffect);
+                            damagable.IGetDamage(owner.GetAtckData(1).damage, owner.GetAtckData(1).AttackEffect);
                             damagable.ISetKnockback(
                                 new Vector2(AttackPower.x * direction, AttackPower.y),
                                 pos.Pose,
                                 AttackSize,
                                 Offset,
                                 owner.GetAtckData(1).stunTime,
-                                owner.GetAtckData(1).pushTime[i]
+                                owner.GetAtckData(1).AttckType[i].pushTime
                                 );
                             
                         }

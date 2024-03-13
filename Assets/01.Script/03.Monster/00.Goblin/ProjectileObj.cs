@@ -20,7 +20,6 @@ public class ProjectileObj : MonoBehaviour
     [SerializeField] int layer;
     [SerializeField] bool isDestroy;
     [SerializeField] AttackEffectType attackType;
-    float destroyTime;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -69,17 +68,10 @@ public class ProjectileObj : MonoBehaviour
         {
             target.IGetDamage(damage, attackType);
             target.ISetKnockback(power, currentPos, size, offset, pushTime);
-            if(isDestroy)
-                Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
    
-    Coroutine coroutine = null;
-    IEnumerator DestroyCo()
-    {
-        yield return new WaitForSeconds(destroyTime);
-        gameObject.SetActive (false);
-    }
     private void FixedUpdate()
     {
         rigid.velocity = direc;

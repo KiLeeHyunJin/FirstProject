@@ -31,11 +31,11 @@ public class Tau_Atck3 : MonsterState<TauState> // 하울링
         AttackOffset = owner.GetAtckData(2).AttackOffset;
         AttackPower = owner.GetAtckData(2).AttackPower;
 
-        int length = owner.GetAtckData(2).AttackTimming.Length;
+        int length = owner.GetAtckData(2).AttckType.Length;
         AttackTime = new float[length];
 
         for (int i = 0; i < length; i++)
-            AttackTime[i] = duringTime * owner.GetAtckData(2).AttackTimming[i];
+            AttackTime[i] = duringTime * owner.GetAtckData(2).AttckType[i].AttackTimming;
 
         checkLength = AttackSize.x > AttackSize.y ? AttackPower.x : AttackPower.y;
         if (pos.direction == TransformPos.Direction.Right)
@@ -68,14 +68,14 @@ public class Tau_Atck3 : MonsterState<TauState> // 하울링
                         IDamagable damagable = colliders[0].GetComponent<IDamagable>();
                         if (damagable != null)
                         {
-                            //damagable.IGetDamage(value);
+                            damagable.IGetDamage(owner.GetAtckData(2).damage, owner.GetAtckData(2).AttackEffect);
                             damagable.ISetKnockback(
                                 new Vector2(AttackPower.x * dir, AttackPower.y),
                                 pos.Pose,
                                 AttackSize,
                                 Offset,
-                                owner.GetAtckData(1).stunTime,
-                                 owner.GetAtckData(1).pushTime[i]
+                                owner.GetAtckData(2).stunTime,
+                                 owner.GetAtckData(2).AttckType[i].pushTime
                                 );
                         }
                     }

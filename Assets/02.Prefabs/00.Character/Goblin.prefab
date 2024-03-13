@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 148321347175399083}
   - component: {fileID: 3082473353979846345}
   - component: {fileID: 8675053423095879905}
-  m_Layer: 6
+  m_Layer: 12
   m_Name: HitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 3.89
+  m_Radius: 5.75
 --- !u!114 &8675053423095879905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,26 +420,34 @@ MonoBehaviour:
   <CurrentState>k__BackingField: 0
   renderer: {fileID: 9098084210304638927}
   anim: {fileID: 1693658141812233305}
-  <Hp>k__BackingField: 0
+  <Hp>k__BackingField: 10
   <layerMask>k__BackingField:
     serializedVersion: 2
-    m_Bits: 0
-  moveSpeed: {x: 0, y: 0}
+    m_Bits: 128
+  moveSpeed: {x: 1.5, y: 1}
   sensor: {fileID: 8675053423095879905}
-  Atck_Data: []
+  Atck_Data:
+  - Atck_CoolTime: 5
+    optimumRange: {x: 4, y: 0.2}
+    AttackSize: {x: 0, y: 0, z: 0}
+    AttackOffset: {x: 0, y: 0}
+    AttackPower: {x: 1, y: 1}
+    stunTime: 0
+    AttackTimming:
+    - 0.648
+    pushTime: []
+    AttackEffect: 0
   atck:
-    prefab: {fileID: 0}
+    prefab: {fileID: 7210604928856022601, guid: 05f1f8a3d7c35f5448a44a598c76cb2a, type: 3}
   down:
     downTime: 1
-  hit:
-    stundTime: 0.3
   idle:
     duringTime: {x: 1, y: 4}
   sit:
     sittingTime: 0.2
   around:
-    randomMovingTime: {x: 0, y: 0}
-    changeTime: {x: 0, y: 0}
+    randomMovingTime: {x: 2, y: 5}
+    changeTime: {x: 1, y: 3}
 --- !u!50 &2371541292244356324
 Rigidbody2D:
   serializedVersion: 4
