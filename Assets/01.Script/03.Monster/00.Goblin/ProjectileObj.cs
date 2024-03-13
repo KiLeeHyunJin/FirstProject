@@ -31,6 +31,7 @@ public class ProjectileObj : MonoBehaviour
     public void SetData(Vector2 _power, Vector3 _pos,int _dir)
     {
         gameObject.SetActive(true);
+        target = null;
         if (_dir > 0)
             GetComponent<SpriteRenderer>().flipX = false;
         else
@@ -41,22 +42,27 @@ public class ProjectileObj : MonoBehaviour
         size = Vector3.one * circleCollider.radius;
         offset = new Vector2(0, 0.5f);
         transform.position = new Vector2(_pos.x, _pos.z) + offset;
-
     }
-    public void SetData(float _destroyTime, Vector3 pos, Vector3 Size, Vector2 offset)
+    public void SetData(float _destroyTime, Vector3 _pos, Vector3 Size, Vector2 _offset,AttackEffectType _attackType)
     {
         destroyTime = _destroyTime;
-        size = Size * 0.5f;
-        this.offset = offset;
-        this.pos = pos;
+        size = Size;
+        this.offset = _offset;
+        this.pos = _pos;
+        attackType = _attackType;
         if (coroutine != null)
             StopCoroutine(coroutine);
         coroutine = StartCoroutine(DestroyCo());
+        isRepeater = true;
+        if (attackCoroutine != null)
+            StopCoroutine(attackCoroutine);
+        attackCoroutine = StartCoroutine(AttackRepeatCo());
     }
+    bool isRepeater = false;
     bool isStart = false;
     private void OnDrawGizmos()
     {
-        float temp = isStart ? 1 : 0.5f;
+        float temp = 0.5f;
         Gizmos.color = UnityEngine.Color.red;
         Gizmos.DrawWireCube(
         new Vector2(transform.position.x, pos.z),
@@ -71,6 +77,8 @@ public class ProjectileObj : MonoBehaviour
     }
     private void Update()
     {
+        if (isRepeater)
+            return;
         if (target == null)
             return;
         Vector3 currentPos = new Vector3(transform.position.x, 0, pos.z);
@@ -82,10 +90,32 @@ public class ProjectileObj : MonoBehaviour
                 Destroy(gameObject);
         }
     }
+    Coroutine attackCoroutine = null;
+    IEnumerator AttackRepeatCo()
+    {
+        while(true)
+        {
+            if(target != null)
+            {
+                Vector3 currentPos = new Vector3(transform.position.x, 0, pos.z);
+                if (target.ICollision(size, currentPos, offset))
+                {
+                    target.IGetDamage(damage, attackType);
+                    target.ISetKnockback(power, currentPos, size, offset, pushTime);
+                    if (isDestroy)
+                        Destroy(gameObject);
+                }
+            }
+
+            yield return new WaitForSeconds(0.15f);
+        }
+    }
     Coroutine coroutine = null;
     IEnumerator DestroyCo()
     {
         yield return new WaitForSeconds(destroyTime);
+        if (attackCoroutine != null)
+            StopCoroutine(attackCoroutine);
         gameObject.SetActive (false);
     }
     private void FixedUpdate()
@@ -97,7 +127,7 @@ public class ProjectileObj : MonoBehaviour
     {
         if(collision.gameObject.layer == layer)
         {
-           target = collision.GetComponent<Attackable>();
+            target = collision.GetComponent<Attackable>();
         }
     }
 }

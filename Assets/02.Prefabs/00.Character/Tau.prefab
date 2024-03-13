@@ -270,7 +270,7 @@ MonoBehaviour:
   hitBox: {fileID: 329399786470704085}
   renderer: {fileID: 5895089936867726898}
   AddForceClass:
-    <Ystate>k__BackingField: 2
+    <Ystate>k__BackingField: 0
 --- !u!114 &4022676833443762153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
   <CurrentState>k__BackingField: 0
   renderer: {fileID: 5895089936867726898}
   anim: {fileID: 5404751986585456317}
-  transformPos: {fileID: 3150831208459916965}
+  <Hp>k__BackingField: 0
   <layerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 128
@@ -300,6 +300,8 @@ MonoBehaviour:
     AttackPower: {x: 2, y: 5}
     AttackTimming:
     - 0.352
+    pushTime: []
+    AttackEffect: 0
   - Atck_CoolTime: 20
     optimumRange: {x: 3, y: 1}
     AttackSize: {x: 1.83, y: 3.34, z: 0.69}
@@ -310,6 +312,8 @@ MonoBehaviour:
     - 0.371
     - 0.629
     - 0.894
+    pushTime: []
+    AttackEffect: 0
   - Atck_CoolTime: 15
     optimumRange: {x: 2, y: 1}
     AttackSize: {x: 2.15, y: 3.34, z: 0.9}
@@ -322,6 +326,8 @@ MonoBehaviour:
     - 0.607
     - 0.8
     - 0.966
+    pushTime: []
+    AttackEffect: 0
   atck2:
     duringTime: 2
     atckSpeed: 5

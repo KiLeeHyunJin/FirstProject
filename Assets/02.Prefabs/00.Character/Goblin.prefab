@@ -420,12 +420,15 @@ MonoBehaviour:
   <CurrentState>k__BackingField: 0
   renderer: {fileID: 9098084210304638927}
   anim: {fileID: 1693658141812233305}
-  transformPos: {fileID: 0}
+  <Hp>k__BackingField: 0
+  <layerMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 0
+  moveSpeed: {x: 0, y: 0}
   sensor: {fileID: 8675053423095879905}
+  Atck_Data: []
   atck:
     prefab: {fileID: 0}
-    attackTime: 0
-    speed: 0
   down:
     downTime: 1
   hit:
@@ -434,11 +437,9 @@ MonoBehaviour:
     duringTime: {x: 1, y: 4}
   sit:
     sittingTime: 0.2
-  walk:
-    moveSpeed: {x: 1.2, y: 1}
-    optimumRange: {x: 3, y: 0.3}
-    randomMovingTime: {x: 2, y: 7}
-    changeTime: {x: 1, y: 3}
+  around:
+    randomMovingTime: {x: 0, y: 0}
+    changeTime: {x: 0, y: 0}
 --- !u!50 &2371541292244356324
 Rigidbody2D:
   serializedVersion: 4

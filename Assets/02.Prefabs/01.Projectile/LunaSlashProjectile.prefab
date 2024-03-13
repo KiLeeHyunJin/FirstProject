@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2657535212031636256}
   - component: {fileID: 5156880302302654516}
   - component: {fileID: 6148973806578454600}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LunaSlashProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   pushTime: 0
-  layer: 0
+  layer: 6
   isDestroy: 0
   attackType: 0
 --- !u!212 &8266287704003760047

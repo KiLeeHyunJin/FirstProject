@@ -637,7 +637,7 @@ MonoBehaviour:
   hitBox: {fileID: 5460500270719136417}
   renderer: {fileID: 8293897163023842626}
   AddForceClass:
-    <Ystate>k__BackingField: 2
+    <Ystate>k__BackingField: 0
 --- !u!114 &2227932376000951827
 MonoBehaviour:
   m_ObjectHideFlags: 0

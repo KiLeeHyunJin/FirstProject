@@ -7,6 +7,7 @@ public class ShortAirSlashController : SkillStateController
 {
     protected override void EnterState()
     {
+        owner.activeType = ActiveType.Skill;
         owner.SetState = PlayerState.AirSlash0;
     }
 }

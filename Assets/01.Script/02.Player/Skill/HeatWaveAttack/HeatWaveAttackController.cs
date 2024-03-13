@@ -8,6 +8,7 @@ public class HeatWaveAttackController : SkillStateController
 {
     protected override void EnterState()
     {
+        owner.activeType = ActiveType.Skill;
         owner.SetState = PlayerState.HeatWaveAttack0;
     }
 }

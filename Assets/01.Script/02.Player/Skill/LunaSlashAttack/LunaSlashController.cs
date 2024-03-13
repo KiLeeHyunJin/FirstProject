@@ -11,6 +11,7 @@ public class LunaSlashController : SkillStateController
     {
         if (luna == null)
             luna = GameObject.Instantiate(projectile);
+        owner.activeType = ActiveType.Skill;
         owner.SetState = PlayerState.LunaSlashAttack0;
     }
 

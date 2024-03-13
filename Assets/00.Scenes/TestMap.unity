@@ -1264,9 +1264,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2313222920286582294, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 2371541292244356324, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
       propertyPath: m_Constraints
-      value: 7
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2493163614983369463, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
       propertyPath: atck.prefab
@@ -1374,7 +1378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4719915068444086467, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1450,8 +1454,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: lunaSlashController.attackData.Array.data[1].attackCounts.Array.data[0].gather
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: lunaSlashController.attackData.Array.data[1].attackCounts.Array.data[0].pushTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
       propertyPath: lunaSlashController.attackData.Array.data[1].attackCounts.Array.data[0].AttackTime
       value: 0.213
+      objectReference: {fileID: 0}
+    - target: {fileID: 7149598894824991604, guid: 89423643508e2994ca962dbd8f3389c3, type: 3}
+      propertyPath: lunaSlashController.attackData.Array.data[1].attackCounts.Array.data[0].effectType
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

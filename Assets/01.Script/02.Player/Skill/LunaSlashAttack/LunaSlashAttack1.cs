@@ -28,12 +28,15 @@ public class LunaSlashAttack1 : SkillState
         if (scale > 1.5f)
             scale = 1.5f;
         Vector3 position = pos.Pose + new Vector3(0.5f * direction, 0, 0);
-        controller.luna.SetData(attackData.attackCounts[0].power, position, direction);
+        Vector2 power = attackData.attackCounts[0].power;
+        power.x *= direction;
+        controller.luna.SetData(power, position, direction);
         controller.luna.SetData(
             controller.ChargeTime * 3,
             pos.Pose,
             attackData.attackSize.size * scale,
-            attackData.attackSize.offset * scale);
+            attackData.attackSize.offset * scale,
+            attackData.attackCounts[0].effectType);
         controller.luna.transform.localScale = Vector3.one * scale;
     }
     protected override void ExitAction()
