@@ -13,6 +13,7 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
     protected bool nextAnim;
     int moveIdx;
     int attackIdx;
+    bool isPlaySound;
     protected int direction;
 
     Collider2D[] colliders;
@@ -23,11 +24,12 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
         animId = _animId;
         chaingAnim = _chaingAnim;
         colliders = new Collider2D[10];
+        isPlaySound = true;
     }
 
     public override void Enter()
     {
-        base.Enter();
+        //base.Enter();
         if(attackData.mana > 0)
         {
             if (owner.Mp >= attackData.mana)
@@ -48,13 +50,20 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
         moveIdx = 0;
         skillController.inputCount++;
         anim.Play(animId);
-        if (attackData.soundClip != null)
-            Manager.Sound.PlaySFX(attackData.soundClip);
         nextAnim = false;
         isTransition = false;
         EnterAction();
-        owner.StartCoroutine(PlaySound());
+        if(isPlaySound)
+        {
+            if (soundRoutine != null)
+                owner.StopCoroutine(soundRoutine);
+            soundRoutine = owner.StartCoroutine(PlaySound());
+            Debug.Log("StartSound");
+            isPlaySound = false;
+        }
+
     }
+    Coroutine soundRoutine = null;
     IEnumerator PlaySound()
     {
         yield return new WaitForSeconds(attackData.soundPlayeTime);
@@ -66,6 +75,7 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
     public override void Exit()
     {
         base.Exit();
+        isPlaySound = true;
         ExitAction();
     }
     protected abstract void EnterAction();

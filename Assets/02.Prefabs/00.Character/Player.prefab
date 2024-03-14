@@ -405,6 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   landBasicController:
+    clip: {fileID: 8300000, guid: 9f82653ecc7d72d40a833c4a19cc0985, type: 3}
     currentSkillKey: 0
     <projectile>k__BackingField: {fileID: 0}
     <objectSpeed>k__BackingField: 0
@@ -413,6 +414,8 @@ MonoBehaviour:
     coolTime: 0
     attackData:
     - AnimName: NomalAtck_0
+      soundPlayeTime: 0.12
+      soundClip: {fileID: 8300000, guid: 18936cfca9cb872438432f1c3fa23502, type: 3}
       delay: 0.725
       damage: 10
       mana: 0
@@ -434,6 +437,8 @@ MonoBehaviour:
         gather: 0
         effectType: 0
     - AnimName: NomalAtck_1
+      soundPlayeTime: 0.08
+      soundClip: {fileID: 8300000, guid: 69451eda445e454439e40d3f5c355946, type: 3}
       delay: 0.529
       damage: 10
       mana: 0
@@ -455,6 +460,8 @@ MonoBehaviour:
         gather: 0
         effectType: 0
     - AnimName: NomalAtck_2
+      soundPlayeTime: 0.25
+      soundClip: {fileID: 8300000, guid: f647becc657a3e54db72470b56ff803e, type: 3}
       delay: 0.789
       damage: 10
       mana: 0
@@ -478,6 +485,7 @@ MonoBehaviour:
     <On>k__BackingField: 0
     Click: 0
   slashController:
+    clip: {fileID: 0}
     currentSkillKey: 0
     <projectile>k__BackingField: {fileID: 0}
     <objectSpeed>k__BackingField: 0
@@ -486,6 +494,8 @@ MonoBehaviour:
     coolTime: 0
     attackData:
     - AnimName: NomalAtck_0
+      soundPlayeTime: 0.05
+      soundClip: {fileID: 8300000, guid: b1aea602f6d19f241b9b8be71ca0a0af, type: 3}
       delay: 0.639
       damage: 0
       mana: 5
@@ -507,6 +517,8 @@ MonoBehaviour:
         gather: 0
         effectType: 0
     - AnimName: NomalAtck_1
+      soundPlayeTime: 0.05
+      soundClip: {fileID: 8300000, guid: 0df4c31ab01adfb4d85f9619b352dee7, type: 3}
       delay: 0.585
       damage: 0
       mana: 5
@@ -528,6 +540,8 @@ MonoBehaviour:
         gather: 0
         effectType: 0
     - AnimName: UperSlash
+      soundPlayeTime: 0.05
+      soundClip: {fileID: 8300000, guid: e439a41ef8d58fc419b67ebfb027ef67, type: 3}
       delay: 0.754
       damage: 0
       mana: 5
@@ -551,6 +565,7 @@ MonoBehaviour:
     <On>k__BackingField: 0
     Click: 0
   runBasicAttackController:
+    clip: {fileID: 0}
     currentSkillKey: 0
     <projectile>k__BackingField: {fileID: 0}
     <objectSpeed>k__BackingField: 0
@@ -559,6 +574,8 @@ MonoBehaviour:
     coolTime: 0
     attackData:
     - AnimName: Stab
+      soundPlayeTime: 0.05
+      soundClip: {fileID: 8300000, guid: f647becc657a3e54db72470b56ff803e, type: 3}
       delay: 0.826
       damage: 0
       mana: 0
@@ -582,14 +599,17 @@ MonoBehaviour:
     <On>k__BackingField: 0
     Click: 0
   jumpBasicAttackController:
+    clip: {fileID: 0}
     currentSkillKey: 0
     <projectile>k__BackingField: {fileID: 0}
-    <objectSpeed>k__BackingField: 0
+    <objectSpeed>k__BackingField: 0.05
     <AttackType>k__BackingField: 0
     hasCoolTime: 0
     coolTime: 0
     attackData:
     - AnimName: JumpAtck
+      soundPlayeTime: 0
+      soundClip: {fileID: 8300000, guid: 08e95f10329e4e9479daedcd0d854d3b, type: 3}
       delay: 0.775
       damage: 0
       mana: 0
@@ -613,6 +633,7 @@ MonoBehaviour:
     <On>k__BackingField: 0
     Click: 0
   shockWaveAttackController:
+    clip: {fileID: 0}
     currentSkillKey: 0
     <projectile>k__BackingField: {fileID: 0}
     <objectSpeed>k__BackingField: 0
@@ -621,6 +642,8 @@ MonoBehaviour:
     coolTime: 0
     attackData:
     - AnimName: ShockDown
+      soundPlayeTime: 0
+      soundClip: {fileID: 8300000, guid: 1adedcf86b9177e49986845cafa684c5, type: 3}
       delay: 0.794
       damage: 0
       mana: 0
@@ -644,6 +667,7 @@ MonoBehaviour:
     <On>k__BackingField: 0
     Click: 0
   heatWaveAttackController:
+    clip: {fileID: 0}
     currentSkillKey: 0
     <projectile>k__BackingField: {fileID: 0}
     <objectSpeed>k__BackingField: 0
@@ -652,6 +676,8 @@ MonoBehaviour:
     coolTime: 0
     attackData:
     - AnimName: HeatWave
+      soundPlayeTime: 0
+      soundClip: {fileID: 8300000, guid: 69451eda445e454439e40d3f5c355946, type: 3}
       delay: 0
       damage: 0
       mana: 0
@@ -677,6 +703,8 @@ MonoBehaviour:
         gather: 0
         effectType: 2
     - AnimName: HeatWaveSlash
+      soundPlayeTime: 0
+      soundClip: {fileID: 8300000, guid: f647becc657a3e54db72470b56ff803e, type: 3}
       delay: 0
       damage: 0
       mana: 0
@@ -760,6 +788,7 @@ MonoBehaviour:
     <On>k__BackingField: 0
     Click: 0
   lunaSlashController:
+    clip: {fileID: 0}
     currentSkillKey: 0
     <projectile>k__BackingField: {fileID: 7423350229670089030, guid: eb66935a057b1db4caeb8bd9b64582d2, type: 3}
     <objectSpeed>k__BackingField: 4
@@ -768,6 +797,8 @@ MonoBehaviour:
     coolTime: 0
     attackData:
     - AnimName: LunaSlash
+      soundPlayeTime: 0
+      soundClip: {fileID: 8300000, guid: 30c797088c839484d8e283f6764307e9, type: 3}
       delay: 0
       damage: 0
       mana: 0
@@ -779,6 +810,8 @@ MonoBehaviour:
       move: []
       attackCounts: []
     - AnimName: LunaSlashShoot
+      soundPlayeTime: 0.1
+      soundClip: {fileID: 8300000, guid: 30899333dd15eab4c9c290142b36d2ea, type: 3}
       delay: 0
       damage: 0
       mana: 0
@@ -844,6 +877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d34e0a6e7d5ac447869353dde1959ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dieClip: {fileID: 0}
   <CurrentState>k__BackingField: 0
   renderer: {fileID: 3843137686234740380}
   anim: {fileID: 3551460506702955033}
@@ -854,32 +888,48 @@ MonoBehaviour:
   <Mp>k__BackingField: 10
   alertTime: 15
   atkController: {fileID: 4803227102972917773}
+  idle:
+    clip: {fileID: 0}
   walk:
+    clip: {fileID: 0}
     Speed: {x: 1.8, y: 1.3}
     term: 0.2
   run:
+    clip: {fileID: 0}
     Speed: {x: 3.2, y: 2.3}
   jumpUp:
+    clip: {fileID: 0}
     moveWalkSpeed: {x: 1.5, y: 1.1}
     moveRunSpeed: {x: 1.9, y: 1.5}
     jumpPower: 10
   jumpDown:
+    clip: {fileID: 0}
     moveWalkSpeed: {x: 1.5, y: 1.1}
     moveRunSpeed: {x: 1.9, y: 1.5}
   land:
+    clip: {fileID: 0}
     delayTime: 0.151
+  fall:
+    clip: {fileID: 0}
+  hit:
+    clip: {fileID: 0}
   down:
+    clip: {fileID: 0}
     downTime: 0.7
   sit:
+    clip: {fileID: 0}
     readyTime: 2
     defaultTime: 0.5
   itemPick:
+    clip: {fileID: 0}
     pickTime: 0.5
   interact:
+    clip: {fileID: 0}
     layerMask:
       serializedVersion: 2
       m_Bits: 512
   basicAttack:
+    clip: {fileID: 0}
     jumpLimitYPos: 0.8
 --- !u!58 &5010243651849250992
 CircleCollider2D:
