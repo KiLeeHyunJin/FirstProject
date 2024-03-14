@@ -10,6 +10,8 @@ public class Tau_Hit : MonsterState<TauState>
     bool isTransition;
     public override void Enter()
     {
+
+        base.Enter();
         isTransition = false;
         stunTime = owner.StunTime;
         if (coroutine != null)

@@ -17,6 +17,8 @@ public class Tau_Atck3 : MonsterState<TauState> // �Ͽ︵
     int direction;
     public override void Enter()
     {
+
+        base.Enter();
         SetActckData();
         anim.Play(AnimIdTable.GetInstance.Atck3Id);
         if (coroutine != null)

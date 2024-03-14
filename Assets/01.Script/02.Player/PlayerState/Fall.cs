@@ -10,6 +10,8 @@ public class Fall : PlayerBaseState<PlayerState>
 
     public override void Enter()
     {
+
+        base.Enter();
         isTransition = false;
         if(coroutine != null)
             owner.StopCoroutine(coroutine);

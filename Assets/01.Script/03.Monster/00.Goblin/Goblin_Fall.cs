@@ -9,6 +9,7 @@ public class Goblin_Fall : MonsterState<GoblinState>
     bool isTransition;
     public override void Enter()
     {
+        base.Enter();
         anim.Play(AnimIdTable.GetInstance.FallingId,0,0);
         isTransition = false;
         if(coroutine != null)

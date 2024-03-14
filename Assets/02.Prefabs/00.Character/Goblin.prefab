@@ -417,6 +417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72f35b756960a5943bf25808082a9d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dieClip: {fileID: 8300000, guid: afd492c4bd3345142bc7366bdbee708e, type: 3}
   <CurrentState>k__BackingField: 0
   renderer: {fileID: 9098084210304638927}
   anim: {fileID: 1693658141812233305}
@@ -428,26 +429,38 @@ MonoBehaviour:
   sensor: {fileID: 8675053423095879905}
   Atck_Data:
   - Atck_CoolTime: 5
+    damage: 0
     optimumRange: {x: 4, y: 0.2}
     AttackSize: {x: 0, y: 0, z: 0}
     AttackOffset: {x: 0, y: 0}
     AttackPower: {x: 1, y: 1}
     stunTime: 0
-    AttackTimming:
-    - 0.648
-    pushTime: []
+    AttckType: []
     AttackEffect: 0
   atck:
+    clip: {fileID: 0}
     prefab: {fileID: 7210604928856022601, guid: 05f1f8a3d7c35f5448a44a598c76cb2a, type: 3}
   down:
+    clip: {fileID: 0}
     downTime: 1
+  fall:
+    clip: {fileID: 8300000, guid: f557c44c7ef080e4ba77182097b26e78, type: 3}
+  hit:
+    clip: {fileID: 8300000, guid: 5012a2f920553be4da75f79108d9fe3a, type: 3}
   idle:
+    clip: {fileID: 0}
     duringTime: {x: 1, y: 4}
   sit:
+    clip: {fileID: 0}
     sittingTime: 0.2
+  walk:
+    clip: {fileID: 0}
   around:
+    clip: {fileID: 0}
     randomMovingTime: {x: 2, y: 5}
     changeTime: {x: 1, y: 3}
+  chase:
+    clip: {fileID: 0}
 --- !u!50 &2371541292244356324
 Rigidbody2D:
   serializedVersion: 4

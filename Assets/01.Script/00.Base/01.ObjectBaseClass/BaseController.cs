@@ -12,6 +12,7 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
     public float StunTime { get; private set; }
     public int MinusHp { set { Hp -= value; } }
     public bool isDie { get; protected set; }
+    [SerializeField] AudioClip dieClip;
     public StateMachine<T> fsm;
     [field : SerializeField]
     public T CurrentState 
@@ -86,6 +87,8 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
     {
         isDie = true;
         transformPos.AddForce(transformPos.Velocity() + (Vector3.up * 6));
+        if (dieClip != null)
+            Manager.Sound.PlaySFX(dieClip);
     }
  
 

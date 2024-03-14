@@ -10,6 +10,7 @@ public class Down : PlayerBaseState<PlayerState>
     bool isTransition;
     public override void Enter() 
     {
+        base.Enter();
         isTransition = false;
         anim.Play(AnimIdTable.GetInstance.DownId);
         if (coroutine != null)

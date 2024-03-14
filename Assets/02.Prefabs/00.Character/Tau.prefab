@@ -354,24 +354,42 @@ MonoBehaviour:
     - AttackTimming: 1
       pushTime: 0.3
     AttackEffect: 1
+  atck1:
+    clip: {fileID: 8300000, guid: 7cc9604ee0a6e924c8795179eeb45604, type: 3}
   atck2:
+    clip: {fileID: 8300000, guid: 3b631516041b8864890f87c5bbc03243, type: 3}
     duringTime: 2
     atckSpeed: 5
   atck3:
+    clip: {fileID: 0}
     duringTime: 4
   atckFinish:
+    clip: {fileID: 0}
     waitingTime: 1
   atckReady:
+    clip: {fileID: 0}
     reayTime: 1
   atckReady1:
+    clip: {fileID: 0}
     reayTime: 0.5
   down:
+    clip: {fileID: 0}
     downTime: 1
+  hit:
+    clip: {fileID: 0}
+  fall:
+    clip: {fileID: 0}
   idle:
+    clip: {fileID: 0}
     duringTime: {x: 0.5, y: 5}
+  walk:
+    clip: {fileID: 0}
   around:
+    clip: {fileID: 0}
     randomMovingTime: {x: 2, y: 5}
     changeTime: {x: 1, y: 3}
+  chase:
+    clip: {fileID: 0}
   offset: {x: 0.99, y: 0}
   size: {x: 1.83, y: 3.34, z: 0.9}
 --- !u!50 &3195353417357399248

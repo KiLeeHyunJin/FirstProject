@@ -37,6 +37,7 @@ public struct AttackSize
 public struct AttackData
 {
     public string AnimName;
+    public float soundPlayeTime;
     public AudioClip soundClip;
     [Range(0, 1)]
     public float delay;

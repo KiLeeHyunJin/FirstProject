@@ -4549,6 +4549,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8493437146200328571, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
+      propertyPath: landBasicController.clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9f82653ecc7d72d40a833c4a19cc0985, type: 3}
+    - target: {fileID: 8493437146200328571, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
+      propertyPath: landBasicController.attackData.Array.data[0].soundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 76a97498ac542ba4aa9633c6b9641482, type: 3}
+    - target: {fileID: 8493437146200328571, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
+      propertyPath: landBasicController.attackData.Array.data[1].soundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f7032eee12ce2bd4ea54a05b8d0a87bc, type: 3}
+    - target: {fileID: 8493437146200328571, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
+      propertyPath: landBasicController.attackData.Array.data[2].soundClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 45381a14bed73c74388b48c8321c2545, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -27,6 +27,7 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
 
     public override void Enter()
     {
+        base.Enter();
         if(attackData.mana > 0)
         {
             if (owner.Mp >= attackData.mana)

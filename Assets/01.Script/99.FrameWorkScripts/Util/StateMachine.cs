@@ -51,6 +51,7 @@ public abstract class BaseState<T> where T : Enum
     protected Animator anim;
     protected TransformPos pos;
     protected SpriteRenderer renderer;
+    [SerializeField] AudioClip clip;
     public void Setting(Animator _anim, TransformPos _transform, SpriteRenderer _renderer)
     {
         anim = _anim;
@@ -61,7 +62,15 @@ public abstract class BaseState<T> where T : Enum
 
     protected void ChangeState(T stateEnum) => stateMachine.ChangeState(stateEnum);
 
-    public virtual void Enter() { }
+    public virtual void Enter() 
+    {
+        if (clip != null)
+            Manager.Sound.PlaySFX(clip);
+    }
+    IEnumerator<T> PlaySound()
+    {
+        yield return new WaitForSeconds()
+    }
     public virtual void Exit() { }
     public virtual void Update() { }
 

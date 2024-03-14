@@ -10,6 +10,7 @@ public class Hit : PlayerBaseState<PlayerState>
     bool isTransition;
     public override void Enter()
     {
+        base.Enter();
         isTransition = false;
 
         if (coroutine != null)
