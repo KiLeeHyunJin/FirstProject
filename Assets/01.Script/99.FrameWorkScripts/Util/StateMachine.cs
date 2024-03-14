@@ -67,10 +67,7 @@ public abstract class BaseState<T> where T : Enum
         if (clip != null)
             Manager.Sound.PlaySFX(clip);
     }
-    IEnumerator<T> PlaySound()
-    {
-        yield return new WaitForSeconds()
-    }
+
     public virtual void Exit() { }
     public virtual void Update() { }
 
@@ -90,6 +87,11 @@ public abstract class PlayerBaseState<T> : BaseState<T> where T : Enum
     protected AttackController attack;
     protected PlayerController owner;
     public void SetController(PlayerController playerController) => owner = playerController;
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
     public void SettingAttackData(AttackController _atckCon)
     {
         attack = _atckCon;

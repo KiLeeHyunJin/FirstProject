@@ -41,7 +41,6 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
             }
         }
 
-
         SetEnter();
         direction = pos.direction == TransformPos.Direction.Left ? -1 : 1;
         owner.activeType = ActiveType.Skill;
@@ -54,7 +53,12 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
         nextAnim = false;
         isTransition = false;
         EnterAction();
-
+        owner.StartCoroutine(PlaySound());
+    }
+    IEnumerator PlaySound()
+    {
+        yield return new WaitForSeconds(attackData.soundPlayeTime);
+        Manager.Sound.PlaySFX(attackData.soundClip);
     }
     protected virtual void SetEnter()
     { }
