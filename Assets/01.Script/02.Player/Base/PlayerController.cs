@@ -54,13 +54,18 @@ public enum ActiveType
 
 public class PlayerController : BaseController<PlayerState>
 {
-    [SerializeField] UnityEvent hpEvent;
-    [SerializeField] public UnityEvent mpEvent;
-    [field: SerializeField] public int MaxMp { get; private set; }
-    [field: SerializeField] public int MaxHp { get; private set; }
+    public PlayerUIData uiData;
+    [field: SerializeField] public float MaxMp { get; private set; }
+    [field: SerializeField] public float MaxHp { get; private set; }
     [field: SerializeField] public int Mp { get; private set; }
 
-    public int MinusMp { set { Mp -= value; } }
+    public int MinusMp 
+    { set 
+        { 
+            Mp -= value;
+            uiData?.SetMp(Mp / MaxMp);
+        } 
+    }
     public int AddHp { set { Hp += value; } }
     public int AddMp { set { Mp += value; } }
 
@@ -134,7 +139,8 @@ public class PlayerController : BaseController<PlayerState>
         fsm.AddState(PlayerState.BasicAtck, basicAttack);
 
 
-
+        Mp = (int)MaxMp;
+        Hp = (int)MaxHp;
 
     }
     protected override void Start()
@@ -168,6 +174,8 @@ public class PlayerController : BaseController<PlayerState>
         GetSkill("LunaSlash", KeyManager.QuickKey.F,
         new PlayerState[]
         { PlayerState.LunaSlashAttack0, PlayerState.LunaSlashAttack1 });
+
+        uiData = FindObjectOfType<PlayerUIData>();
     }
 
     void SetStateData(PlayerBaseState<PlayerState> state)
@@ -212,6 +220,7 @@ public class PlayerController : BaseController<PlayerState>
         base.Die();
         SetState = PlayerState.Fall;
     }
+    //스킬 단축키
     public void AroundCheckQuickKey()
     {
         if (CurrentState == PlayerState.Hit || 
@@ -295,6 +304,7 @@ public class PlayerController : BaseController<PlayerState>
     public override void ISetDamage(int damage, AttackEffectType effectType, float stunTime)
     {
         base.ISetDamage(damage, effectType, stunTime);
+        uiData?.SetHp(Hp / MaxHp);
         if (CurrentState == PlayerState.Fall ||
             CurrentState == PlayerState.Down)
         {
@@ -315,7 +325,6 @@ public class PlayerController : BaseController<PlayerState>
             default:
                 break;
         }
-        hpEvent?.Invoke();
     }
 }
 public static class EnumUtil<T>

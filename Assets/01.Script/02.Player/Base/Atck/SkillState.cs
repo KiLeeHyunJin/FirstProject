@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 public abstract class SkillState : PlayerBaseState<PlayerState>
 {
@@ -31,7 +32,6 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
             if (owner.Mp >= attackData.mana)
             {
                 owner.MinusMp = attackData.mana;
-                owner.mpEvent?.Invoke();
             }
             else
             {
@@ -48,6 +48,8 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
         moveIdx = 0;
         skillController.inputCount++;
         anim.Play(animId);
+        if (attackData.soundClip != null)
+            Manager.Sound.PlaySFX(attackData.soundClip);
         nextAnim = false;
         isTransition = false;
         EnterAction();

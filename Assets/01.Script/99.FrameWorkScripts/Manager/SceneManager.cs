@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,12 +7,15 @@ using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 public class SceneManager : Singleton<SceneManager>
 {
     [SerializeField] Image fade;
-    [SerializeField] Slider loadingBar;
+    [SerializeField] Image Loading;
+    //[SerializeField] Slider loadingBar;
     [SerializeField] float fadeTime;
+    [SerializeField] float waitingTime;
     [SerializeField] string loadingSceneName;
-
+    [SerializeField] Sprite[] loadingImg;
+    [SerializeField] Sprite[] loadTextImg;
     private BaseScene curScene;
-
+    public int enterIdx;
     public BaseScene GetCurScene()
     {
         if (curScene == null)
@@ -37,6 +41,16 @@ public class SceneManager : Singleton<SceneManager>
 
     IEnumerator LoadingRoutine(string sceneName)
     {
+        if (curScene == null)
+            GetCurScene();
+        if (loadingImg.Length >= curScene.loadingImgIdx)
+        {
+            if (loadingImg[curScene.loadingImgIdx] != null)
+                fade.sprite = loadingImg[curScene.loadingImgIdx];
+        }
+        enterIdx = curScene.enterIdx;
+
+
         yield return FadeOut();
 
         Manager.Pool.ClearPool();
@@ -46,22 +60,43 @@ public class SceneManager : Singleton<SceneManager>
         Manager.UI.CloseInGameUI();
 
         Time.timeScale = 0f;
-        loadingBar.gameObject.SetActive(true);
-        UnitySceneManager.LoadScene(loadingSceneName);
+        //loadingBar.gameObject.SetActive(true);
+        Loading.gameObject.SetActive(true);
+        if (coroutine != null)
+            StopCoroutine(coroutine);
+        coroutine = StartCoroutine(ChangeLoadText());
+
+        //UnitySceneManager.LoadScene(loadingSceneName);
         AsyncOperation oper = UnitySceneManager.LoadSceneAsync(sceneName);
         while (oper.isDone == false)
         {
-            loadingBar.value = oper.progress;
+            //loadingBar.value = oper.progress;
             yield return null;
         }
+        yield return new WaitForSecondsRealtime(waitingTime);
 
-        BaseScene curScene = GetCurScene();
-        yield return curScene.LoadingRoutine();
-
-        loadingBar.gameObject.SetActive(false);
+        BaseScene newCurScene = GetCurScene();
+        yield return newCurScene.LoadingRoutine();
         Time.timeScale = 1f;
-
+        StopCoroutine(coroutine);
+        Loading.gameObject.SetActive(false);
+        //loadingBar.gameObject.SetActive(false);
         yield return FadeIn();
+    }
+    Coroutine coroutine = null;
+    int changeIdx = 0;
+    IEnumerator ChangeLoadText()
+    {
+        changeIdx = 0;
+        while(true)
+        {
+            Loading.sprite = loadTextImg[changeIdx];
+            Loading.SetNativeSize();
+            yield return new WaitForSecondsRealtime(0.2f);
+            changeIdx++;
+            if (loadTextImg.Length <= changeIdx)
+                changeIdx = 0;
+        }
     }
 
     IEnumerator FadeOut()

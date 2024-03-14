@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DataManager : Singleton<DataManager>
 {
-    private GameData gameData;
-    public GameData GameData { get { return gameData; } }
+    private PlayerUIData gameData;
+    public PlayerUIData GameData { get { return gameData; } }
 
 #if UNITY_EDITOR
     private string path => Path.Combine(Application.dataPath, $"Resources/Data/SaveLoad");
@@ -15,7 +15,7 @@ public class DataManager : Singleton<DataManager>
 
     public void NewData()
     {
-        gameData = new GameData();
+        gameData = new PlayerUIData();
     }
 
     public void SaveData(int index = 0)
@@ -40,7 +40,7 @@ public class DataManager : Singleton<DataManager>
         string json = File.ReadAllText($"{path}/{index}.txt");
         try
         {
-            gameData = JsonUtility.FromJson<GameData>(json);
+            gameData = JsonUtility.FromJson<PlayerUIData>(json);
         }
         catch (Exception ex)
         {

@@ -95,7 +95,7 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
         MinusHp = damage;
 
         if (isDie == false && Hp <= 0)
-                Die();
+           Die();
     }
 
     public virtual void ISetType()

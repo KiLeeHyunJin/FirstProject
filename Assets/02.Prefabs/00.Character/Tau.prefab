@@ -294,47 +294,65 @@ MonoBehaviour:
   sensor: {fileID: 2472301566280020505}
   Atck_Data:
   - Atck_CoolTime: 10
+    damage: 0
     optimumRange: {x: 1, y: 0.5}
     AttackSize: {x: 2.62, y: 4, z: 0.76}
     AttackOffset: {x: 0.94, y: 0}
     AttackPower: {x: 2, y: 5}
-    stunTime: 0
-    AttackTimming:
-    - 0.352
-    pushTime: []
+    stunTime: 0.322
+    AttckType:
+    - AttackTimming: 0.619
+      pushTime: 0.199
     AttackEffect: 2
   - Atck_CoolTime: 20
+    damage: 0
     optimumRange: {x: 3, y: 1}
     AttackSize: {x: 1.83, y: 3.34, z: 0.69}
     AttackOffset: {x: 0.99, y: 0}
     AttackPower: {x: 5, y: 6}
-    stunTime: 0
-    AttackTimming:
-    - 0.083
-    - 0.371
-    - 0.629
-    - 0.894
-    pushTime: []
+    stunTime: 0.181
+    AttckType:
+    - AttackTimming: 0
+      pushTime: 0.108
+    - AttackTimming: 0.205
+      pushTime: 0.108
+    - AttackTimming: 0.42
+      pushTime: 0.108
+    - AttackTimming: 0.636
+      pushTime: 0.108
+    - AttackTimming: 0.864
+      pushTime: 0.108
     AttackEffect: 2
   - Atck_CoolTime: 15
+    damage: 1
     optimumRange: {x: 2, y: 1}
     AttackSize: {x: 2.15, y: 3.34, z: 0.9}
     AttackOffset: {x: 0.65, y: 0}
-    AttackPower: {x: 1, y: 3}
-    stunTime: 0
-    AttackTimming:
-    - 0
-    - 0.179
-    - 0.372
-    - 0.607
-    - 0.8
-    - 0.966
-    pushTime:
-    - 0.1
-    - 0.1
-    - 0.1
-    - 0.1
-    - 0.1
+    AttackPower: {x: 0.15, y: 3}
+    stunTime: 0.374
+    AttckType:
+    - AttackTimming: 0
+      pushTime: 0.3
+    - AttackTimming: 0.108
+      pushTime: 0.3
+    - AttackTimming: 0.2
+      pushTime: 0.3
+    - AttackTimming: 0.3
+      pushTime: 0.3
+    - AttackTimming: 0.4
+      pushTime: 0.3
+    - AttackTimming: 0.5
+      pushTime: 0.3
+    - AttackTimming: 0.6
+      pushTime: 0.3
+    - AttackTimming: 0.7
+      pushTime: 0.3
+    - AttackTimming: 0.8
+      pushTime: 0.3
+    - AttackTimming: 0.9
+      pushTime: 0.3
+    - AttackTimming: 1
+      pushTime: 0.3
     AttackEffect: 1
   atck2:
     duringTime: 2

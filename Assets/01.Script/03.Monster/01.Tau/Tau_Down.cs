@@ -31,6 +31,8 @@ public class Tau_Down : MonsterState<TauState>
     }
     public override void Transition()
     {
+        if (owner.isDie)
+            return;
         if (isTransition)
         {
             owner.SetState = TauState.Idle;
