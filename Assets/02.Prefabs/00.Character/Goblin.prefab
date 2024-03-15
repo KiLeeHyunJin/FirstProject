@@ -421,7 +421,7 @@ MonoBehaviour:
   <CurrentState>k__BackingField: 0
   renderer: {fileID: 9098084210304638927}
   anim: {fileID: 1693658141812233305}
-  <Hp>k__BackingField: 10
+  <Hp>k__BackingField: 20
   <layerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 128
@@ -435,7 +435,9 @@ MonoBehaviour:
     AttackOffset: {x: 0, y: 0}
     AttackPower: {x: 1, y: 1}
     stunTime: 0
-    AttckType: []
+    AttckType:
+    - AttackTimming: 0.136
+      pushTime: 0
     AttackEffect: 0
   atck:
     clip: {fileID: 0}

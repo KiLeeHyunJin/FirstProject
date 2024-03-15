@@ -10,6 +10,7 @@ public class Goblin_Hit : MonsterState<GoblinState>
     bool isTransition;
     public override void Enter()
     {
+        base.Enter();
         anim.Play(AnimIdTable.GetInstance.Hit1Id);
         isTransition = false;
         stunTime = owner.StunTime;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PoolManager : Singleton<PoolManager>
 {
     private Dictionary<int, ObjectPool> poolDic = new Dictionary<int, ObjectPool>();
@@ -30,9 +31,10 @@ public class PoolManager : Singleton<PoolManager>
         {
             Destroy(objectPool.gameObject);
         }
-
         poolDic.Clear();
     }
+
+
 
     public PooledObject GetPool(PooledObject prefab, Vector3 position, Quaternion rotation)
     {

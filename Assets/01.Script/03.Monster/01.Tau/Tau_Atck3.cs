@@ -17,7 +17,6 @@ public class Tau_Atck3 : MonsterState<TauState> // 하울링
     int direction;
     public override void Enter()
     {
-
         base.Enter();
         SetActckData();
         anim.Play(AnimIdTable.GetInstance.Atck3Id);
@@ -71,11 +70,12 @@ public class Tau_Atck3 : MonsterState<TauState> // 하울링
                         if (damagable != null)
                         {
                             damagable.IGetDamage(owner.GetAtckData(2).damage, owner.GetAtckData(2).AttackEffect);
+                            damagable.ICollision(pos.Pose,
+                                AttackSize,
+                                Offset);
                             damagable.ISetKnockback(
                                 new Vector2(AttackPower.x * dir, AttackPower.y),
-                                pos.Pose,
-                                AttackSize,
-                                Offset,
+                                
                                 owner.GetAtckData(2).stunTime,
                                  owner.GetAtckData(2).AttckType[i].pushTime
                                 );

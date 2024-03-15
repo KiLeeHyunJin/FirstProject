@@ -18,6 +18,7 @@ public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
     int direction;
     public override void Enter()
     {
+        base.Enter();
         AttackSize = owner.GetAtckData(0).AttackSize;
         AttackOffset = owner.GetAtckData(0).AttackOffset;
         AttackPower = owner.GetAtckData(0).AttackPower;
@@ -59,11 +60,11 @@ public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
                     if (damagable != null)
                     {
                         damagable.IGetDamage(owner.GetAtckData(0).damage, owner.GetAtckData(0).AttackEffect);
+                        damagable.ICollision(pos.Pose,
+                            AttackSize,
+                            Offset);
                         damagable.ISetKnockback(
                             new Vector2(AttackPower.x * dir, AttackPower.y),
-                            pos.Pose,
-                            AttackSize,
-                            Offset,
                             owner.GetAtckData(0).stunTime,
                             owner.GetAtckData(0).AttckType[0].pushTime
                             );

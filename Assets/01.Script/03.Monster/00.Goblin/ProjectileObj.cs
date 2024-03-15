@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
@@ -67,7 +68,8 @@ public class ProjectileObj : MonoBehaviour
         if (target.ICollision(size, currentPos, offset))
         {
             target.IGetDamage(damage, attackType);
-            target.ISetKnockback(power, currentPos, size, offset, pushTime);
+            target.ICollision(currentPos, size, offset);
+            target.ISetKnockback(power, pushTime);
             gameObject.SetActive(false);
         }
     }

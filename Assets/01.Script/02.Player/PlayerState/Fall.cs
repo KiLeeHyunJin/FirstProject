@@ -7,11 +7,11 @@ using UnityEngine;
 public class Fall : PlayerBaseState<PlayerState>
 {
     bool isTransition;
-
+    [SerializeField] AudioClip[] clips;
     public override void Enter()
     {
 
-        base.Enter();
+        //base.Enter();
         isTransition = false;
         if(coroutine != null)
             owner.StopCoroutine(coroutine);
@@ -19,6 +19,12 @@ public class Fall : PlayerBaseState<PlayerState>
         coroutine = owner.StartCoroutine(FallingCo());
         anim.Play(AnimIdTable.GetInstance.FallingId);
         owner.SetStandState = StandingState.Fall;
+        int playIdx = UnityEngine.Random.Range(0, clips.Length);
+        for (int i = 0; i < clips.Length; i++)
+        {
+            if (clips[playIdx] != null)
+                Manager.Sound.PlayVoice(clips[playIdx]);
+        }
     }
     public override void Exit()
     {

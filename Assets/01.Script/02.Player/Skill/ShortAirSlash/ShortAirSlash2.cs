@@ -18,7 +18,7 @@ public class ShortAirSlash2 : SkillState
     }
     protected override void Attack(float normalTime)
     {
-
+        pos.Synchro();
     }
 
     protected override void ExitAction()

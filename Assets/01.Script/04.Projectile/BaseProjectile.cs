@@ -9,7 +9,7 @@ public class BaseProjectile : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] Transform hitbox;
     List<Attackable> target;
-
+    AudioClip audioClip;
     Vector3 size;
     Vector2 power;
     Vector2 offset;
@@ -43,6 +43,10 @@ public class BaseProjectile : MonoBehaviour
         else
             GetComponent<SpriteRenderer>().flipX = true;
         direc = new Vector2(_dir * speed, 0);
+    }
+    public void SetAudioClip(AudioClip clip)
+    {
+        audioClip = clip;
     }
 
     public void SetPosition(Vector3 _pos, Vector3 Size, Vector2 _offset, Vector2 _posOffset)
@@ -107,16 +111,21 @@ public class BaseProjectile : MonoBehaviour
                     Vector3 currentPos = new Vector3(transform.position.x, 0, pos.z);
                     if (element.ICollision(size, currentPos, offset))
                     {
-                        element.IGetDamage(damage, attackType);
-                        element.ISetKnockback(power, currentPos, size, offset, pushTime);
-
-                        if (isRepeater == false)
+                        if(element.IGetDamage(damage, attackType))
                         {
-                            OffState();
-                            if (disableCoroutine != null)
-                                StopCoroutine(disableCoroutine);
-                            yield break;
+                            if (element.ICollision(currentPos, size, offset))
+                            {
+                                element.ISetKnockback(power, pushTime);
+                                if (isRepeater == false)
+                                {
+                                    OffState();
+                                    if (disableCoroutine != null)
+                                        StopCoroutine(disableCoroutine);
+                                    yield break;
+                                }
+                            }
                         }
+                        
                     }
                 }
             }

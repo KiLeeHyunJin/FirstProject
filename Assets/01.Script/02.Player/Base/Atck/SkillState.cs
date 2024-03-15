@@ -55,19 +55,37 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
         EnterAction();
         if(isPlaySound)
         {
-            if (soundRoutine != null)
-                owner.StopCoroutine(soundRoutine);
-            soundRoutine = owner.StartCoroutine(PlaySound());
-            Debug.Log("StartSound");
+            attack.SetSoundClip(attackData.soundSwingClip, attackData.soundHitClip);
+
+            if(attackData.soundClip != null)
+            {
+                if (soundRoutine != null)
+                    owner.StopCoroutine(soundRoutine);
+                soundRoutine = owner.StartCoroutine(PlayVoice());
+            }
+
+            if(attackData.skillEffectClip != null)
+            {
+                if (effectSoundRoutine != null)
+                    owner.StopCoroutine(effectSoundRoutine);
+                effectSoundRoutine = owner.StartCoroutine(EffectSound());
+            }
+
             isPlaySound = false;
         }
-
     }
+    Coroutine effectSoundRoutine = null;
+    IEnumerator EffectSound()
+    {
+        yield return new WaitForSeconds(attackData.skillEffectPlayTime);
+        Manager.Sound.PlaySFX(attackData.skillEffectClip);
+    }
+
     Coroutine soundRoutine = null;
-    IEnumerator PlaySound()
+    IEnumerator PlayVoice()
     {
         yield return new WaitForSeconds(attackData.soundPlayeTime);
-        Manager.Sound.PlaySFX(attackData.soundClip);
+        Manager.Sound.PlayVoice(attackData.soundClip);
     }
     protected virtual void SetEnter()
     { }
@@ -109,12 +127,19 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
 
         if (normalTime >= attackData.attackCounts[attackIdx].AttackTime)
         {
+            if (attackData.attackCounts[attackIdx].AttackEffectSoundClip != null)
+                Manager.Sound.PlayVoice(attackData.attackCounts[attackIdx].AttackEffectSoundClip);
+
+            attack.SetDamage(attackData.attackCounts[attackIdx].Percent, attackData.damage);
+
             attack.SetPosition(
                 new Vector2(
                     attackData.attackSize.offset.x * direction,
                     attackData.attackSize.offset.y),
-                attackData.attackSize.size,
-                attackData.attackCounts[attackIdx].gather);
+                    attackData.attackSize.size,
+                    attackData.attackCounts[attackIdx].gather) ;
+
+
 
             attack.SetKnockBack(
                 new Vector2(
@@ -125,7 +150,6 @@ public abstract class SkillState : PlayerBaseState<PlayerState>
                     attackData.attackCounts[attackIdx].pushTime
                 );
 
-            attack.SetDamage(attackData.attackCounts[attackIdx].Percent, attackData.damage);
             attack.OnAttackEnable();
             attackIdx++;
         }

@@ -5,26 +5,35 @@ using UnityEngine;
 public class Attackable : MonoBehaviour, IDamagable
 {
     public TransformPos transformPos;
+    new SpriteRenderer renderer;
     [field :SerializeField]public IConnectController controller;
     AttackEffectType attackEffectType;
     int dam;
     float jumpPower;
+    bool isPossible;
+    bool isColl;
     void Start()
     {
         controller = transformPos.GetComponent<IConnectController>();
+        renderer = GetComponentInChildren<SpriteRenderer>();
     }
 
-    public void IGetDamage(int damage, AttackEffectType effectType)
+    public bool IGetDamage(int damage, AttackEffectType effectType)
     {
         dam = damage;
         attackEffectType = effectType;
+        return isPossible = AttackPowerCheck(attackEffectType);
+    }
+    public bool ICollision(Vector3 size, Vector3 pos, Vector2 offset)
+    {
+        return isColl = transformPos.attackCheck.CheckAttackCollision(pos, size, offset);
     }
 
-    public void ISetKnockback(Vector3 power, Vector3 pos, Vector3 size, Vector2 offset, float stunTime,float pushTime = 0)
+    public void ISetKnockback(Vector3 power, float stunTime,float pushTime = 0)
     {
-        if (ICollision(size,pos, offset))
+        if (isColl)
         {
-            if (AttackPowerCheck(attackEffectType) == false)
+            if (isPossible == false)
                 return;
 
             Vector3 force = new Vector3(power.x, power.y * jumpPower, power.z);
@@ -66,17 +75,20 @@ public class Attackable : MonoBehaviour, IDamagable
         }
         return answerd;
     }
-    public Vector2 IGetPos()
+    public Vector3 IGetPos()
     {
-        return new Vector2(transformPos.X, transformPos.Z);
+        return transformPos.Pose;
     }
-    public bool ICollision(Vector3 size, Vector3 pos, Vector2 offset)
+    public Vector2 IGetOffset()
     {
-        return transformPos.attackCheck.CheckAttackCollision(pos, size, offset);
+        return transformPos.Offset;
     }
+
 
     public StandingState IGetStandType()
     {
         return controller.IGetStandingType();
     }
+
+    public int IGetRenderLayerNum() =>  renderer.sortingOrder;
 }

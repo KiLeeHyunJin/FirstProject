@@ -283,10 +283,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 790fe5d33c95ed64cadbe5b0e07a4d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dieClip: {fileID: 0}
   <CurrentState>k__BackingField: 0
   renderer: {fileID: 5895089936867726898}
   anim: {fileID: 5404751986585456317}
-  <Hp>k__BackingField: 0
+  <Hp>k__BackingField: 2
   <layerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 128

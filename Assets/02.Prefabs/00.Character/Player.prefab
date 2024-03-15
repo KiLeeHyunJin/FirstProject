@@ -416,8 +416,12 @@ MonoBehaviour:
     - AnimName: NomalAtck_0
       soundPlayeTime: 0.12
       soundClip: {fileID: 8300000, guid: 18936cfca9cb872438432f1c3fa23502, type: 3}
+      soundSwingClip: {fileID: 8300000, guid: d69696e5997be014fb2ac684e5106093, type: 3}
+      soundHitClip: {fileID: 8300000, guid: 2d89644944e856547aaaa5794a95c8d2, type: 3}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 0}
       delay: 0.725
-      damage: 10
+      damage: 2
       mana: 0
       chainAnim: 0
       charging: 0
@@ -429,7 +433,9 @@ MonoBehaviour:
         move: {x: 2, y: 0}
         movingTime: 0.15
       attackCounts:
-      - AttackTime: 0.267
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.267
         Percent: 0.87
         power: {x: 2, y: 2.5}
         pushTime: 0.15
@@ -439,8 +445,12 @@ MonoBehaviour:
     - AnimName: NomalAtck_1
       soundPlayeTime: 0.08
       soundClip: {fileID: 8300000, guid: 69451eda445e454439e40d3f5c355946, type: 3}
+      soundSwingClip: {fileID: 8300000, guid: 1855b316f7a9f554b9d64941c5bf688d, type: 3}
+      soundHitClip: {fileID: 8300000, guid: e5b476f2aa158f84e8a9ea83846ef3ea, type: 3}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 0}
       delay: 0.529
-      damage: 10
+      damage: 2
       mana: 0
       chainAnim: 0
       charging: 0
@@ -452,7 +462,9 @@ MonoBehaviour:
         move: {x: 2, y: 0}
         movingTime: 0.15
       attackCounts:
-      - AttackTime: 0.267
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.267
         Percent: 0.821
         power: {x: 2, y: 2.5}
         pushTime: 0.15
@@ -462,8 +474,12 @@ MonoBehaviour:
     - AnimName: NomalAtck_2
       soundPlayeTime: 0.25
       soundClip: {fileID: 8300000, guid: f647becc657a3e54db72470b56ff803e, type: 3}
+      soundSwingClip: {fileID: 8300000, guid: beecbb54dacfb834a9aadbe2474dbedd, type: 3}
+      soundHitClip: {fileID: 8300000, guid: f2d42d6872797e348af930d920daf88f, type: 3}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 0}
       delay: 0.789
-      damage: 10
+      damage: 2
       mana: 0
       chainAnim: 0
       charging: 0
@@ -475,7 +491,9 @@ MonoBehaviour:
         move: {x: 2, y: 0}
         movingTime: 0.15
       attackCounts:
-      - AttackTime: 0.161
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.161
         Percent: 0.686
         power: {x: 1.5, y: 4}
         pushTime: 0
@@ -496,6 +514,10 @@ MonoBehaviour:
     - AnimName: NomalAtck_0
       soundPlayeTime: 0.05
       soundClip: {fileID: 8300000, guid: b1aea602f6d19f241b9b8be71ca0a0af, type: 3}
+      soundSwingClip: {fileID: 8300000, guid: ad481ad6749d63948a3603cc768b78b9, type: 3}
+      soundHitClip: {fileID: 8300000, guid: be57acbf046ce78498f23c20fb47dc59, type: 3}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 8300000, guid: f01ad075231b53145a80ed705e89cd1b, type: 3}
       delay: 0.639
       damage: 0
       mana: 5
@@ -509,7 +531,9 @@ MonoBehaviour:
         move: {x: 15, y: 2}
         movingTime: 0.32
       attackCounts:
-      - AttackTime: 0.147
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.147
         Percent: 0
         power: {x: 3, y: 0}
         pushTime: 0.15
@@ -519,6 +543,10 @@ MonoBehaviour:
     - AnimName: NomalAtck_1
       soundPlayeTime: 0.05
       soundClip: {fileID: 8300000, guid: 0df4c31ab01adfb4d85f9619b352dee7, type: 3}
+      soundSwingClip: {fileID: 8300000, guid: d3d59781ba966f74fa7825e8ca275944, type: 3}
+      soundHitClip: {fileID: 8300000, guid: be57acbf046ce78498f23c20fb47dc59, type: 3}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 8300000, guid: eca4f001177b5764bae8351d2c9fa218, type: 3}
       delay: 0.585
       damage: 0
       mana: 5
@@ -532,7 +560,9 @@ MonoBehaviour:
         move: {x: 13, y: 0}
         movingTime: 0.35
       attackCounts:
-      - AttackTime: 0.147
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.147
         Percent: 0
         power: {x: 3, y: 2}
         pushTime: 0.15
@@ -542,6 +572,10 @@ MonoBehaviour:
     - AnimName: UperSlash
       soundPlayeTime: 0.05
       soundClip: {fileID: 8300000, guid: e439a41ef8d58fc419b67ebfb027ef67, type: 3}
+      soundSwingClip: {fileID: 8300000, guid: 566c07db2a00f0d4782a70531be4ff6e, type: 3}
+      soundHitClip: {fileID: 8300000, guid: be57acbf046ce78498f23c20fb47dc59, type: 3}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 8300000, guid: 7f3e6b594e9541944aa24ec6bc8ae2d5, type: 3}
       delay: 0.754
       damage: 0
       mana: 5
@@ -555,7 +589,9 @@ MonoBehaviour:
         move: {x: 15, y: 0}
         movingTime: 0.25
       attackCounts:
-      - AttackTime: 0.147
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.147
         Percent: 0
         power: {x: 3, y: 4}
         pushTime: 0.2
@@ -576,6 +612,10 @@ MonoBehaviour:
     - AnimName: Stab
       soundPlayeTime: 0.05
       soundClip: {fileID: 8300000, guid: f647becc657a3e54db72470b56ff803e, type: 3}
+      soundSwingClip: {fileID: 8300000, guid: beecbb54dacfb834a9aadbe2474dbedd, type: 3}
+      soundHitClip: {fileID: 8300000, guid: f2d42d6872797e348af930d920daf88f, type: 3}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 0}
       delay: 0.826
       damage: 0
       mana: 0
@@ -589,7 +629,9 @@ MonoBehaviour:
         move: {x: 2, y: 0}
         movingTime: 0.15
       attackCounts:
-      - AttackTime: 0.397
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.397
         Percent: 0
         power: {x: 2, y: 3}
         pushTime: 0.15
@@ -610,6 +652,10 @@ MonoBehaviour:
     - AnimName: JumpAtck
       soundPlayeTime: 0
       soundClip: {fileID: 8300000, guid: 08e95f10329e4e9479daedcd0d854d3b, type: 3}
+      soundSwingClip: {fileID: 8300000, guid: 1855b316f7a9f554b9d64941c5bf688d, type: 3}
+      soundHitClip: {fileID: 8300000, guid: e5b476f2aa158f84e8a9ea83846ef3ea, type: 3}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 0}
       delay: 0.775
       damage: 0
       mana: 0
@@ -623,7 +669,9 @@ MonoBehaviour:
         move: {x: 0, y: 2}
         movingTime: 0
       attackCounts:
-      - AttackTime: 0.368
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.368
         Percent: 0
         power: {x: 1.5, y: 3}
         pushTime: 0.2
@@ -644,6 +692,10 @@ MonoBehaviour:
     - AnimName: ShockDown
       soundPlayeTime: 0
       soundClip: {fileID: 8300000, guid: 1adedcf86b9177e49986845cafa684c5, type: 3}
+      soundSwingClip: {fileID: 8300000, guid: beecbb54dacfb834a9aadbe2474dbedd, type: 3}
+      soundHitClip: {fileID: 8300000, guid: f2d42d6872797e348af930d920daf88f, type: 3}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 8300000, guid: 37e9bc4c2c4ad7d41a9e1736c6efde9f, type: 3}
       delay: 0.794
       damage: 0
       mana: 0
@@ -657,7 +709,9 @@ MonoBehaviour:
         move: {x: 2, y: -15}
         movingTime: 0.15
       attackCounts:
-      - AttackTime: 0
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0
         Percent: 0
         power: {x: 2, y: 5}
         pushTime: 0.2
@@ -678,6 +732,10 @@ MonoBehaviour:
     - AnimName: HeatWave
       soundPlayeTime: 0
       soundClip: {fileID: 8300000, guid: 69451eda445e454439e40d3f5c355946, type: 3}
+      soundSwingClip: {fileID: 8300000, guid: 566c07db2a00f0d4782a70531be4ff6e, type: 3}
+      soundHitClip: {fileID: 8300000, guid: be57acbf046ce78498f23c20fb47dc59, type: 3}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 8300000, guid: 3a1c88d964b0a9b4d99cd758cd6afc94, type: 3}
       delay: 0
       damage: 0
       mana: 0
@@ -688,14 +746,18 @@ MonoBehaviour:
         size: {x: 2.82, y: 3.95, z: 1.42}
       move: []
       attackCounts:
-      - AttackTime: 0.236
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.236
         Percent: 0
         power: {x: 0.5, y: 4}
         pushTime: 0
         stunTime: 0
         gather: 0
         effectType: 2
-      - AttackTime: 0.846
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.846
         Percent: 0
         power: {x: 0, y: 1}
         pushTime: 0
@@ -705,6 +767,10 @@ MonoBehaviour:
     - AnimName: HeatWaveSlash
       soundPlayeTime: 0
       soundClip: {fileID: 8300000, guid: f647becc657a3e54db72470b56ff803e, type: 3}
+      soundSwingClip: {fileID: 8300000, guid: beecbb54dacfb834a9aadbe2474dbedd, type: 3}
+      soundHitClip: {fileID: 8300000, guid: f2d42d6872797e348af930d920daf88f, type: 3}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 0}
       delay: 0
       damage: 0
       mana: 0
@@ -715,70 +781,90 @@ MonoBehaviour:
         size: {x: 3.13, y: 1.59, z: 1.42}
       move: []
       attackCounts:
-      - AttackTime: 0
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0
         Percent: 0
         power: {x: 0, y: 1.2}
         pushTime: 0
         stunTime: 0
         gather: 1
         effectType: 2
-      - AttackTime: 0.1
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.1
         Percent: 0
         power: {x: 0, y: 1.2}
         pushTime: 0
         stunTime: 0
         gather: 1
         effectType: 2
-      - AttackTime: 0.2
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.2
         Percent: 0
         power: {x: 0, y: 1.2}
         pushTime: 0
         stunTime: 0
         gather: 1
         effectType: 2
-      - AttackTime: 0.3
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.3
         Percent: 0
         power: {x: 0, y: 1.2}
         pushTime: 0
         stunTime: 0
         gather: 1
         effectType: 2
-      - AttackTime: 0.4
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.4
         Percent: 0
         power: {x: 0, y: 1.2}
         pushTime: 0
         stunTime: 0
         gather: 1
         effectType: 2
-      - AttackTime: 0.5
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.5
         Percent: 0
         power: {x: 0, y: 1.2}
         pushTime: 0
         stunTime: 0
         gather: 1
         effectType: 2
-      - AttackTime: 0.6
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.6
         Percent: 0
         power: {x: 0, y: 1.2}
         pushTime: 0
         stunTime: 0
         gather: 1
         effectType: 2
-      - AttackTime: 0.7
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.7
         Percent: 0
         power: {x: 0, y: 1.2}
         pushTime: 0
         stunTime: 0
         gather: 1
         effectType: 2
-      - AttackTime: 0.8
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.8
         Percent: 0
         power: {x: 0, y: 1.2}
         pushTime: 0
         stunTime: 0
         gather: 1
         effectType: 2
-      - AttackTime: 0.9
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.9
         Percent: 0
         power: {x: 0, y: 1.2}
         pushTime: 0
@@ -799,6 +885,10 @@ MonoBehaviour:
     - AnimName: LunaSlash
       soundPlayeTime: 0
       soundClip: {fileID: 8300000, guid: 30c797088c839484d8e283f6764307e9, type: 3}
+      soundSwingClip: {fileID: 0}
+      soundHitClip: {fileID: 0}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 8300000, guid: 4bcb487d4c38799498c489c88337a592, type: 3}
       delay: 0
       damage: 0
       mana: 0
@@ -812,6 +902,10 @@ MonoBehaviour:
     - AnimName: LunaSlashShoot
       soundPlayeTime: 0.1
       soundClip: {fileID: 8300000, guid: 30899333dd15eab4c9c290142b36d2ea, type: 3}
+      soundSwingClip: {fileID: 0}
+      soundHitClip: {fileID: 0}
+      skillEffectPlayTime: 0
+      skillEffectClip: {fileID: 8300000, guid: db3bd0e10e45ebd4a875b433ee7d5c83, type: 3}
       delay: 0
       damage: 0
       mana: 0
@@ -822,7 +916,9 @@ MonoBehaviour:
         size: {x: 1.2, y: 3.1, z: 1.8}
       move: []
       attackCounts:
-      - AttackTime: 0.213
+      - AttackEffectSoundTime: 0
+        AttackEffectSoundClip: {fileID: 0}
+        AttackTime: 0.213
         Percent: 0
         power: {x: 1.5, y: 2}
         pushTime: 0.2
@@ -877,7 +973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d34e0a6e7d5ac447869353dde1959ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dieClip: {fileID: 0}
+  dieClip: {fileID: 8300000, guid: dde4b0630161d9c47a6f5e4d8096e880, type: 3}
   <CurrentState>k__BackingField: 0
   renderer: {fileID: 3843137686234740380}
   anim: {fileID: 3551460506702955033}
@@ -910,9 +1006,17 @@ MonoBehaviour:
     clip: {fileID: 0}
     delayTime: 0.151
   fall:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: ef35bcbe6bf2e8b4ab86442b22a72a01, type: 3}
+    clips:
+    - {fileID: 8300000, guid: 8a9116f94934f4040858850fdde2d163, type: 3}
+    - {fileID: 8300000, guid: ef35bcbe6bf2e8b4ab86442b22a72a01, type: 3}
+    - {fileID: 8300000, guid: 76f90f548b8a34c4faae074223d11be5, type: 3}
   hit:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 8a9116f94934f4040858850fdde2d163, type: 3}
+    clips:
+    - {fileID: 8300000, guid: 8a9116f94934f4040858850fdde2d163, type: 3}
+    - {fileID: 8300000, guid: ef35bcbe6bf2e8b4ab86442b22a72a01, type: 3}
+    - {fileID: 8300000, guid: 76f90f548b8a34c4faae074223d11be5, type: 3}
   down:
     clip: {fileID: 0}
     downTime: 0.7

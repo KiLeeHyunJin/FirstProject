@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
+    [SerializeField] PooledObject bloodEffect;
+    [SerializeField] int effectCount;
     AttackEffectType effectType;
     [SerializeField] int maxAttack;
     [SerializeField] TransformPos pos;
@@ -15,13 +17,18 @@ public class AttackController : MonoBehaviour
     [SerializeField] Vector3 size;
 
     Vector2 knockbackPower;
-    int targetCount;
     float per;
-    int damage;
-    bool isStart;
     float stunTime;
     float pushTime;
+    int damage;
+    int targetCount;
+
+    bool isStart;
     bool gather;
+
+    AudioClip audioSwingClip;
+    AudioClip audioHitClip;
+
     public void Awake()
     {
         if(maxAttack < 1)
@@ -31,14 +38,22 @@ public class AttackController : MonoBehaviour
         offset = Vector3.zero;
         size = Vector3.zero;
     }
-
+    private void Start()
+    {
+        if(bloodEffect != null)
+            Manager.Pool.CreatePool(bloodEffect, effectCount, effectCount);
+    }
     public void SetPosition(Vector2 _position, Vector3 _size, bool _gather = false)
     {
         offset = _position;
         size = _size * 0.5f;
         gather = _gather;
     }
-
+    public void SetSoundClip(AudioClip swingClip, AudioClip hitClip)
+    {
+        audioSwingClip = swingClip;
+        audioHitClip = hitClip;
+    }
     public void SetKnockBack(Vector3 power, AttackEffectType _effectType, float _pushTime, float _stunTime)
     {
         knockbackPower = power;
@@ -66,6 +81,11 @@ public class AttackController : MonoBehaviour
         Debug.Log($"count : {targetCount}");
         if(targetCount > 0)
             StartCoroutine(AttackCo());
+        else
+        {
+            if (audioSwingClip != null)
+                Manager.Sound.PlaySFX(audioSwingClip);
+        }
     }
 
     private void OnDrawGizmos()
@@ -97,34 +117,50 @@ public class AttackController : MonoBehaviour
         Vector3 returnPos = pos.Pose;
         Vector3 returnSize = size;
         Vector2 returnOffset = offset;
-        
+        int hitTaget = 0;
+        int dir = pos.direction == TransformPos.Direction.Left ? -1 : 1;
         for (int i = 0; i < targetCount; i++)
         {
             IDamagable damagable = colliders[i].GetComponent<IDamagable>();
             if (damagable != null)
             {
-                if (gather)
+                if (damagable.IGetDamage(value, effectType))
                 {
-                    Vector2 sour =(
-                            (new Vector2(pos.X,pos.Z) + offset) - damagable.IGetPos()
-                        ).normalized;
-                    Vector3 temp = new Vector3(sour.x, returnKnockback.y, sour.y);
-                    returnKnockback = temp;
+                    if(damagable.ICollision(returnSize, returnPos, returnOffset))
+                    {
+                        if (gather)
+                        {
+                            Vector3 currentPos = damagable.IGetPos();
+                            Vector2 sour = (
+                                    (new Vector2(pos.X, pos.Z) + offset) - new Vector2(currentPos.x, currentPos.z)
+                                ).normalized;
+                            Vector3 temp = new Vector3(sour.x, returnKnockback.y, sour.y);
+                            returnKnockback = temp;
+                        }
+
+                        damagable.ISetKnockback(returnKnockback,stunTime,pushTime);
+                        if (audioHitClip != null)
+                            Manager.Sound.PlaySFX(audioHitClip);
+
+                        PooledObject hitEffect = Manager.Pool.GetPool(
+                            bloodEffect, 
+                            new Vector3(
+                                damagable.IGetPos().x + damagable.IGetOffset().x * dir, 
+                                damagable.IGetPos().y + damagable.IGetOffset().y +
+                                damagable.IGetPos().z,0), 
+                            Quaternion.identity);
+                        HitEffect effect = hitEffect as HitEffect;
+                        if (effect != null)
+                            effect.SetSortingLayer(damagable.IGetRenderLayerNum() + 1);
+                        hitTaget++;
+                    }
                 }
-                damagable.IGetDamage(
-                    value,
-                    effectType);
-                damagable.ISetKnockback(
-                    returnKnockback,
-                    returnPos,
-                    returnSize,
-                    returnOffset,
-                    stunTime,
-                    pushTime
-                    );
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(Random.Range(0.005f, 0.02f));
         }
+        if(hitTaget == 0)
+            if (audioSwingClip != null)
+                Manager.Sound.PlaySFX(audioSwingClip);
     }
 
     private void SetttingReset()

@@ -35,18 +35,14 @@ public class HeatWaveAttack1 : SkillState
 
                 //if (AttackPossibleCheck(damagable.IGetStandType()) == false)
                 //    continue;
-
-                damagable.IGetDamage(
-                    0,
-                    AttackEffectType.Down);
-                damagable.ISetKnockback(
-                    returnKnockback,
-                    returnPos,
-                    returnSize,
-                    returnOffset,
-                    attackData.attackCounts[0].stunTime,
-                    0
-                    );
+                if (damagable.IGetDamage(0, AttackEffectType.Down))
+                {
+                    if (damagable.ICollision(returnSize, returnPos, returnOffset))
+                    {
+                        damagable.ISetKnockback(returnKnockback,attackData.attackCounts[0].stunTime,0);
+                    }
+                }
+               
             }
         }
         skillController.Out();

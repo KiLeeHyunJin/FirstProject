@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    [SerializeField] PooledObject prefab;
+    PooledObject prefab;
     [SerializeField] int size;
     [SerializeField] int capacity;
 

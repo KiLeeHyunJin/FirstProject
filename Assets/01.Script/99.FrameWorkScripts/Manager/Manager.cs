@@ -24,6 +24,8 @@ public static class Manager
         GameManager.CreateInstance();
         DataManager.CreateInstance();
         PoolManager.CreateInstance();
+
+
         ResourceManager.CreateInstance();
         SceneManager.CreateInstance();
         SoundManager.CreateInstance();

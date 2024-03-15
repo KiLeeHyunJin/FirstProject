@@ -8,6 +8,9 @@ using UnityEngine;
 public struct AttackCount
 {
     [Range(0, 1)]
+    public float AttackEffectSoundTime;
+    public AudioClip AttackEffectSoundClip;
+    [Range(0, 1)]
     public float AttackTime;
     [Range(0,2)]
     public float Percent;
@@ -39,6 +42,11 @@ public struct AttackData
     public string AnimName;
     public float soundPlayeTime;
     public AudioClip soundClip;
+    public AudioClip soundSwingClip;
+    public AudioClip soundHitClip;
+    [Range(0, 1)]
+    public float skillEffectPlayTime;
+    public AudioClip skillEffectClip;
     [Range(0, 1)]
     public float delay;
     public int damage;
