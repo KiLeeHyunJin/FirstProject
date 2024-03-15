@@ -34,8 +34,6 @@ public class PoolManager : Singleton<PoolManager>
         poolDic.Clear();
     }
 
-
-
     public PooledObject GetPool(PooledObject prefab, Vector3 position, Quaternion rotation)
     {
         return poolDic[prefab.GetInstanceID()].GetPool(position, rotation);

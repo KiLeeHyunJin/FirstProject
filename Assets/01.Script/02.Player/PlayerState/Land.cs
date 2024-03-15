@@ -12,6 +12,7 @@ public class Land : PlayerBaseState<PlayerState>
     bool isTransition;
     public override void Enter()
     {
+        base.Enter();
         isTransition = false;
         if (coroutine != null)
             owner.StopCoroutine(coroutine);

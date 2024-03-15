@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ServerSelect : MonoBehaviour
+public class ServerSelect : BaseScene
 {
     [SerializeField] Image img;
     [SerializeField] int selectCount;
     ServerSlot[] servers;
     private void Start()
     {
+        StartBGM();
         servers = FindObjectsOfType<ServerSlot>();
         selectCount = -1;
         img.sprite = null;
@@ -21,9 +22,10 @@ public class ServerSelect : MonoBehaviour
     {
         if(selectCount == idx)
         {
-            selectCount = -1;
-            img.sprite = null;
-            img.enabled = false;
+            NextScene();
+            //selectCount = -1;
+            //img.sprite = null;
+            //img.enabled = false;
         }
         else
         {
@@ -36,5 +38,14 @@ public class ServerSelect : MonoBehaviour
         }
         foreach (var server in servers)
             server.Cancle(selectCount);
+    }
+
+    public override IEnumerator LoadingRoutine()
+    {
+        yield return null;
+    }
+    public void NextScene()
+    {
+        Manager.Scene.LoadScene("SelectCharacter");
     }
 }

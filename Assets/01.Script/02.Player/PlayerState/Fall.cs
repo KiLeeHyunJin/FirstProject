@@ -10,7 +10,6 @@ public class Fall : PlayerBaseState<PlayerState>
     [SerializeField] AudioClip[] clips;
     public override void Enter()
     {
-
         //base.Enter();
         isTransition = false;
         if(coroutine != null)

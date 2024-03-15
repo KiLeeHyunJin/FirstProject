@@ -18,6 +18,6 @@ EditorBuildSettings:
     path: Assets/00.Scenes/00.Enter/SelectSever.unity
     guid: 1d581e19e3f17114ea68b76706c89568
   - enabled: 1
-    path: Assets/00.Scenes/LoadingScene.unity
-    guid: d64e3de0d00f5bc40bdf8320701f9780
+    path: Assets/00.Scenes/Lorien.unity
+    guid: a3a85e12feb0db8419b9727aebfc5d55
   m_configObjects: {}

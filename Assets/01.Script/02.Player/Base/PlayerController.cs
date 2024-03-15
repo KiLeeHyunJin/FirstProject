@@ -1,15 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Net.NetworkInformation;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.UI;
-using static KeyManager;
-using static UnityEditor.PlayerSettings;
 public enum PlayerState
 {
     Idle,
@@ -54,6 +47,7 @@ public enum ActiveType
 
 public class PlayerController : BaseController<PlayerState>
 {
+    [SerializeField] AudioClip readySound;
     public PlayerUIData uiData;
     [field: SerializeField] public float MaxMp { get; private set; }
     [field: SerializeField] public float MaxHp { get; private set; }
@@ -244,7 +238,10 @@ public class PlayerController : BaseController<PlayerState>
                     continue;
 
                 if (atckState.ReadyCheck() == false)
+                {
+                    Manager.Sound.PlayVoice(readySound);
                     continue;
+                }
 
                 PlayerState state = EnumUtil<PlayerState>.Parse(key.ToString());
                 if (atckState.On)

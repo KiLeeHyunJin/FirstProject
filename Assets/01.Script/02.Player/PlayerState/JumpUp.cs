@@ -14,6 +14,7 @@ public class JumpUp : PlayerBaseState<PlayerState>
     Vector2 speed;
     public override void Enter()
     {
+        base.Enter();
         anim.Play(AnimIdTable.GetInstance.JumpUpId);
         isTransition = false;
         if (pos.yState() == TransformAddForce.YState.None || pos.Y <= 0)

@@ -121,6 +121,8 @@ public class AttackController : MonoBehaviour
         int dir = pos.direction == TransformPos.Direction.Left ? -1 : 1;
         for (int i = 0; i < targetCount; i++)
         {
+            if (colliders[i] == null)
+                continue;
             IDamagable damagable = colliders[i].GetComponent<IDamagable>();
             if (damagable != null)
             {

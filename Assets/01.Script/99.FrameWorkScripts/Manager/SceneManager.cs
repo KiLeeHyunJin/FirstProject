@@ -41,6 +41,7 @@ public class SceneManager : Singleton<SceneManager>
 
     IEnumerator LoadingRoutine(string sceneName)
     {
+        fade.gameObject.SetActive(true);
         if (curScene == null)
             GetCurScene();
         if (loadingImg.Length >= curScene.loadingImgIdx)
@@ -79,6 +80,7 @@ public class SceneManager : Singleton<SceneManager>
         yield return newCurScene.LoadingRoutine();
         Time.timeScale = 1f;
         StopCoroutine(coroutine);
+        newCurScene.StartBGM();
         Loading.gameObject.SetActive(false);
         //loadingBar.gameObject.SetActive(false);
         yield return FadeIn();
@@ -125,5 +127,6 @@ public class SceneManager : Singleton<SceneManager>
             fade.color = Color.Lerp(fadeOutColor, fadeInColor, rate);
             yield return null;
         }
+        fade.gameObject.SetActive(false);
     }
 }

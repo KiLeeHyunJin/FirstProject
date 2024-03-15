@@ -1717,6 +1717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingImgIdx: 4
   enterIdx: 0
+  bgm: {fileID: 8300000, guid: d1c128bc1f1e85448932f96837968ef6, type: 3}
   player: {fileID: 0}
   pos: []
 --- !u!1 &1339291525

@@ -14,12 +14,15 @@ public class ServerSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     ServerSelect select;
     Image img;
     bool click;
-    private void Start()
+    void Awake()
     {
         img = GetComponent<Image>();
-        select = FindObjectOfType<ServerSelect>();
         click = false;
         img.sprite = disableIcon;
+    }
+    private void Start()
+    {
+        select = FindObjectOfType<ServerSelect>();
     }
 
     void EnterData()

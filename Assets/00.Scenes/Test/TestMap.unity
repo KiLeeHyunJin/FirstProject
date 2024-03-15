@@ -171,17 +171,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4803227102972917773, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
-      propertyPath: bloodEffect
-      value: 
-      objectReference: {fileID: 6553082411340407292, guid: f3f9345506ef76948a6f1d60cbf7f719, type: 3}
     - target: {fileID: 6941593350664759580, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8493437146200328571, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
-      propertyPath: slashController.attackData.Array.data[0].attackCounts.Array.data[0].power.y
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
