@@ -8,6 +8,7 @@ public class ServerSelect : BaseScene
     [SerializeField] Image img;
     [SerializeField] int selectCount;
     ServerSlot[] servers;
+    [SerializeField] Image CloseImage;
     private void Start()
     {
         StartBGM();
@@ -15,6 +16,7 @@ public class ServerSelect : BaseScene
         selectCount = -1;
         img.sprite = null;
         img.enabled = false;
+        CloseImage.gameObject.SetActive(false);
         foreach (var server in servers)
             server.Cancle(selectCount);
     }
@@ -22,6 +24,7 @@ public class ServerSelect : BaseScene
     {
         if(selectCount == idx)
         {
+            CloseImage.gameObject.SetActive(true);
             NextScene();
             //selectCount = -1;
             //img.sprite = null;

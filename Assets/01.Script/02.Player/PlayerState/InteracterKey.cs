@@ -12,17 +12,28 @@ public class InteracterKey : PlayerBaseState<PlayerState>
     int count;
     enum Interact{ Attack,Pick };
     Interact type;
+    bool isTransition;
     public override void Enter() 
     {
-        count = Physics2D.OverlapCircleNonAlloc(pos.Pose, 0.2f, collider, layerMask);
+        isTransition = false;
+        count = Physics2D.OverlapCircleNonAlloc(new Vector2(pos.X,pos.Z), 0.2f, collider, layerMask);
         if (count > 0)
+        {
+            isTransition = true;
             type = Interact.Pick;
+
+        }
         else
+        {
+            isTransition = true;
             type = Interact.Attack;
+        }
     }
 
     public override void Transition()
     {
+        if (isTransition == false)
+            return;
         switch (type)
         {
             case Interact.Attack:
@@ -32,5 +43,10 @@ public class InteracterKey : PlayerBaseState<PlayerState>
                 owner.SetState = PlayerState.ItemPick;
                 break;
         }
+    }
+    public override void Exit()
+    {
+        base.Exit();
+        isTransition = false;
     }
 }
