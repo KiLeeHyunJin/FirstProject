@@ -5,68 +5,47 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlotEntry : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
+public class EquipSlotEntry : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     Image Icon;
-    TextMeshProUGUI text;
-    InventoryWindow owner;
     public int idx { get; private set; }
-
+    EquipmentWindow owner;
     private void Awake()
     {
         Icon = GetComponent<Image>();
-        text = GetComponent<TextMeshProUGUI>();
     }
-    public void SetIndex(int _idx, InventoryWindow _owner)
+    public void SetIndex(int _idx, EquipmentWindow _owner)
     {
         idx = _idx;
         owner = _owner;
     }
-    public void SetData(Sprite icon, int count)
+    public void SetData(Sprite icon)
     {
-        if(icon == null)
+        if (icon == null)
         {
             Icon.enabled = false;
             return;
         }
         else
         {
-            if(Icon.enabled == false)
+            if (Icon.enabled == false)
                 Icon.enabled = true;
             Icon.sprite = icon;
         }
-        if (text == null)
-            return;
-        if (count == 1)
-            text.enabled = false;
-        else 
-        {
-            if (text.enabled == false)
-                text.enabled = true;
-            text.text = count.ToString();
-        }
     }
-    float time;
+
     public void OnPointerClick(PointerEventData eventData)
     {
-        float before = time;
-        time = Time.time;
-        if(time - before <= 0.35f)
-        {
-            owner.playerData.CallUsedItem(owner.type, idx);
-        }
-        //ExecuteEvents.ExecuteHierarchy(transform.parent.gameObject, eventData, ExecuteEvents.pointerClickHandler);
-        
+        //.OnFirstLayer();
+        this.transform.SetAsLastSibling();
     }
+    Vector2 startPos;
     public void OnBeginDrag(PointerEventData eventData)
     {
-
         if (owner.dragData == null)
-            owner.dragData = new InventoryWindow.InventoryDragData();
-
+            owner.dragData = new EquipmentWindow.InventoryDragData();
         owner.dragData.entry = this;
         owner.dragData.parent = (RectTransform)transform.parent;
-
         transform.SetParent(owner.DragCanvas.transform, true);
     }
     public void OnDrag(PointerEventData eventData)
@@ -88,19 +67,11 @@ public class InventorySlotEntry : MonoBehaviour, IBeginDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        bool isSucces = owner.HandledDroppedEntry(eventData.position);
+       // bool isSucces = owner.HandledDroppedEntry(eventData.position);
         RectTransform t = transform as RectTransform;
         transform.SetParent(owner.dragData.parent, true);
         t.offsetMin = t.offsetMax = Vector2.zero;
-
-        float before = time;
-        time = Time.time;
-        if (time - before <= 0.3f)
-        {
-            owner.playerData.CallUsedItem(owner.type, idx);
-            Debug.Log("È£Ãâ");
-        }
     }
 
-
 }
+

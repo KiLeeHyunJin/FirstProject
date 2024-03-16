@@ -48,7 +48,23 @@ public class InventorySystem
         }
     }
     public void SetEquipSystem(EquipmentSystem _equipmentSystem) => equipment = _equipmentSystem;
-    
+    public void UseItem(EnumType.ItemType type, int idx)
+    {
+        if (idx >= inventory.GetLength(1))
+            return;
+        if(inventory[(int)type, idx].stateType == ItemState.Fill)
+        {
+            if (inventory[(int)type, idx].count > 0)
+            {
+                if(type == ItemType.Equip)
+                {
+                    inventory[(int)type, idx].Used();
+
+                    //data.uIData.CallEquipData(type);
+                }
+            }
+        }
+    }
     void UpdateSlot(int idx, EnumType.ItemType type)
     {
         data.uIData.UpdateSlot(type, idx);

@@ -7,14 +7,15 @@ public class PlayerUIData : MonoBehaviour
     StatusUI statusUI;
     PlayerData playerData;
     public InventoryWindow inventoryWindow { get; private set; }
+    public EquipmentWindow equipmentWindow { get; private set; }
     private void Start()
     {
         if(playerData == null)
             playerData = FindObjectOfType<PlayerData>();
         playerData.SetUIData(this);
     }
-    public void UpdateSlot(Action<int, EnumType.ItemType> action) => playerData.SlotUpdate += action;
     public void SetInventoryUI(InventoryWindow inventory) => inventoryWindow = inventory;
+    public void SetEquipUI(EquipmentWindow equipment) => equipmentWindow = equipment;
 
     public int CallMaxCount()
     {
@@ -29,8 +30,10 @@ public class PlayerUIData : MonoBehaviour
         if (inventoryWindow.type == type)
             inventoryWindow.UpdateEntry(idx);
     }
-
+    public void CallUsedItem(EnumType.ItemType type, int idx) => playerData.inventory.UseItem(type, idx);
     public void CallSwapItem(EnumType.ItemType type,int idx1, int idx2) => playerData.inventory.SwapItem(type, idx1, idx2);
+    public void UpdateEquipSlot(EnumType.EquipType type) => equipmentWindow.UpdateEntry(type);
+    public Sprite CallEquipData(EnumType.EquipType type) => playerData.equipment.GetData(type);
     public InvenEntry CallSlotData(int idx) => playerData.inventory.GetSlot(idx);
     public InvenEntry[] CallInventoryData(EnumType.ItemType type) => playerData.inventory.GetInventory(type);
 

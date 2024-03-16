@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.LightingExplorerTableColumn;
 
-public class InventoryDragData
+
+public class InventoryWindow :WindowUI
 {
-    public InventorySlotEntry entry;
-    public Transform parent;
-}
-public class InventoryWindow : WindowUI
-{
-    PlayerUIData playerData;
+    public class InventoryDragData
+    {
+        public InventorySlotEntry entry;
+        public Transform parent;
+    }
+    public PlayerUIData playerData { get; private set; }
     [SerializeField] InventorySlotEntry prefab;
     [SerializeField] RectTransform[] rects;
     InventorySlotEntry[] slots;
@@ -35,7 +36,7 @@ public class InventoryWindow : WindowUI
             slots[i] = obj;
             slots[i].SetIndex(i,this);
         }
-        //UpdateEntry();
+        UpdateEntry();
     }
     public void ChangeSlot(int itemType)
     {

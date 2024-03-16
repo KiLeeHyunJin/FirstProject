@@ -1,24 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static EnumType;
 using static UnityEditor.LightingExplorerTableColumn;
+using static UnityEditor.Progress;
 
 public class EquipmentSystem
 {
     public EquipItem[] equips { get; private set; }
+    public InventorySystem inventory { get; private set; }
+    PlayerData data;
+
     public EquipmentSystem(PlayerData owner)
     {
         equips = new EquipItem[(int)EquipType.END];
         data = owner;
     }
-    public InventorySystem inventory { get; private set; }
-    PlayerData data;
+
     public void SetInventorySystem(InventorySystem _inventory) => inventory = _inventory;
+    public Sprite GetData(EnumType.EquipType type) => equips[(int)type].icon;
+
     public void EquipItem(EquipItem item)
     {
-        if (equips[(int)item.equipType] != null) //장착 장비가 있을 시 
-            equips[(int)item.equipType] = item;
+        if (equips[(int)item.equipType] != null)
+            DequipItem(item.equipType);
+        equips[(int)item.equipType] = item;
+
+        data.uIData.UpdateEquipSlot(item.equipType);
     }
     public void DequipItem(EquipType itemType)
     {
@@ -27,6 +36,7 @@ public class EquipmentSystem
         {
             equips[idx].Diquip();
             equips[idx] = null;
+            data.uIData.UpdateEquipSlot(itemType);
         }
     }
     bool DequipCheck(int idx)

@@ -10,23 +10,17 @@ public class PlayerData : MonoBehaviour
     [field : SerializeField] public int MaxCount { get; private set;}
     public InventorySystem inventory;
     public EquipmentSystem equipment;
-    public event Action<int, EnumType.ItemType> SlotUpdate;
     public PlayerUIData uIData { get; private set; }
-    int mp;
-    int hp;
-    public int HP { get { return hp; } set { hp -= value; } }
-    public int Mp { get { return mp; } set { mp -= value; } }
-
     private void Awake()
     {
         CreateItemDic();
-
         inventory = new InventorySystem(MaxCount, this);
         equipment = new EquipmentSystem(this);
         inventory.SetEquipSystem(equipment);
         equipment.SetInventorySystem(inventory);
     }
     public void SetUIData(PlayerUIData playerUI) => uIData = playerUI; 
+
     void CreateItemDic()
     {
         itemDic = new Dictionary<EnumType.ItemType, Hashtable>();
