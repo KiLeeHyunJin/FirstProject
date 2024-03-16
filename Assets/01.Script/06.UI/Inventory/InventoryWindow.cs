@@ -9,19 +9,21 @@ public class InventoryDragData
     public InventorySlotEntry entry;
     public Transform parent;
 }
-public class InventoryWindow : MonoBehaviour//WindowUI
+public class InventoryWindow : WindowUI
 {
     PlayerUIData playerData;
     [SerializeField] InventorySlotEntry prefab;
     [SerializeField] RectTransform[] rects;
     InventorySlotEntry[] slots;
-    EnumType.ItemType type;
+    public EnumType.ItemType type { get; private set; }
     [field: SerializeField] public Canvas DragCanvas { get; private set; }
     [field : SerializeField]public CanvasScaler DragCanvasScaler { get; private set; }
     [HideInInspector] public InventoryDragData dragData;
     private void Start()
     {
         playerData = FindObjectOfType<PlayerUIData>();
+        playerData.SetInventoryUI(this);
+
         DragCanvas = GetComponentInParent<Canvas>();
         DragCanvasScaler = GetComponentInParent<CanvasScaler>();
         dragData = new InventoryDragData();
@@ -71,12 +73,10 @@ public class InventoryWindow : MonoBehaviour//WindowUI
                     UpdateEntry(dragData.entry.idx);
                     UpdateEntry(i);
 
-                    Debug.Log("교환");
                     return true;
                 }
             }
         }
-        Debug.Log("실패");
         return false;
     }
 }

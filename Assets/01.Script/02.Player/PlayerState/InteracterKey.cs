@@ -40,7 +40,18 @@ public class InteracterKey : PlayerBaseState<PlayerState>
                 owner.SetState = PlayerState.BasicAtck;
                 break;
             case Interact.Pick:
-                owner.SetState = PlayerState.ItemPick;
+                {
+                    owner.SetState = PlayerState.ItemPick;
+                    DropItem item = collider[0].GetComponent<DropItem>();
+                    if(item != null)
+                    {
+                        owner.data.inventory.AddItem(item.id, item.type);
+
+                        PooledObject pickItem = item.GetComponent<PooledObject>();
+                        if (pickItem != null)
+                            pickItem.Release();
+                    }
+                }
                 break;
         }
     }

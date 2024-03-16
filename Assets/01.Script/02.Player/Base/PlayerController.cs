@@ -48,6 +48,7 @@ public enum ActiveType
 public class PlayerController : BaseController<PlayerState>
 {
     [SerializeField] AudioClip readySound;
+    public PlayerData data { get; private set;}
     public PlayerUIData uiData;
     [field: SerializeField] public float MaxMp { get; private set; }
     [field: SerializeField] public float MaxHp { get; private set; }
@@ -68,7 +69,6 @@ public class PlayerController : BaseController<PlayerState>
 
     [SerializeField] float alertTime;
 
-    public AnimIdTable animId { get; private set; }
     [Header("¸µÅ©")]
     [SerializeField] AttackController atkController;
 
@@ -101,6 +101,7 @@ public class PlayerController : BaseController<PlayerState>
         base.Awake();
         //SkillDic ;
         keys = GetComponent<KeyManager>();
+        data = GetComponent<PlayerData>();
         attackContainer = GetComponent<AttackContainer>();
         SetStateData(walk);
         SetStateData(run);

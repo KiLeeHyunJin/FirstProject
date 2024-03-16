@@ -37,7 +37,8 @@ public class InventorySlotEntry : MonoBehaviour, IPointerClickHandler, IBeginDra
                 Icon.enabled = true;
             Icon.sprite = icon;
         }
-
+        if (text == null)
+            return;
         if (count == 1)
             text.enabled = false;
         else 

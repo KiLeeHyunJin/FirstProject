@@ -19,13 +19,12 @@ public class BaseItem
     public Sprite icon { get; private set; }
     public EnumType.ItemType itemType { get; private set;}
     public EnumType.ItemState stateType { get; private set; }
-    public void SetItemData(int _count, int _id, EnumType.ItemType _itemType, int _idx, Sprite _icon)
+    public void SetItemData(int _count, int _id, EnumType.ItemType _itemType, Sprite _icon)
     {
         stateType = EnumType.ItemState.Fill;
         count = _count;
         id = _id;
         itemType = _itemType;
-        idx = _idx;
         icon = _icon;
     }
 

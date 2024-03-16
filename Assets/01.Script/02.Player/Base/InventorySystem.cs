@@ -19,8 +19,8 @@ public class InventorySystem
         currentUIType = type;
         for (int i = 0; i < getArray.Length; i++)
         {
-            getArray[i].icon = null;//inventory[(int)type, i].ico;
-            getArray[i].count = 0;
+            getArray[i].icon = inventory[(int)type,i].icon;//inventory[(int)type, i].ico;
+            getArray[i].count = inventory[(int)type, i].count;
         }
         return getArray;
     }
@@ -39,15 +39,20 @@ public class InventorySystem
         for (int i = 0; i < getArray.Length; i++)
             getArray[i] = new InvenEntry();
 
-        for (int i = 0; i < inventory.GetLength(0); i++)
+        for (int i = 0; i < (int)ItemType.Gold; i++)
         {
             for (int j = 0; j < inventory.GetLength(1); j++)
             {
-                inventory[i, j] = new BaseItem(EnumType.ItemState.Blank,this,j);
+                inventory[i, j] = new BaseItem(EnumType.ItemState.Blank,this, j);
             }
         }
     }
     public void SetEquipSystem(EquipmentSystem _equipmentSystem) => equipment = _equipmentSystem;
+    
+    void UpdateSlot(int idx, EnumType.ItemType type)
+    {
+        data.uIData.UpdateSlot(type, idx);
+    }
 
     public void AddItem(int id, ItemType type, int count = 1)
     {
@@ -57,14 +62,20 @@ public class InventorySystem
             if (idx >= 0)
             {
                 inventory[(int)type, idx].AddItem(count);
+                UpdateSlot(idx, type);
                 return;
             }
         }
         int addIdx = SearchBlackSlot(type);
         ItemObjectable item = data.GetItem(id, type);
-        if(addIdx >= 0)
+        if (item == null)
         {
-            inventory[(int)type, addIdx].SetItemData(count, id, type, addIdx, item.Icon);
+            return;
+        }
+        if (addIdx >= 0)
+        {
+            inventory[(int)type, addIdx].SetItemData(count, id, type, item.Icon);
+            UpdateSlot(addIdx, type);
         }
     }
 
@@ -85,7 +96,12 @@ public class InventorySystem
         if (inventory.GetLength(1) <= idx || 0 > idx)
             return false;
         if(inventory[(int)type, idx].count >= count)
-            return inventory[(int)type, idx].MinusItem(count);
+        {
+            bool result  = inventory[(int)type, idx].MinusItem(count);
+
+            UpdateSlot(idx, type);
+            return result;
+        }
         return false;
     }
 
@@ -104,25 +120,21 @@ public class InventorySystem
 
     public void SwapItem(ItemType type, int idx1, int idx2)
     {
-        if (inventory[(int)type, idx1].stateType == ItemState.Blank || inventory[(int)type, idx2].stateType == ItemState.Blank)
-        {
-            if (inventory[(int)type, idx1] == null)
-            {
-                inventory[(int)type, idx1] = inventory[(int)type, idx2];
-                inventory[(int)type, idx2].Clear();
-            }
-            else
-            {
-                inventory[(int)type, idx2] = inventory[(int)type, idx1];
-                inventory[(int)type, idx1].Clear();
-            }
-        }
-        else
-        {
-            BaseItem temp = inventory[(int)type, idx1];
-            inventory[(int)type, idx1] = inventory[(int)type, idx2];
-            inventory[(int)type, idx2] = temp;
-        }
+        Copy(inventory[(int)type, idx1], inventory[(int)type, idx2]);
+    }
+    void Copy(BaseItem idx1,BaseItem idx2)
+    {
+        Sprite icon = idx1.icon;
+        EnumType.ItemType type = idx1.itemType;
+        int id = idx1.id;
+        int count = idx1.count;
 
+        idx1.SetItemData(idx2.count, idx2.id, idx2.itemType, idx2.icon);
+        idx2.SetItemData(count, id, type, icon);
+
+        if (idx1.count <= 0)
+            idx1.Clear();
+        if (idx2.count <= 0)
+            idx2.Clear();
     }
 }
