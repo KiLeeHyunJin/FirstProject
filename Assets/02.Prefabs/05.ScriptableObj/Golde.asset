@@ -15,7 +15,8 @@ MonoBehaviour:
   id: 0
   itemName: "\uAE08"
   icon: {fileID: 21300000, guid: 9d4e005bb6ad21744870c039c43fcdc0, type: 3}
-  type: 0
+  type: 1
+  equipType: 0
   count: 0
-  addStat: 0
-  value: 0
+  addStat: 1
+  value: 50

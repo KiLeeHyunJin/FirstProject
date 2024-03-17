@@ -59,15 +59,17 @@ public class Tau_Atck1 : MonsterState<TauState> //³»·Á Âï±â
                     IDamagable damagable = colliders[0].GetComponent<IDamagable>();
                     if (damagable != null)
                     {
-                        damagable.IGetDamage(owner.GetAtckData(0).damage, owner.GetAtckData(0).AttackEffect);
-                        damagable.ICollision(pos.Pose,
-                            AttackSize,
-                            Offset);
-                        damagable.ISetKnockback(
-                            new Vector2(AttackPower.x * dir, AttackPower.y),
-                            owner.GetAtckData(0).stunTime,
-                            owner.GetAtckData(0).AttckType[0].pushTime
-                            );
+                        if (damagable.ICollision(AttackSize, pos.Pose,
+                            Offset))
+                        {
+                            if(damagable.IGetDamage(owner.GetAtckData(0).damage, owner.GetAtckData(0).AttackEffect))
+                            {
+                                damagable.ISetKnockback(
+                                    new Vector2(AttackPower.x * dir, AttackPower.y),
+                                    owner.GetAtckData(0).stunTime,
+                                    owner.GetAtckData(0).AttckType[0].pushTime);
+                            }
+                        }
                     }
                 }
                 break;

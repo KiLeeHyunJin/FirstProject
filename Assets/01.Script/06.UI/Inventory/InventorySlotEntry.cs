@@ -56,7 +56,6 @@ public class InventorySlotEntry : MonoBehaviour, IBeginDragHandler, IEndDragHand
             owner.playerData.CallUsedItem(owner.type, idx);
         }
         //ExecuteEvents.ExecuteHierarchy(transform.parent.gameObject, eventData, ExecuteEvents.pointerClickHandler);
-        
     }
     public void OnBeginDrag(PointerEventData eventData)
     {

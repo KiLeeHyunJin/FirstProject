@@ -12,7 +12,7 @@ public class InventorySystem
 {
     BaseItem[,] inventory;
     InvenEntry[] getArray;
-    PlayerData data;
+    public PlayerData data;
     EnumType.ItemType currentUIType;
     public InvenEntry[] GetInventory(EnumType.ItemType type)
     {
@@ -26,9 +26,13 @@ public class InventorySystem
     }
     public InvenEntry GetSlot(int idx)
     {
-        return new InvenEntry() { 
-            icon = inventory[(int)currentUIType,idx].icon, 
-            count = 0 };
+        InvenEntry answer = new InvenEntry() { icon = null, count = 0 };
+        if (inventory[(int)currentUIType, idx].stateType == ItemState.Fill)
+        {
+            answer.icon = inventory[(int)currentUIType, idx].icon;
+            answer.count = inventory[(int)currentUIType, idx].count;
+        }
+        return answer;
     }
     public EquipmentSystem equipment { get; private set; }
     public InventorySystem(int maxCount, PlayerData owner)
@@ -43,8 +47,21 @@ public class InventorySystem
         {
             for (int j = 0; j < inventory.GetLength(1); j++)
             {
-                inventory[i, j] = new BaseItem(EnumType.ItemState.Blank,this, j);
+                BaseItem item = null;
+                switch ((EnumType.ItemType)i)
+                {
+                    case ItemType.Equip:
+                        item = new EquipItem(EnumType.ItemState.Blank, this, j);
+                        break;
+                    case ItemType.Consume:
+                        item = new ConsumItem(EnumType.ItemState.Blank, this, j);
+                        break;
+                    case ItemType.Gold:
+                        break;
+                }
+                inventory[i, j] = item;
             }
+               
         }
     }
     public void SetEquipSystem(EquipmentSystem _equipmentSystem) => equipment = _equipmentSystem;
@@ -56,16 +73,25 @@ public class InventorySystem
         {
             if (inventory[(int)type, idx].count > 0)
             {
-                if(type == ItemType.Equip)
+                if (type == ItemType.Equip)
+                {
+                    EquipItem equip = inventory[(int)type, idx] as EquipItem;
+                    if (equip != null)
+                    {
+                        EquipType equipType = equip.equipType;
+                        inventory[(int)type, idx].Used();
+                        data.uIData.CallEquipData(equipType);
+                    }
+                }
+                else
                 {
                     inventory[(int)type, idx].Used();
-
-                    //data.uIData.CallEquipData(type);
+                    data.uIData.UpdateSlot(type, idx);
                 }
             }
         }
     }
-    void UpdateSlot(int idx, EnumType.ItemType type)
+    public void UpdateSlot(int idx, EnumType.ItemType type)
     {
         data.uIData.UpdateSlot(type, idx);
     }
@@ -85,12 +111,19 @@ public class InventorySystem
         int addIdx = SearchBlackSlot(type);
         ItemObjectable item = data.GetItem(id, type);
         if (item == null)
-        {
             return;
-        }
+
         if (addIdx >= 0)
         {
             inventory[(int)type, addIdx].SetItemData(count, id, type, item.Icon);
+            if(item.Type == ItemType.Equip)
+            {
+                inventory[(int)type, addIdx].SetEquipData(item.Equip);
+            }
+            else if(item.Type == ItemType.Consume)
+            {
+                inventory[(int)type, addIdx].SetConsumeData(item.AddStat, item.Value);
+            }
             UpdateSlot(addIdx, type);
         }
     }
@@ -136,9 +169,11 @@ public class InventorySystem
 
     public void SwapItem(ItemType type, int idx1, int idx2)
     {
-        Copy(inventory[(int)type, idx1], inventory[(int)type, idx2]);
+        Copy(inventory[(int)type, idx1], inventory[(int)type, idx2], idx1, idx2);
+        UpdateSlot(idx1, type);
+        UpdateSlot(idx2, type);
     }
-    void Copy(BaseItem idx1,BaseItem idx2)
+    void Copy(BaseItem idx1,BaseItem idx2, int idx_1, int idx_2)
     {
         Sprite icon = idx1.icon;
         EnumType.ItemType type = idx1.itemType;
@@ -149,8 +184,12 @@ public class InventorySystem
         idx2.SetItemData(count, id, type, icon);
 
         if (idx1.count <= 0)
+        {
             idx1.Clear();
+        }
         if (idx2.count <= 0)
+        {
             idx2.Clear();
+        }
     }
 }

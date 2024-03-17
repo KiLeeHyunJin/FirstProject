@@ -22,7 +22,6 @@ public class PlayerUIData : MonoBehaviour
         if (playerData == null)
             playerData = FindObjectOfType<PlayerData>();
         return playerData.MaxCount;
-
     }
 
     public void UpdateSlot(EnumType.ItemType type, int idx)
@@ -36,6 +35,7 @@ public class PlayerUIData : MonoBehaviour
     public Sprite CallEquipData(EnumType.EquipType type) => playerData.equipment.GetData(type);
     public InvenEntry CallSlotData(int idx) => playerData.inventory.GetSlot(idx);
     public InvenEntry[] CallInventoryData(EnumType.ItemType type) => playerData.inventory.GetInventory(type);
+    public void CallDequipItem(int idx) => playerData.equipment.DequipItem((EnumType.EquipType)idx);
 
     public void SetHp(float _hp) => statusUI.UpdateHp(_hp);
     public void SetMp(float _mp) => statusUI.UpdateMp(_mp);

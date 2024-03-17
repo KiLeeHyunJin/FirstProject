@@ -11,6 +11,7 @@ public class PlayerData : MonoBehaviour
     public InventorySystem inventory;
     public EquipmentSystem equipment;
     public PlayerUIData uIData { get; private set; }
+    public PlayerController playerController { get; private set; }
     private void Awake()
     {
         CreateItemDic();
@@ -20,7 +21,7 @@ public class PlayerData : MonoBehaviour
         equipment.SetInventorySystem(inventory);
     }
     public void SetUIData(PlayerUIData playerUI) => uIData = playerUI; 
-
+    public void SetPlayer(PlayerController player) =>playerController = player;
     void CreateItemDic()
     {
         itemDic = new Dictionary<EnumType.ItemType, Hashtable>();

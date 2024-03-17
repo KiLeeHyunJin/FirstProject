@@ -19,7 +19,13 @@ public class EquipmentSystem
     }
 
     public void SetInventorySystem(InventorySystem _inventory) => inventory = _inventory;
-    public Sprite GetData(EnumType.EquipType type) => equips[(int)type].icon;
+    public Sprite GetData(EnumType.EquipType type)
+    {
+        if (equips[(int)type] != null)
+            return equips[(int)type].icon;
+        else
+            return null;
+    }
 
     public void EquipItem(EquipItem item)
     {

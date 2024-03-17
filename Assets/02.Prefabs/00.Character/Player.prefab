@@ -539,6 +539,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4621700051401635338}
+  - component: {fileID: 611928712166309431}
   - component: {fileID: 8493437146200328571}
   - component: {fileID: 5296899851847033797}
   - component: {fileID: 7202603519542357929}
@@ -571,6 +572,21 @@ Transform:
   - {fileID: 791742622110736927}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &611928712166309431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6941593350664759580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c5a213a38e547c4ab95e5af66e07f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemObjectables:
+  - {fileID: 11400000, guid: d8d8601262ee9c24db8ccb39c4c9c11d, type: 2}
+  <MaxCount>k__BackingField: 24
 --- !u!114 &8493437146200328571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -699,7 +715,7 @@ MonoBehaviour:
       skillEffectClip: {fileID: 8300000, guid: f01ad075231b53145a80ed705e89cd1b, type: 3}
       delay: 0.367
       damage: 0
-      mana: 0
+      mana: 5
       chainAnim: 0
       charging: 0
       attackSize:
@@ -728,7 +744,7 @@ MonoBehaviour:
       skillEffectClip: {fileID: 8300000, guid: eca4f001177b5764bae8351d2c9fa218, type: 3}
       delay: 0.408
       damage: 0
-      mana: 0
+      mana: 5
       chainAnim: 0
       charging: 0
       attackSize:
@@ -1157,7 +1173,7 @@ MonoBehaviour:
   renderer: {fileID: 3843137686234740380}
   anim: {fileID: 3551460506702955033}
   <Hp>k__BackingField: 10
-  readySound: {fileID: 0}
+  readySound: {fileID: 8300000, guid: d1607972da507a548b96509ae3dd2b86, type: 3}
   uiData: {fileID: 0}
   <MaxMp>k__BackingField: 100
   <MaxHp>k__BackingField: 15

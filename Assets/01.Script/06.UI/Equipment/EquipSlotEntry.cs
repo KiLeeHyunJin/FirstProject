@@ -33,11 +33,16 @@ public class EquipSlotEntry : MonoBehaviour, IPointerClickHandler, IBeginDragHan
             Icon.sprite = icon;
         }
     }
-
+    float time;
     public void OnPointerClick(PointerEventData eventData)
     {
-        //.OnFirstLayer();
-        this.transform.SetAsLastSibling();
+        float before = time;
+        time = Time.time;
+        if (time - before <= 0.35f)
+        {
+            owner.DeQuip(idx);
+        }
+        //ExecuteEvents.ExecuteHierarchy(transform.parent.gameObject, eventData, ExecuteEvents.pointerClickHandler);
     }
     Vector2 startPos;
     public void OnBeginDrag(PointerEventData eventData)

@@ -102,6 +102,7 @@ public class PlayerController : BaseController<PlayerState>
         //SkillDic ;
         keys = GetComponent<KeyManager>();
         data = GetComponent<PlayerData>();
+        data.SetPlayer(this);
         attackContainer = GetComponent<AttackContainer>();
         SetStateData(walk);
         SetStateData(run);
@@ -179,7 +180,24 @@ public class PlayerController : BaseController<PlayerState>
         state.SetController(this);
         state.SettingAttackData(atkController);
     }
-
+    public void AddState(EnumType.ConsumeType type , int value)
+    {
+        switch (type)
+        {
+            case EnumType.ConsumeType.Hp:
+                AddHp = value;
+                if (Hp > MaxHp)
+                    Hp = (int)MaxHp;
+                uiData.SetHp(Hp);
+                break;
+            case EnumType.ConsumeType.Mp:
+                AddMp = value;
+                if(Mp > MaxMp)
+                    Mp = (int)MaxMp;
+                uiData.SetMp(Mp);
+                break;
+        }
+    }
     void GetSkill(string str, KeyManager.QuickKey setKey, params PlayerState[] enums)
     {
         SkillContain contain = attackContainer.GetSkillData(str);
@@ -284,6 +302,8 @@ public class PlayerController : BaseController<PlayerState>
         isAlert = true;
     }
     Coroutine Alertcoroutine = null;
+    private int typ;
+
     IEnumerator StartAlert()
     {
         yield return new WaitForSeconds(alertTime);

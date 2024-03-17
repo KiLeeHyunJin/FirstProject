@@ -32,11 +32,18 @@ public class EquipmentWindow : MonoBehaviour
         {
             equips[i].SetIndex(i,this);
         }
+        for (int i = 0; i < (int)EnumType.EquipType.END; i++)
+        {
+            UpdateEntry((EnumType.EquipType)i);
+        }
     }
     public void UpdateEntry(EnumType.EquipType type)
     {
         Sprite icon = playerData.CallEquipData(type);
         equips[(int)type].SetData(icon);
     }
-
+    public void DeQuip(int idx)
+    {
+        playerData.CallDequipItem(idx);
+    }
 }
