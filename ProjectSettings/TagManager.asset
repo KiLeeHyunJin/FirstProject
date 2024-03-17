@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Monster
   - Damage
+  - Door
   layers:
   - Default
   - TransparentFX
