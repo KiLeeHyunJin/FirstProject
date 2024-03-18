@@ -106,6 +106,13 @@ public class InventorySlotEntry : MonoBehaviour, IBeginDragHandler, IEndDragHand
                 }
             }
         }
+        else if(owner.type == EnumType.ItemType.Consume)
+        {
+            if(owner.playerData.quickSlotWindow.HandledDroppedEntry(eventData.position, idx))
+            {
+
+            }
+        }
 
         RectTransform t = transform as RectTransform;
         transform.SetParent(owner.dragData.parent, true);

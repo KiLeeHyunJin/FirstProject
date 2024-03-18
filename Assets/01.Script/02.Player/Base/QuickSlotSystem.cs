@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static EnumType;
+using static UnityEditor.Progress;
 
 public class QuickSlotSystem : MonoBehaviour
 {
@@ -13,33 +15,39 @@ public class QuickSlotSystem : MonoBehaviour
     public QuickSlotSystem(PlayerData owner)
     {
         data = owner;
+        consume = new ConsumItem[5];
+        invenIdx = new int[5];
     }
     public void UseKey(KeyManager.SlotKey key)
     {
         if (consume[(int)key].stateType == ItemState.Fill)
             inventory.UseItem(ItemType.Consume, invenIdx[(int)key]);
+        if (consume[(int)key].count <= 0)
+        {
+            consume[(int)key] = null;
+            data.uIData.UpdateQuickSlot(invenIdx[(int)key], (int)key);
+            invenIdx[(int)key] = -1;
+        }
     }
     public void SetInventorySystem(InventorySystem _inventory)
     {
         inventory = _inventory;
-        consume = new ConsumItem[5];
-        invenIdx = new int[5];
-        //for (int i = 0; i < consume.Length; i++)
-        //    consume[i] = new ConsumItem(ItemState.Blank, inventory, i);
-    }
-    public Sprite GetData(KeyManager.SlotKey key)
-    {
-        if (consume[(int)key].stateType == ItemState.Fill)
-            return consume[(int)key].icon;
-        else
-            return null;
     }
 
-    public void SetItem(ConsumItem item, int idx, KeyManager.SlotKey key)
+    public void CallSetItem(int idx, int saveIdx)
     {
-        if (consume[(int)key].stateType != ItemState.Blank)
-            //consume[(int)key].Clear();
-            consume[(int)key] = null;
+        ConsumItem consum  = inventory.GetConsume(idx) as ConsumItem;  
+        if(consum != null)
+        {
+            consume[saveIdx] = consum;
+            invenIdx[saveIdx] = idx;
+            data.uIData.UpdateQuickSlot(idx, saveIdx);
+        }
+    }
+
+    void SetItem(ConsumItem item, int idx, KeyManager.SlotKey key)
+    {
+        consume[(int)key] = null;
         invenIdx[(int)key] = idx;
         consume[(int)key] = item;
         //consume[(int)key].SetItemData(item.count, item.id, item.itemType, item.icon);

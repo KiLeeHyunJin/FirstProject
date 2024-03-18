@@ -15,6 +15,8 @@ public class InventorySystem
     InvenEntry[] getArray;
     public PlayerData data;
     EnumType.ItemType currentUIType;
+    public BaseItem GetConsume(int idx)
+    { return inventory[(int)ItemType.Consume,idx]; }
     public InvenEntry[] GetInventory(EnumType.ItemType type)
     {
         currentUIType = type;
@@ -24,6 +26,16 @@ public class InventorySystem
             getArray[i].count = inventory[(int)type, i].count;
         }
         return getArray;
+    }
+    public InvenEntry GetConsumeData(int idx)
+    {
+        InvenEntry answer = new InvenEntry() { icon = null, count = 0 };
+        if (inventory[(int)EnumType.ItemType.Consume, idx].stateType == ItemState.Fill)
+        {
+            answer.icon = inventory[(int)EnumType.ItemType.Consume, idx].icon;
+            answer.count = inventory[(int)EnumType.ItemType.Consume, idx].count;
+        }
+        return answer;
     }
     public EnumType.EquipType GetEquipType(int idx)
     {
