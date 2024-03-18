@@ -34,6 +34,7 @@ public class PlayerUIData : MonoBehaviour
     public void UpdateEquipSlot(EnumType.EquipType type) => equipmentWindow.UpdateEntry(type);
     public Sprite CallEquipData(EnumType.EquipType type) => playerData.equipment.GetData(type);
     public InvenEntry CallSlotData(int idx) => playerData.inventory.GetSlot(idx);
+    public EnumType.EquipType CallEquipType(int idx) => playerData.inventory.GetEquipType(idx);
     public InvenEntry[] CallInventoryData(EnumType.ItemType type) => playerData.inventory.GetInventory(type);
     public void CallDequipItem(int idx) => playerData.equipment.DequipItem((EnumType.EquipType)idx);
 

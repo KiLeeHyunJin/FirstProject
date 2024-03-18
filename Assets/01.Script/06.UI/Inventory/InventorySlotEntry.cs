@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlotEntry : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler
+public class InventorySlotEntry : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler, IPointerDownHandler
 {
     Image Icon;
     TextMeshProUGUI text;
@@ -46,15 +46,18 @@ public class InventorySlotEntry : MonoBehaviour, IBeginDragHandler, IEndDragHand
             text.text = count.ToString();
         }
     }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+    }
+
     float time;
     public void OnPointerClick(PointerEventData eventData)
     {
         float before = time;
         time = Time.time;
         if(time - before <= 0.35f)
-        {
             owner.playerData.CallUsedItem(owner.type, idx);
-        }
+
         //ExecuteEvents.ExecuteHierarchy(transform.parent.gameObject, eventData, ExecuteEvents.pointerClickHandler);
     }
     public void OnBeginDrag(PointerEventData eventData)
@@ -87,18 +90,26 @@ public class InventorySlotEntry : MonoBehaviour, IBeginDragHandler, IEndDragHand
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        bool isSucces = owner.HandledDroppedEntry(eventData.position);
+        if(owner.HandledDroppedEntry(eventData.position))
+        {
+
+        }
+        else if (owner.type == EnumType.ItemType.Equip)
+        {
+            EnumType.EquipType equip = owner.playerData.CallEquipType(idx);
+
+            if (equip != EnumType.EquipType.END)
+            {
+                if (owner.playerData.equipmentWindow.HandleDroppedEntryPosition(equip, eventData.position))
+                {
+                    owner.playerData.CallUsedItem(owner.type, idx);
+                }
+            }
+        }
+
         RectTransform t = transform as RectTransform;
         transform.SetParent(owner.dragData.parent, true);
         t.offsetMin = t.offsetMax = Vector2.zero;
-
-        float before = time;
-        time = Time.time;
-        if (time - before <= 0.3f)
-        {
-            owner.playerData.CallUsedItem(owner.type, idx);
-            Debug.Log("È£Ãâ");
-        }
     }
 
 

@@ -5,6 +5,7 @@ using static EnumType;
 using static UnityEditor.LightingExplorerTableColumn;
 public class InvenEntry
 {
+    public EnumType.ItemType Type;
     public Sprite icon;
     public int count;
 }
@@ -24,6 +25,16 @@ public class InventorySystem
         }
         return getArray;
     }
+    public EnumType.EquipType GetEquipType(int idx)
+    {
+        if(inventory[(int)ItemType.Equip, idx].stateType == ItemState.Fill)
+        {
+            EquipItem item = inventory[(int)ItemType.Equip, idx] as EquipItem;
+            if (item != null)
+                return item.equipType;
+        }
+        return EquipType.END;
+    }
     public InvenEntry GetSlot(int idx)
     {
         InvenEntry answer = new InvenEntry() { icon = null, count = 0 };
@@ -31,6 +42,7 @@ public class InventorySystem
         {
             answer.icon = inventory[(int)currentUIType, idx].icon;
             answer.count = inventory[(int)currentUIType, idx].count;
+            answer.Type = inventory[(int)currentUIType, idx].itemType;
         }
         return answer;
     }

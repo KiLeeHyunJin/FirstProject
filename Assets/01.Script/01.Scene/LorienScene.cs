@@ -13,7 +13,7 @@ public class LorienScene : BaseScene
     void Start()
     {
         if (player != null)
-            player.Pose = new Vector3(pos[enterIdx].position.x, 0, pos[enterIdx].position.y);
+            player.Pose = new Vector3(pos[Manager.Scene.enterIdx].position.x, 0, pos[Manager.Scene.enterIdx].position.y);
     }
 
 }

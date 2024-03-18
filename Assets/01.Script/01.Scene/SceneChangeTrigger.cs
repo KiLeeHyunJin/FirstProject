@@ -12,6 +12,8 @@ public class SceneChangeTrigger : MonoBehaviour
     {
         gameObject.layer = LayerMask.NameToLayer("Portal");
         scene = GetComponentInParent<BaseScene>();
+        if (scene == null)
+            scene = FindObjectOfType<BaseScene>();
     }
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)

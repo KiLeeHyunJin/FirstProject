@@ -21,15 +21,25 @@ public class DungeonDoor : MonoBehaviour
         flashRender.gameObject.SetActive(false);
     }
     Coroutine coroutine = null;
+    bool flashOn = true;
     IEnumerator OpenFlash()
     {
+        Color color = flashRender.color;
         while(true)
         {
-            if (flashRender.sprite == null)
-                flashRender.sprite = Flash;
+            color.a += flashOn ? Time.deltaTime : -Time.deltaTime;
+            if (flashOn)
+            {
+                if(color.a >= 1)
+                    flashOn = false;
+            }
             else
-                flashRender.sprite = null;
-            yield return new WaitForSeconds(1);
+            {
+                if(color.a <= 0)
+                    flashOn = true;
+            }
+            flashRender.color = color;
+            yield return new WaitForFixedUpdate();
         }
     }
 

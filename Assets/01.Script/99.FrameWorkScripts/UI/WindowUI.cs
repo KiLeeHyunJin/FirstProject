@@ -1,6 +1,6 @@
 using UnityEngine.EventSystems;
 
-public class WindowUI : BaseUI, IDragHandler, IPointerClickHandler
+public class WindowUI : BaseUI, IDragHandler, IPointerDownHandler
 {
     public void OnDrag(PointerEventData eventData)
     {
@@ -17,4 +17,8 @@ public class WindowUI : BaseUI, IDragHandler, IPointerClickHandler
         Manager.UI.CloseWindowUI(this);
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Manager.UI.SelectWindowUI(this);
+    }
 }

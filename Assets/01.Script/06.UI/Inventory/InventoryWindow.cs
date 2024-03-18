@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.LightingExplorerTableColumn;
+using UnityEngine.UIElements;
 
 
 public class InventoryWindow :WindowUI
@@ -15,11 +15,13 @@ public class InventoryWindow :WindowUI
     public PlayerUIData playerData { get; private set; }
     [SerializeField] InventorySlotEntry prefab;
     [SerializeField] RectTransform[] rects;
+    [SerializeField] UnityEngine.UI.Image Layout;
     InventorySlotEntry[] slots;
     public EnumType.ItemType type { get; private set; }
     [field: SerializeField] public Canvas DragCanvas { get; private set; }
     [field : SerializeField]public CanvasScaler DragCanvasScaler { get; private set; }
     [HideInInspector] public InventoryDragData dragData;
+    
     private void Start()
     {
         playerData = FindObjectOfType<PlayerUIData>();
@@ -62,6 +64,8 @@ public class InventoryWindow :WindowUI
     }
     public bool HandledDroppedEntry(Vector3 position)
     {
+        if(RectTransformUtility.RectangleContainsScreenPoint(Layout.rectTransform,position) == false)
+            return false;
         for (int i = 0; i < rects.Length; ++i)
         {
             RectTransform t = rects[i];
@@ -76,6 +80,23 @@ public class InventoryWindow :WindowUI
 
                     return true;
                 }
+            }
+        }
+        return false;
+    }
+    public bool DequipDroppedEntry(Vector3 position)
+    {
+        if (RectTransformUtility.RectangleContainsScreenPoint(Layout.rectTransform, position) == false)
+            return false;
+        if (type != EnumType.ItemType.Equip)
+            return false;
+        for (int i = 0; i < rects.Length; ++i)
+        {
+            RectTransform t = rects[i];
+
+            if (RectTransformUtility.RectangleContainsScreenPoint(t, position))
+            {
+                return true;
             }
         }
         return false;

@@ -13,6 +13,7 @@ public class EquipmentWindow : MonoBehaviour
     }
     PlayerUIData playerData;
 
+    [SerializeField] Image Layout;
     [SerializeField] RectTransform[] rects;
     [SerializeField] EquipSlotEntry[] equips;
 
@@ -45,5 +46,16 @@ public class EquipmentWindow : MonoBehaviour
     public void DeQuip(int idx)
     {
         playerData.CallDequipItem(idx);
+    }
+
+    public bool HandledDroppedEntry(Vector3 position)
+    {
+        return playerData.inventoryWindow.DequipDroppedEntry(position);
+    }
+    public bool HandleDroppedEntryPosition(EnumType.EquipType equipType, Vector3 position)
+    {
+        if (RectTransformUtility.RectangleContainsScreenPoint(Layout.GetComponent<RectTransform>(), position))
+            return RectTransformUtility.RectangleContainsScreenPoint(equips[(int)equipType].GetComponent<RectTransform>(), position);
+        return false;
     }
 }

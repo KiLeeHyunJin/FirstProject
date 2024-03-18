@@ -75,6 +75,7 @@ public class MonsterController<T> : BaseController<T> where T : Enum
     protected override void Die()
     {
         base.Die();
+       FindObjectOfType<BattleManager>() ?. MinusMonster();
         coroutine = StartCoroutine(Disappear());
     }
     Coroutine coroutine = null;

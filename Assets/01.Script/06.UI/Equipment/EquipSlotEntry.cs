@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EquipSlotEntry : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class EquipSlotEntry : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler, IPointerDownHandler
 {
     Image Icon;
     public int idx { get; private set; }
@@ -47,6 +47,7 @@ public class EquipSlotEntry : MonoBehaviour, IPointerClickHandler, IBeginDragHan
     Vector2 startPos;
     public void OnBeginDrag(PointerEventData eventData)
     {
+        startPos = transform.localPosition;
         if (owner.dragData == null)
             owner.dragData = new EquipmentWindow.InventoryDragData();
         owner.dragData.entry = this;
@@ -72,11 +73,18 @@ public class EquipSlotEntry : MonoBehaviour, IPointerClickHandler, IBeginDragHan
 
     public void OnEndDrag(PointerEventData eventData)
     {
-       // bool isSucces = owner.HandledDroppedEntry(eventData.position);
+        // bool isSucces = owner.HandledDroppedEntry(eventData.position);
+        if(owner.HandledDroppedEntry(eventData.position))
+            owner.DeQuip(idx);
+
         RectTransform t = transform as RectTransform;
         transform.SetParent(owner.dragData.parent, true);
-        t.offsetMin = t.offsetMax = Vector2.zero;
+        transform.localPosition = startPos;
+        //t.offsetMin = t.offsetMax = Vector2.zero;
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+    }
 }
 
