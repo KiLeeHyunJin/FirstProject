@@ -28,7 +28,7 @@ public class AttackController : MonoBehaviour
 
     AudioClip audioSwingClip;
     AudioClip audioHitClip;
-
+    PlayerUIData uIData;
     public void Awake()
     {
         if(maxAttack < 1)
@@ -42,6 +42,7 @@ public class AttackController : MonoBehaviour
     {
         if(bloodEffect != null)
             Manager.Pool.CreatePool(bloodEffect, effectCount, effectCount);
+        uIData = FindObjectOfType<PlayerUIData>();
     }
     public void SetPosition(Vector2 _position, Vector3 _size, bool _gather = false)
     {
@@ -110,9 +111,11 @@ public class AttackController : MonoBehaviour
             new Vector2(size.x * temp * 2, size.y * temp));
 
     }
+
+    void AttackTarget(StateData targetData) => uIData.UpdateTargetData(targetData);
     IEnumerator AttackCo()
     {
-        int value = (int)(damage * per);
+        int value = (int)(damage);
         Vector3 returnKnockback = knockbackPower;
         Vector3 returnPos = pos.Pose;
         Vector3 returnSize = size;
@@ -155,6 +158,10 @@ public class AttackController : MonoBehaviour
                         if (effect != null)
                             effect.SetSortingLayer(damagable.IGetRenderLayerNum() + 1);
                         hitTaget++;
+                        uIData.AddComboCount();
+                        GetStateData state = colliders[i].GetComponent<GetStateData>();
+                        if(state != null)
+                            AttackTarget(state.GetData());
                     }
                 }
             }

@@ -42,10 +42,7 @@ public class TransformPos : MonoBehaviour
         Size = hitBox != null ? new Vector3(hitBox.localScale.x / 2, Heigth, hitBox.localScale.y / 2) : Vector2.zero;
         Offset = hitBox != null ? new Vector2(hitBox.transform.localPosition.x, hitBox.transform.localPosition.y): Vector2.zero;
     }
-    private void Update()
-    {
-        renderer.sortingOrder = (int) (xPosTarget.position.y * -10);
-    }
+    private void FixedUpdate() => renderer.sortingOrder = (int)(xPosTarget.position.y * -10);
 
     public void ChangeGravity(float value) => AddForceClass.SetGravity(value);
     public void ResetGravity() => AddForceClass.ResetGravity();

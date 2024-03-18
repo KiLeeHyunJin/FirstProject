@@ -3,10 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static TauController;
 
-public class MonsterController<T> : BaseController<T> where T : Enum
+public class MonsterController<T> : BaseController<T>, IBaseState where T : Enum
 {
+    [SerializeField] Sprite Monstericon;
+    [SerializeField] string MonsterName;
+
     [Serializable]
     public struct AtckCount
     {
@@ -91,5 +93,10 @@ public class MonsterController<T> : BaseController<T> where T : Enum
             yield return new WaitForFixedUpdate();
         }
         Destroy(this.gameObject);
+    }
+
+    public StateData IGetState()
+    {
+        return new StateData() { icon = Monstericon, Hp = StateHp, MaxHp = StateMaxHp, Name = MonsterName };
     }
 }

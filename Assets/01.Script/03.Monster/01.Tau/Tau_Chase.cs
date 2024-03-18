@@ -9,9 +9,11 @@ public class Tau_Chase : MonsterState<TauState>
     Vector2 optimumRange;
     Transform target;
     bool isTransition;
+    bool isIdle;
     public override void Enter()
     {
         isTransition = false;
+        isIdle = false;
         target = owner.sensor.target;
         int typeIdx = (int)owner.AtckType;
         optimumRange = owner.GetAtckData(typeIdx).optimumRange;
@@ -19,6 +21,11 @@ public class Tau_Chase : MonsterState<TauState>
     public override void Update()
     {
         Vector2 currentPos = new Vector2(pos.X, pos.Z);
+        if (target == null)
+        {
+            isIdle = true;
+            return;
+        }
         Vector3 targetPos = target.position;
 
         Vector2 distance = new Vector2(targetPos.x, targetPos.y) - currentPos;
@@ -67,5 +74,7 @@ public class Tau_Chase : MonsterState<TauState>
                     break;
             }
         }
+        else if (isIdle)
+            owner.SetState = TauState.Idle;
     }
 }

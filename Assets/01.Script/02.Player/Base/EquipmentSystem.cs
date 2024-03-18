@@ -14,11 +14,17 @@ public class EquipmentSystem
 
     public EquipmentSystem(PlayerData owner)
     {
-        equips = new EquipItem[(int)EquipType.END];
         data = owner;
     }
 
-    public void SetInventorySystem(InventorySystem _inventory) => inventory = _inventory;
+    public void SetInventorySystem(InventorySystem _inventory)
+    {
+        inventory = _inventory;
+        equips = new EquipItem[(int)EquipType.END];
+
+        for (int i = 0; i < equips.Length; i++)
+            equips[i] = new EquipItem(ItemState.Blank, inventory, i);
+    }
     public Sprite GetData(EnumType.EquipType type)
     {
         if (equips[(int)type] != null)
@@ -29,9 +35,11 @@ public class EquipmentSystem
 
     public void EquipItem(EquipItem item)
     {
-        if (equips[(int)item.equipType] != null)
+        if (equips[(int)item.equipType].stateType != ItemState.Blank)
             DequipItem(item.equipType);
-        equips[(int)item.equipType] = item;
+
+        equips[(int)item.equipType].SetItemData(1, item.id, item.itemType, item.icon);
+        equips[(int)item.equipType].SetEquipData(item.equipType);
 
         data.uIData.UpdateEquipSlot(item.equipType);
     }
@@ -40,8 +48,8 @@ public class EquipmentSystem
         int idx = (int)itemType;
         if(DequipCheck(idx))
         {
-            equips[idx].Diquip();
-            equips[idx] = null;
+            equips[idx].Dequip();
+            equips[idx].Clear();
             data.uIData.UpdateEquipSlot(itemType);
         }
     }
@@ -49,7 +57,7 @@ public class EquipmentSystem
     {
         if (equips.Length <= idx)
             return false;
-        if (equips[idx] != null)
+        if (equips[idx].stateType == ItemState.Fill)
             return true;
         return false;
 

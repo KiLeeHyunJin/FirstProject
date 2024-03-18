@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1745445713
-  m_SortingLayer: 1
+  m_SortingLayerID: 7981807
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.8235294}
@@ -585,7 +585,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemObjectables:
+  - {fileID: 11400000, guid: 1bd5609f55a816645b0058b0bda033e8, type: 2}
   - {fileID: 11400000, guid: d8d8601262ee9c24db8ccb39c4c9c11d, type: 2}
+  - {fileID: 11400000, guid: 840203f1f50e81a4dad8fb372dd8abdd, type: 2}
+  - {fileID: 11400000, guid: 1ff7c6ea6c9dd294a92abe2e40878730, type: 2}
+  - {fileID: 11400000, guid: 4809fb74eb85a1b4f961fabc6240460f, type: 2}
+  - {fileID: 11400000, guid: 3ed53ad48dd627e44990af2e29baf9b8, type: 2}
+  - {fileID: 11400000, guid: 3e49520bb14cc3542af9209b935a16eb, type: 2}
+  - {fileID: 11400000, guid: 30712624ee42b6e48bf0a42049060a2c, type: 2}
   <MaxCount>k__BackingField: 24
 --- !u!114 &8493437146200328571
 MonoBehaviour:
@@ -703,8 +710,8 @@ MonoBehaviour:
     <projectile>k__BackingField: {fileID: 0}
     <objectSpeed>k__BackingField: 0
     <AttackType>k__BackingField: 0
-    hasCoolTime: 0
-    coolTime: 0
+    hasCoolTime: 1
+    coolTime: 9
     attackData:
     - AnimName: NomalAtck_0
       soundPlayeTime: 0.05
@@ -714,7 +721,7 @@ MonoBehaviour:
       skillEffectPlayTime: 0
       skillEffectClip: {fileID: 8300000, guid: f01ad075231b53145a80ed705e89cd1b, type: 3}
       delay: 0.367
-      damage: 0
+      damage: 3
       mana: 5
       chainAnim: 0
       charging: 0
@@ -729,7 +736,7 @@ MonoBehaviour:
       - AttackEffectSoundTime: 0
         AttackEffectSoundClip: {fileID: 0}
         AttackTime: 0.147
-        Percent: 0
+        Percent: 1
         power: {x: 3, y: 2}
         pushTime: 0.15
         stunTime: 0
@@ -743,7 +750,7 @@ MonoBehaviour:
       skillEffectPlayTime: 0
       skillEffectClip: {fileID: 8300000, guid: eca4f001177b5764bae8351d2c9fa218, type: 3}
       delay: 0.408
-      damage: 0
+      damage: 4
       mana: 5
       chainAnim: 0
       charging: 0
@@ -758,7 +765,7 @@ MonoBehaviour:
       - AttackEffectSoundTime: 0
         AttackEffectSoundClip: {fileID: 0}
         AttackTime: 0.147
-        Percent: 0
+        Percent: 1
         power: {x: 3, y: 2}
         pushTime: 0.15
         stunTime: 0
@@ -772,8 +779,8 @@ MonoBehaviour:
       skillEffectPlayTime: 0
       skillEffectClip: {fileID: 8300000, guid: 7f3e6b594e9541944aa24ec6bc8ae2d5, type: 3}
       delay: 0.417
-      damage: 0
-      mana: 0
+      damage: 5
+      mana: 3
       chainAnim: 0
       charging: 0
       attackSize:
@@ -787,7 +794,7 @@ MonoBehaviour:
       - AttackEffectSoundTime: 0
         AttackEffectSoundClip: {fileID: 0}
         AttackTime: 0.147
-        Percent: 0
+        Percent: 1
         power: {x: 3, y: 4}
         pushTime: 0.2
         stunTime: 0
@@ -812,7 +819,7 @@ MonoBehaviour:
       skillEffectPlayTime: 0
       skillEffectClip: {fileID: 0}
       delay: 0.826
-      damage: 0
+      damage: 5
       mana: 0
       chainAnim: 1
       charging: 0
@@ -827,7 +834,7 @@ MonoBehaviour:
       - AttackEffectSoundTime: 0
         AttackEffectSoundClip: {fileID: 0}
         AttackTime: 0.397
-        Percent: 0
+        Percent: 1
         power: {x: 2, y: 3}
         pushTime: 0.15
         stunTime: 0
@@ -852,7 +859,7 @@ MonoBehaviour:
       skillEffectPlayTime: 0
       skillEffectClip: {fileID: 0}
       delay: 0.775
-      damage: 0
+      damage: 3
       mana: 0
       chainAnim: 1
       charging: 0
@@ -867,7 +874,7 @@ MonoBehaviour:
       - AttackEffectSoundTime: 0
         AttackEffectSoundClip: {fileID: 0}
         AttackTime: 0.368
-        Percent: 0
+        Percent: 1
         power: {x: 1.5, y: 3}
         pushTime: 0.2
         stunTime: 0
@@ -881,8 +888,8 @@ MonoBehaviour:
     <projectile>k__BackingField: {fileID: 0}
     <objectSpeed>k__BackingField: 0
     <AttackType>k__BackingField: 2
-    hasCoolTime: 0
-    coolTime: 0
+    hasCoolTime: 1
+    coolTime: 5
     attackData:
     - AnimName: ShockDown
       soundPlayeTime: 0
@@ -892,7 +899,7 @@ MonoBehaviour:
       skillEffectPlayTime: 0
       skillEffectClip: {fileID: 8300000, guid: 37e9bc4c2c4ad7d41a9e1736c6efde9f, type: 3}
       delay: 0.794
-      damage: 0
+      damage: 4
       mana: 0
       chainAnim: 0
       charging: 0
@@ -907,7 +914,7 @@ MonoBehaviour:
       - AttackEffectSoundTime: 0
         AttackEffectSoundClip: {fileID: 0}
         AttackTime: 0
-        Percent: 0
+        Percent: 1
         power: {x: 2, y: 5}
         pushTime: 0.2
         stunTime: 0
@@ -921,8 +928,8 @@ MonoBehaviour:
     <projectile>k__BackingField: {fileID: 0}
     <objectSpeed>k__BackingField: 0
     <AttackType>k__BackingField: 0
-    hasCoolTime: 0
-    coolTime: 0
+    hasCoolTime: 1
+    coolTime: 13
     attackData:
     - AnimName: HeatWave
       soundPlayeTime: 0
@@ -932,7 +939,7 @@ MonoBehaviour:
       skillEffectPlayTime: 0
       skillEffectClip: {fileID: 8300000, guid: 3a1c88d964b0a9b4d99cd758cd6afc94, type: 3}
       delay: 0
-      damage: 0
+      damage: 3
       mana: 0
       chainAnim: 1
       charging: 0
@@ -944,7 +951,7 @@ MonoBehaviour:
       - AttackEffectSoundTime: 0
         AttackEffectSoundClip: {fileID: 0}
         AttackTime: 0.236
-        Percent: 0
+        Percent: 1
         power: {x: 0.5, y: 4}
         pushTime: 0
         stunTime: 0
@@ -953,7 +960,7 @@ MonoBehaviour:
       - AttackEffectSoundTime: 0
         AttackEffectSoundClip: {fileID: 0}
         AttackTime: 0.846
-        Percent: 0
+        Percent: 1
         power: {x: 0, y: 1}
         pushTime: 0
         stunTime: 0
@@ -967,7 +974,7 @@ MonoBehaviour:
       skillEffectPlayTime: 0
       skillEffectClip: {fileID: 0}
       delay: 0
-      damage: 0
+      damage: 2
       mana: 0
       chainAnim: 1
       charging: 0
@@ -979,7 +986,7 @@ MonoBehaviour:
       - AttackEffectSoundTime: 0
         AttackEffectSoundClip: {fileID: 0}
         AttackTime: 0
-        Percent: 0
+        Percent: 1
         power: {x: 0, y: 1.2}
         pushTime: 0
         stunTime: 0
@@ -988,7 +995,7 @@ MonoBehaviour:
       - AttackEffectSoundTime: 0
         AttackEffectSoundClip: {fileID: 0}
         AttackTime: 0.1
-        Percent: 0
+        Percent: 1
         power: {x: 0, y: 1.2}
         pushTime: 0
         stunTime: 0
@@ -1074,8 +1081,8 @@ MonoBehaviour:
     <projectile>k__BackingField: {fileID: 7423350229670089030, guid: eb66935a057b1db4caeb8bd9b64582d2, type: 3}
     <objectSpeed>k__BackingField: 4
     <AttackType>k__BackingField: 0
-    hasCoolTime: 0
-    coolTime: 0
+    hasCoolTime: 1
+    coolTime: 11
     attackData:
     - AnimName: LunaSlash
       soundPlayeTime: 0
@@ -1102,7 +1109,7 @@ MonoBehaviour:
       skillEffectPlayTime: 0
       skillEffectClip: {fileID: 8300000, guid: db3bd0e10e45ebd4a875b433ee7d5c83, type: 3}
       delay: 0
-      damage: 0
+      damage: 5
       mana: 0
       chainAnim: 0
       charging: 0
@@ -1114,7 +1121,7 @@ MonoBehaviour:
       - AttackEffectSoundTime: 0
         AttackEffectSoundClip: {fileID: 0}
         AttackTime: 0.213
-        Percent: 0
+        Percent: 1
         power: {x: 1.5, y: 2}
         pushTime: 0.2
         stunTime: 0
@@ -1172,11 +1179,10 @@ MonoBehaviour:
   <CurrentState>k__BackingField: 0
   renderer: {fileID: 3843137686234740380}
   anim: {fileID: 3551460506702955033}
-  <Hp>k__BackingField: 10
+  <StateMaxHp>k__BackingField: 100
   readySound: {fileID: 8300000, guid: d1607972da507a548b96509ae3dd2b86, type: 3}
   uiData: {fileID: 0}
   <MaxMp>k__BackingField: 100
-  <MaxHp>k__BackingField: 15
   <Mp>k__BackingField: 10
   alertTime: 15
   atkController: {fileID: 4803227102972917773}

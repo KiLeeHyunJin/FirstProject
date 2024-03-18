@@ -48,21 +48,22 @@ public enum ActiveType
 public class PlayerController : BaseController<PlayerState>
 {
     [SerializeField] AudioClip readySound;
-    public PlayerData data { get; private set;}
+    public PlayerData data { get; private set; }
     public PlayerUIData uiData;
     [field: SerializeField] public float MaxMp { get; private set; }
-    [field: SerializeField] public float MaxHp { get; private set; }
     [field: SerializeField] public int Mp { get; private set; }
 
-    public int MinusMp 
-    { set 
-        { 
+    public int MinusMp
+    { set
+        {
             Mp -= value;
             uiData?.SetMp(Mp / MaxMp);
-        } 
+        }
     }
-    public int AddHp { set { Hp += value; } }
+    public int AddHp { set { StateHp += value; } }
     public int AddMp { set { Mp += value; } }
+    int[] CoolTimer;
+    public int this[int index] { get { return CoolTimer[index]; } private set { CoolTimer[index] = value; } }
 
     public PlayerState WalkType { get; set; }
     public ActiveType activeType { get; set; }
@@ -88,17 +89,17 @@ public class PlayerController : BaseController<PlayerState>
     [SerializeField] Hit hit;
     [SerializeField] Down down;
     [SerializeField] Sit sit;
-    
+
     [SerializeField] ItemPick itemPick;
     [SerializeField] InteracterKey interact;
     [SerializeField] BasicAttack basicAttack;
 
     AttackContainer attackContainer;
     Dictionary<KeyManager.QuickKey, SkillStateController> SkillDic = new Dictionary<KeyManager.QuickKey, SkillStateController>();
-
     protected override void Awake()
     {
         base.Awake();
+        CoolTimer = new int[(int)KeyManager.QuickKey.Non];
         //SkillDic ;
         keys = GetComponent<KeyManager>();
         data = GetComponent<PlayerData>();
@@ -118,7 +119,7 @@ public class PlayerController : BaseController<PlayerState>
 
         SetStateData(interact);
         SetStateData(basicAttack);
-        
+
 
         fsm.AddState(PlayerState.JumpUp, jumpUp);
         fsm.AddState(PlayerState.JumpDown, jumpDown);
@@ -136,13 +137,12 @@ public class PlayerController : BaseController<PlayerState>
 
 
         Mp = (int)MaxMp;
-        Hp = (int)MaxHp;
+        StateHp = (int)StateMaxHp;
 
     }
     protected override void Start()
     {
         fsm.Start(PlayerState.Idle);
-
         GetSkill("LandBasic", PlayerState.LandAtckControll,
         new PlayerState[]
         { PlayerState.LandAtck0, PlayerState.LandAtck1, PlayerState.LandAtck2 });
@@ -172,8 +172,26 @@ public class PlayerController : BaseController<PlayerState>
         { PlayerState.LunaSlashAttack0, PlayerState.LunaSlashAttack1 });
 
         uiData = FindObjectOfType<PlayerUIData>();
+        transformPos.SetDirection = TransformPos.Direction.Right;
     }
-
+    public void StartCoolTime(int idx, int time)
+    {
+        CoolTimer[idx] = time;
+        StartCoroutine(CoolTimeCo(idx));
+    }
+    private IEnumerator CoolTimeCo(int idx)
+    {
+        int maxTime = CoolTimer[idx];
+        data.uIData.coolTimeUI.UpdateSkillSlot(idx, 1, maxTime);
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            CoolTimer[idx] -= 1;
+            data.uIData.coolTimeUI.UpdateSkillSlot(idx, CoolTimer[idx] / (float)maxTime, CoolTimer[idx]);
+            if (CoolTimer[idx] <= 0)
+                break;
+        }
+    }
     void SetStateData(PlayerBaseState<PlayerState> state)
     {
         base.SetStateData(state);
@@ -186,15 +204,15 @@ public class PlayerController : BaseController<PlayerState>
         {
             case EnumType.ConsumeType.Hp:
                 AddHp = value;
-                if (Hp > MaxHp)
-                    Hp = (int)MaxHp;
-                uiData.SetHp(Hp);
+                if (StateHp > StateMaxHp)
+                    StateHp = (int)StateMaxHp;
+                uiData.SetHp(StateHp / StateMaxHp);
                 break;
             case EnumType.ConsumeType.Mp:
                 AddMp = value;
                 if(Mp > MaxMp)
                     Mp = (int)MaxMp;
-                uiData.SetMp(Mp);
+                uiData.SetMp(Mp / MaxMp);
                 break;
         }
     }
@@ -263,10 +281,12 @@ public class PlayerController : BaseController<PlayerState>
                 }
 
                 PlayerState state = EnumUtil<PlayerState>.Parse(key.ToString());
+
                 if (atckState.On)
                     atckState.Click = true;
                 else
                     SetState = state;
+
                 return;
             }
         }
@@ -285,6 +305,7 @@ public class PlayerController : BaseController<PlayerState>
             return;
         PlayerState state = EnumUtil<PlayerState>.Parse(key.ToString());
         SetStateData(atckState);
+        atckState.currentSkillKey = key;
         SkillDic.Add(key, atckState);
         fsm.AddState( state, atckState);
     }
@@ -322,7 +343,8 @@ public class PlayerController : BaseController<PlayerState>
     public override void ISetDamage(int damage, AttackEffectType effectType, float stunTime)
     {
         base.ISetDamage(damage, effectType, stunTime);
-        uiData?.SetHp(Hp / MaxHp);
+        uiData.ResetComboCount();
+        uiData?.SetHp(StateHp / StateMaxHp);
         if (CurrentState == PlayerState.Fall ||
             CurrentState == PlayerState.Down)
         {

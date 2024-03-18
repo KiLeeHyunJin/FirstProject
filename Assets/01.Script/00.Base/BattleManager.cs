@@ -16,7 +16,7 @@ public class BattleManager : MonoBehaviour
     public void MinusMonster()
     {
         monsterCount--;
-        if(monsterCount <= 0 )
+        if (monsterCount <= 0)
             OpenDoor();
     }
 

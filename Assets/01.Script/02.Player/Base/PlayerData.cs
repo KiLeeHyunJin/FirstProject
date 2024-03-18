@@ -10,6 +10,7 @@ public class PlayerData : MonoBehaviour
     [field : SerializeField] public int MaxCount { get; private set;}
     public InventorySystem inventory;
     public EquipmentSystem equipment;
+    public QuickSlotSystem quickSlot;
     public PlayerUIData uIData { get; private set; }
     public PlayerController playerController { get; private set; }
     private void Awake()
@@ -17,9 +18,13 @@ public class PlayerData : MonoBehaviour
         CreateItemDic();
         inventory = new InventorySystem(MaxCount, this);
         equipment = new EquipmentSystem(this);
+        quickSlot = new QuickSlotSystem(this);
+
         inventory.SetEquipSystem(equipment);
         equipment.SetInventorySystem(inventory);
+        quickSlot.SetInventorySystem(inventory);
     }
+
     public void SetUIData(PlayerUIData playerUI) => uIData = playerUI; 
     public void SetPlayer(PlayerController player) =>playerController = player;
     void CreateItemDic()

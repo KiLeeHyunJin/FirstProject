@@ -10,8 +10,9 @@ public class LorienScene : BaseScene
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         if (player != null)
             player.Pose = new Vector3(pos[Manager.Scene.enterIdx].position.x, 0, pos[Manager.Scene.enterIdx].position.y);
     }

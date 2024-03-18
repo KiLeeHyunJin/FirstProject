@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1323365139457749880}
   - component: {fileID: 161809583300337792}
   - component: {fileID: 1419158964846834930}
+  - component: {fileID: 7583699439309221008}
   m_Layer: 6
   m_Name: YPos
   m_TagString: Monster
@@ -110,6 +111,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transformPos: {fileID: 3150831208459916965}
+--- !u!114 &7583699439309221008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548853563276847607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eab24f6d9c09e044abaee57e310a02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5740996624665820566
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +300,9 @@ MonoBehaviour:
   <CurrentState>k__BackingField: 0
   renderer: {fileID: 5895089936867726898}
   anim: {fileID: 5404751986585456317}
-  <Hp>k__BackingField: 2
+  <StateMaxHp>k__BackingField: 10
+  Monstericon: {fileID: 21300000, guid: 8646850bd73e51c488b3194e88c18b7d, type: 3}
+  MonsterName: "\uD0C0\uC6B0"
   <layerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 128

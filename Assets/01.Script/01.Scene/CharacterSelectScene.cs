@@ -8,8 +8,11 @@ public class CharacterSelectScene : BaseScene
     {
         yield return null;
     }
-
-    public void EnterGame()
+    protected override void Start()
+    {
+        base.Start();
+    }
+        public void EnterGame()
     {
         Manager.Scene.LoadScene("SeriaRoom");
     }

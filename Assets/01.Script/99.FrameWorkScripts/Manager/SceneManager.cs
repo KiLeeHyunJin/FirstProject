@@ -80,7 +80,6 @@ public class SceneManager : Singleton<SceneManager>
         yield return newCurScene.LoadingRoutine();
         Time.timeScale = 1f;
         StopCoroutine(coroutine);
-        newCurScene.StartBGM();
         Loading.gameObject.SetActive(false);
         //loadingBar.gameObject.SetActive(false);
         yield return FadeIn();

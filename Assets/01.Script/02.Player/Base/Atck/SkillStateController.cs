@@ -78,7 +78,8 @@ public abstract class SkillStateController : PlayerBaseState<PlayerState>
             return;
         if (coroutine != null)
             owner.StopCoroutine(coroutine);
-        coroutine = owner.StartCoroutine(CoolDown());
+        //coroutine = owner.StartCoroutine(CoolDown());
+        owner.StartCoolTime((int)currentSkillKey, (int)coolTime);
     }
     Coroutine coroutine = null;
     IEnumerator CoolDown()
@@ -97,8 +98,8 @@ public abstract class SkillStateController : PlayerBaseState<PlayerState>
             if (inputCount >= attackData.Length)
                 return false;
         }
-        if (owner.Mp >= attackData[checkNum].mana && 
-            isCool == false)
+        if (owner.Mp >= attackData[checkNum].mana &&
+            owner[(int)currentSkillKey] <= 0 )
         {
             //owner.MinusMp = attackData[checkNum].mana;
             return true;

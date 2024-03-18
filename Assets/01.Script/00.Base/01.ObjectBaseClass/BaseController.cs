@@ -10,7 +10,7 @@ public enum StandingState
 public abstract class BaseController<T> : MonoBehaviour, IConnectController where T : Enum
 {
     public float StunTime { get; private set; }
-    public int MinusHp { set { Hp -= value; } }
+    public int MinusHp { set { StateHp -= value; } }
     public bool isDie { get; protected set; }
     [SerializeField] AudioClip dieClip;
     public StateMachine<T> fsm;
@@ -46,10 +46,12 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
     [SerializeField] protected Animator anim;
 
      protected TransformPos transformPos;
-    [field: SerializeField] public int Hp { get; protected set; }
+    protected int StateHp { get; set; }
+    [field: SerializeField] protected float StateMaxHp { get; set; }
 
     protected virtual void Awake()
     {
+        StateHp = (int)StateMaxHp;
         isDie = false;
             transformPos = GetComponent<TransformPos>();
         fsm = new StateMachine<T>();
@@ -96,8 +98,7 @@ public abstract class BaseController<T> : MonoBehaviour, IConnectController wher
     {
         StunTime = stunTime;
         MinusHp = damage;
-
-        if (isDie == false && Hp <= 0)
+        if (isDie == false && StateHp <= 0)
            Die();
     }
 

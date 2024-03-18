@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,16 +10,11 @@ public class ElvenGaurdScene : BaseScene
         yield return null;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        if(player != null)
+        base.Start();
+        if (player != null)
             player.Pose = new Vector3(pos[Manager.Scene.enterIdx].position.x,0, pos[Manager.Scene.enterIdx].position.y);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

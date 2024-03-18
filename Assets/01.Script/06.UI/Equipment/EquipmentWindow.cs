@@ -25,7 +25,7 @@ public class EquipmentWindow : MonoBehaviour
     void Start()
     {
         playerData = FindObjectOfType<PlayerUIData>();
-        playerData.SetEquipUI(this);
+        //playerData.SetEquipUI(this);
         DragCanvas = GetComponentInParent<Canvas>();
         DragCanvasScaler = GetComponentInParent<CanvasScaler>();
         dragData = new InventoryDragData();
@@ -33,6 +33,7 @@ public class EquipmentWindow : MonoBehaviour
         {
             equips[i].SetIndex(i,this);
         }
+        playerData.CheckPlayerData();
         for (int i = 0; i < (int)EnumType.EquipType.END; i++)
         {
             UpdateEntry((EnumType.EquipType)i);

@@ -8,8 +8,9 @@ public class SeriaRoomScence : BaseScene
     {
         yield return null;
     }
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         if (player != null)
             player.Pose = new Vector3(pos[Manager.Scene.enterIdx].position.x, 0, pos[Manager.Scene.enterIdx].position.y);
     }

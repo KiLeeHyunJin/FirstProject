@@ -12,17 +12,24 @@ public class KeyManager : MonoBehaviour
     [SerializeField] InputActionAsset inputActionAsset;
     [field: SerializeField] public int Layer { get; private set; }
     [field: SerializeField] public int DefaultLayer { get; private set; }
+    [field: SerializeField] public int SlotKeyLayer { get; private set; }
     public QuickKey[] QuickKeys { get { return QuickKeyArray; } }
     public DefaultKey[] DefaultKeys { get { return DefaultArray; } }
+    public SlotKey[] SlotKeys { get { return SlotKeyArray; } }
+    public enum SlotKey
+    {
+        Q, W, E, R, T
+    }
     public enum QuickKey
     {
-        A, S, D, F, G, Q, W, E, R, T, Non
+        A, S, D, F, G, Non
     }
     public enum DefaultKey
     {
         Move, C, X, Non
     }
-    QuickKey[] QuickKeyArray = new QuickKey[] { QuickKey.A, QuickKey.S, QuickKey.D, QuickKey.F, QuickKey.G, QuickKey.Q, QuickKey.W, QuickKey.E, QuickKey.R, QuickKey.T };
+    SlotKey[] SlotKeyArray = new SlotKey[] { SlotKey.Q, SlotKey.W, SlotKey.E, SlotKey.R, SlotKey.T };
+    QuickKey[] QuickKeyArray = new QuickKey[] { QuickKey.A, QuickKey.S, QuickKey.D, QuickKey.F, QuickKey.G };
     DefaultKey[] DefaultArray = new DefaultKey[] { DefaultKey.Move, DefaultKey.C, DefaultKey.X };
     private void Awake()
     {
@@ -48,8 +55,6 @@ public class KeyManager : MonoBehaviour
 
         //allKeysMap.Enable();
     }
-
-
 
     void OnX(InputValue value)
     {
@@ -86,14 +91,8 @@ public class KeyManager : MonoBehaviour
         if (value.isPressed)
             Layer |= 1 << (int)QuickKey.G;
     }
-    public void OffMoveLayer()
-    {
-        OffLayer(DefaultKey.Move);
-    }
-    public void OnMoveLayer()
-    {
-        DefaultLayer |= 1 << (int)DefaultKey.Move;
-    }
+    public void OffMoveLayer() => OffLayer(DefaultKey.Move);
+    public void OnMoveLayer() => DefaultLayer |= 1 << (int)DefaultKey.Move;
     public void OffLayer(DefaultKey checkKey)
     {
         int offLayer = 1 << (int)checkKey;
@@ -104,29 +103,19 @@ public class KeyManager : MonoBehaviour
     {
         Layer = 0;
         DefaultLayer &= (1 << (int)DefaultKey.Move);
+        SlotKeyLayer = 0;
     }
-    public void OnLayer(QuickKey checkKey)
+    public void OnLayer(QuickKey checkKey) => Layer |= 1 << (int)Layer;
+    public bool ContainLayer(QuickKey checkKey) => ContainCheck(Layer, 1 << (int)checkKey);
+    public bool ContainLayer(DefaultKey checkKey) => ContainCheck(DefaultLayer, 1 << (int)checkKey);
+    public bool COntainLayer(SlotKey checkKey) => ContainCheck(SlotKeyLayer, 1 << (int)checkKey);
+    bool ContainCheck(int layer , int  checkLayer)
     {
-        int addLayer = 1 << (int)Layer;
-        Layer |= addLayer;
-    }
-    public bool ContainLayer(QuickKey checkKey)
-    {
-        int checkLayer = 1 << (int)checkKey;
-        checkLayer = Layer & checkLayer;
+        checkLayer &= layer & checkLayer;
         if (checkLayer > 0)
             return true;
         return false;
     }
-    public bool ContainLayer(DefaultKey checkKey)
-    {
-        int checkLayer = 1 << (int)checkKey;
-        checkLayer &= DefaultLayer & checkLayer;
-        if (checkLayer > 0)
-            return true;
-        return false;
-    }
-
     public bool[] CheckLayers(params QuickKey[] checkKeys)
     {
         bool[] checkLayers = new bool[checkKeys.Length];

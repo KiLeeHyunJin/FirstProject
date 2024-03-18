@@ -91,4 +91,5 @@ public class Attackable : MonoBehaviour, IDamagable
     }
 
     public int IGetRenderLayerNum() =>  renderer.sortingOrder;
+
 }

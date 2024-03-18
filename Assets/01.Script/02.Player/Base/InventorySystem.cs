@@ -81,6 +81,7 @@ public class InventorySystem
     {
         if (idx >= inventory.GetLength(1))
             return;
+
         if(inventory[(int)type, idx].stateType == ItemState.Fill)
         {
             if (inventory[(int)type, idx].count > 0)
@@ -103,10 +104,7 @@ public class InventorySystem
             }
         }
     }
-    public void UpdateSlot(int idx, EnumType.ItemType type)
-    {
-        data.uIData.UpdateSlot(type, idx);
-    }
+    public void UpdateSlot(int idx, EnumType.ItemType type) => data.uIData.UpdateSlot(type, idx);
 
     public void AddItem(int id, ItemType type, int count = 1)
     {
@@ -128,14 +126,12 @@ public class InventorySystem
         if (addIdx >= 0)
         {
             inventory[(int)type, addIdx].SetItemData(count, id, type, item.Icon);
+
             if(item.Type == ItemType.Equip)
-            {
                 inventory[(int)type, addIdx].SetEquipData(item.Equip);
-            }
             else if(item.Type == ItemType.Consume)
-            {
                 inventory[(int)type, addIdx].SetConsumeData(item.AddStat, item.Value);
-            }
+
             UpdateSlot(addIdx, type);
         }
     }
@@ -156,10 +152,10 @@ public class InventorySystem
     {
         if (inventory.GetLength(1) <= idx || 0 > idx)
             return false;
+
         if(inventory[(int)type, idx].count >= count)
         {
             bool result  = inventory[(int)type, idx].MinusItem(count);
-
             UpdateSlot(idx, type);
             return result;
         }

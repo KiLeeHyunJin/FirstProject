@@ -25,11 +25,12 @@ public class InventoryWindow :WindowUI
     private void Start()
     {
         playerData = FindObjectOfType<PlayerUIData>();
-        playerData.SetInventoryUI(this);
+        //playerData.SetInventoryUI(this);
 
         DragCanvas = GetComponentInParent<Canvas>();
         DragCanvasScaler = GetComponentInParent<CanvasScaler>();
         dragData = new InventoryDragData();
+        playerData.CheckPlayerData();
         int count = playerData.CallMaxCount();
         slots = new InventorySlotEntry[count];
         for (int i = 0; i < count; i++)

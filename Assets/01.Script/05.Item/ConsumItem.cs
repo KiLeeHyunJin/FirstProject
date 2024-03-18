@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class ConsumItem : BaseItem
 {
-    EnumType.ConsumeType consumeType;
-    EnumType.StatType statType;
-    int value;
+    public EnumType.ConsumeType consumeType { get; private set; }
+    public int value { get; private set; }
     public ConsumItem(EnumType.ItemState stateType, InventorySystem _inventorySystem, int _idx) : 
         base(stateType, _inventorySystem, _idx)
     {

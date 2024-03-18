@@ -14,17 +14,14 @@ public class EquipItem : BaseItem
         base.Used();
         Equip();
     }
-    public override void SetEquipData(EnumType.EquipType _equip = EnumType.EquipType.Top)
-    {
-        base.SetEquipData(_equip);
-    }
+    public override void SetEquipData(EnumType.EquipType _equip) => equipType = _equip;
     public void Equip()
     {
         inventorySystem.equipment.EquipItem(this);
         inventorySystem.ClearSlot(idx, itemType);
         inventorySystem.UpdateSlot(idx, itemType);
     }
-    public void Diquip()
+    public void Dequip()
     {
         inventorySystem.AddItem(id, itemType);
     }

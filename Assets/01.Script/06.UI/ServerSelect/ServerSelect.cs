@@ -9,9 +9,9 @@ public class ServerSelect : BaseScene
     [SerializeField] int selectCount;
     ServerSlot[] servers;
     [SerializeField] Image CloseImage;
-    private void Start()
+    protected override void Start()
     {
-        StartBGM();
+        base.Start();
         servers = FindObjectsOfType<ServerSlot>();
         selectCount = -1;
         img.sprite = null;

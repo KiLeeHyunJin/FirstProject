@@ -26,9 +26,8 @@ public class BaseItem
         id = _id;
         itemType = _itemType;
         icon = _icon;
-
     }
-    public virtual void SetEquipData(EnumType.EquipType _equip = EnumType.EquipType.Top)
+    public virtual void SetEquipData(EnumType.EquipType _equip)
     {
     }
 
@@ -51,7 +50,6 @@ public class BaseItem
         stateType = EnumType.ItemState.Blank;
         count = 0;
         icon = null;
-        
     }
     public virtual void Used()
     {

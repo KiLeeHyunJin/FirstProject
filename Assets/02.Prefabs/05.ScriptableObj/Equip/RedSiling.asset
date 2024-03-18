@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd13161ab9e4c664294d42c514b4ec02, type: 3}
-  m_Name: Golde
+  m_Name: RedSiling
   m_EditorClassIdentifier: 
-  id: 0
-  itemName: "\uAE08"
-  icon: {fileID: 21300000, guid: 9d4e005bb6ad21744870c039c43fcdc0, type: 3}
+  id: 3
+  itemName: 
+  icon: {fileID: 21300000, guid: b1e0188f7fc5fe94394fe012fecebce9, type: 3}
   type: 0
-  equipType: 0
+  equipType: 8
   count: 0
-  addStat: 1
-  value: 50
+  addStat: 0
+  value: 0
