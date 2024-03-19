@@ -22,8 +22,16 @@ public class InventorySystem
         currentUIType = type;
         for (int i = 0; i < getArray.Length; i++)
         {
-            getArray[i].icon = inventory[(int)type,i].icon;//inventory[(int)type, i].ico;
-            getArray[i].count = inventory[(int)type, i].count;
+            if(inventory[(int)type, i].stateType == ItemState.Fill)
+            {
+                getArray[i].icon = inventory[(int)type, i].icon;
+                getArray[i].count = inventory[(int)type, i].count;
+            }
+            else
+            {
+                getArray[i].icon = null;
+                getArray[i].count = -1;
+            }
         }
         return getArray;
     }
@@ -189,19 +197,28 @@ public class InventorySystem
 
     public void SwapItem(ItemType type, int idx1, int idx2)
     {
-        Copy(inventory[(int)type, idx1], inventory[(int)type, idx2], idx1, idx2);
+        Swap(inventory[(int)type, idx1], inventory[(int)type, idx2]);
         UpdateSlot(idx1, type);
         UpdateSlot(idx2, type);
     }
-    void Copy(BaseItem idx1,BaseItem idx2, int idx_1, int idx_2)
+    void Swap(BaseItem idx1,BaseItem idx2)
     {
-        Sprite icon = idx1.icon;
-        EnumType.ItemType type = idx1.itemType;
-        int id = idx1.id;
-        int count = idx1.count;
-
-        idx1.SetItemData(idx2.count, idx2.id, idx2.itemType, idx2.icon);
-        idx2.SetItemData(count, id, type, icon);
+    //    switch (currentUIType)
+    //    {
+    //        case ItemType.Equip:
+    //            EquipItem equipItem1 = idx1 as EquipItem;
+    //            EquipItem equipItem2 = idx2 as EquipItem;
+    //            equipItem1.Swap(equipItem2);
+    //            break;
+    //        case ItemType.Consume:
+    //            ConsumItem consumItem1 = idx1 as ConsumItem;
+    //            ConsumItem consumItem2 = idx2 as ConsumItem;
+    //            consumItem1.Swap(consumItem2);
+    //            break;
+    //        case ItemType.Gold:
+    //            break;
+    //    }
+        idx1.Swap(idx2);
 
         if (idx1.count <= 0)
         {

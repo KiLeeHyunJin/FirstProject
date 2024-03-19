@@ -243,6 +243,7 @@ public class PlayerController : BaseController<PlayerState>
     {
         base.Update();
         AroundCheckQuickKey();
+        AroundCheckSlotKey();
         keys.ResetLayer();
         //keys.Re();
     }
@@ -250,6 +251,16 @@ public class PlayerController : BaseController<PlayerState>
     {
         base.Die();
         SetState = PlayerState.Fall;
+    }
+    void AroundCheckSlotKey()
+    {
+        foreach (KeyManager.SlotKey key in keys.SlotKeys)
+        {
+            if(keys.ContainLayer(key))
+            {
+                data.quickSlot.UseKey(key);
+            }
+        }
     }
     //스킬 단축키
     public void AroundCheckQuickKey()

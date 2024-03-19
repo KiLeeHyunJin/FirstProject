@@ -7,6 +7,8 @@ public class BaseProjectile : MonoBehaviour
 {
     [SerializeField] int layer;
     [SerializeField] float speed;
+    [SerializeField] DamageUI damageUI;
+    [SerializeField] Canvas canvas;
     [SerializeField] Transform hitbox;
     List<Attackable> target;
     AudioClip audioClip;
@@ -34,6 +36,11 @@ public class BaseProjectile : MonoBehaviour
         circleCollider = GetComponent<CircleCollider2D>();
         target = new List<Attackable>();
         gameObject.SetActive(false);
+    }
+    private void Start()
+    {
+         if(canvas == null)
+            canvas = FindObjectOfType<Canvas>();
     }
     public void SetDirection(int _dir)
     {
@@ -113,16 +120,20 @@ public class BaseProjectile : MonoBehaviour
                     {
                         if(element.IGetDamage(damage, attackType))
                         {
-                            if (element.ICollision(currentPos, size, offset))
+                            element.ISetKnockback(power, pushTime);
+                            PooledObject pooledObject = Manager.Pool.GetPool(damageUI, currentPos, Quaternion.identity);
+                            DamageUI text = pooledObject as DamageUI;
+                            if (text != null)
                             {
-                                element.ISetKnockback(power, pushTime);
-                                if (isRepeater == false)
-                                {
-                                    OffState();
-                                    if (disableCoroutine != null)
-                                        StopCoroutine(disableCoroutine);
-                                    yield break;
-                                }
+                                text.SetTarget(element.gameObject.transform, damage);
+                                text.transform.SetParent(canvas.transform);
+                            }
+                            if (isRepeater == false)
+                            {
+                                OffState();
+                                if (disableCoroutine != null)
+                                    StopCoroutine(disableCoroutine);
+                                yield break;
                             }
                         }
                         

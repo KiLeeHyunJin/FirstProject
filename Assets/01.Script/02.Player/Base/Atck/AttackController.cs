@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
+    [SerializeField] DamageUI damageTxt;
+    [SerializeField] Canvas canvas;
+    [SerializeField] int damageTxtCount;
     [SerializeField] PooledObject bloodEffect;
     [SerializeField] int effectCount;
     AttackEffectType effectType;
@@ -43,6 +46,7 @@ public class AttackController : MonoBehaviour
         if(bloodEffect != null)
             Manager.Pool.CreatePool(bloodEffect, effectCount, effectCount);
         uIData = FindObjectOfType<PlayerUIData>();
+        Manager.Pool.CreatePool(damageTxt, damageTxtCount, damageTxtCount);
     }
     public void SetPosition(Vector2 _position, Vector3 _size, bool _gather = false)
     {
@@ -162,6 +166,13 @@ public class AttackController : MonoBehaviour
                         GetStateData state = colliders[i].GetComponent<GetStateData>();
                         if(state != null)
                             AttackTarget(state.GetData());
+                        PooledObject text = Manager.Pool.GetPool(damageTxt, colliders[i].transform.position, Quaternion.identity);
+                        DamageUI damage = text as DamageUI;
+                        damage.transform.SetParent(canvas.transform);
+                        if(damage != null)
+                        {
+                            damage.SetTarget(colliders[i].transform, value);
+                        }
                     }
                 }
             }

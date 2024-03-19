@@ -433,8 +433,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45fac130c919a754d983f2c5a61285f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageTxt: {fileID: 403156970752532021, guid: 65d5fc11f2993e44fabbb4e79e86324e, type: 3}
+  canvas: {fileID: 0}
+  damageTxtCount: 15
   bloodEffect: {fileID: 6553082411340407292, guid: f3f9345506ef76948a6f1d60cbf7f719, type: 3}
-  effectCount: 0
+  effectCount: 15
   maxAttack: 15
   pos: {fileID: 5296899851847033797}
   layerMask:
@@ -594,6 +597,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3e49520bb14cc3542af9209b935a16eb, type: 2}
   - {fileID: 11400000, guid: 30712624ee42b6e48bf0a42049060a2c, type: 2}
   <MaxCount>k__BackingField: 24
+  quickSlot: {fileID: 0}
 --- !u!114 &8493437146200328571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1163,6 +1167,7 @@ MonoBehaviour:
   inputActionAsset: {fileID: -944628639613478452, guid: abb3067fcbe3b4045898fd8797c95dc6, type: 3}
   <Layer>k__BackingField: 0
   <DefaultLayer>k__BackingField: 0
+  <SlotKeyLayer>k__BackingField: 0
 --- !u!114 &3163505436581916317
 MonoBehaviour:
   m_ObjectHideFlags: 0

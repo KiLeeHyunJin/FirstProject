@@ -7,7 +7,6 @@ public class QuickSlotWindow : MonoBehaviour
 {
     public PlayerUIData playerData { get; private set; }
     [SerializeField] RectTransform[] rects;
-    [SerializeField] UnityEngine.UI.Image Layout;
     [SerializeField] QuickSlotEntry[] slots;
     public EnumType.ItemType type { get; private set; }
     [field: SerializeField] public Canvas DragCanvas { get; private set; }
@@ -18,19 +17,19 @@ public class QuickSlotWindow : MonoBehaviour
         playerData = FindObjectOfType<PlayerUIData>();
         DragCanvas = GetComponentInParent<Canvas>();
         DragCanvasScaler = GetComponentInParent<CanvasScaler>();
-        slots = new QuickSlotEntry[5];
     }
 
     public void UpdateEntry(int idx, int quickSlotIdx)
     {
         InvenEntry entryData = playerData.CallQuickSlotData(idx);
+        if (entryData == null)
+            return;
         slots[quickSlotIdx].SetData(entryData.icon, entryData.count);
     }
+    public void ClearSlot(int quickSlotIdx) => slots[quickSlotIdx].SetData(null, 0);
 
     public bool HandledDroppedEntry(Vector3 position, int idx)
     {
-        if (RectTransformUtility.RectangleContainsScreenPoint(Layout.rectTransform, position) == false)
-            return false;
         for (int i = 0; i < rects.Length; ++i)
         {
             RectTransform t = rects[i];

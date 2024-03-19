@@ -39,7 +39,7 @@ public class ProjectileObj : MonoBehaviour
         direc = new Vector2(_dir * speed, 0);
         power = _power;
         pos = _pos;
-        size = Vector3.one * circleCollider.radius;
+        size = Vector3.one * circleCollider.radius * 2;
         offset = new Vector2(0, 0.5f);
         transform.position = new Vector2(_pos.x, _pos.z) + offset;
     }
@@ -50,33 +50,32 @@ public class ProjectileObj : MonoBehaviour
         Gizmos.color = UnityEngine.Color.red;
         Gizmos.DrawWireCube(
         new Vector2(transform.position.x, pos.z),
-            new Vector2(size.x, size.z) * temp * 2);
+            new Vector2(size.x, size.z));
 
         float realYPos =
-        (pos.z + offset.y) + (size.x * temp * 0.5f);
+        (pos.z + offset.y) + (size.y * 0.25f);
 
         Gizmos.color = UnityEngine.Color.green;
         Gizmos.DrawWireCube(new Vector2(transform.position.x, realYPos),
-        new Vector2(size.x * temp * 2, size.y * temp));
+        new Vector2(size.x * 2, size.y) * temp);
     }
-    private void Update()
-    {
 
-        if (target == null)
-            return;
-        Vector3 currentPos = new Vector3(transform.position.x, 0, pos.z);
-        if (target.ICollision(size, currentPos, offset))
-        {
-            target.IGetDamage(damage, attackType);
-            target.ICollision(currentPos, size, offset);
-            target.ISetKnockback(power, pushTime);
-            gameObject.SetActive(false);
-        }
-    }
-   
     private void FixedUpdate()
     {
         rigid.velocity = direc;
+
+        if (target == null)
+            return;
+
+        Vector3 currentPos = new Vector3(transform.position.x, 0, pos.z);
+        if (target.ICollision(size, currentPos, offset))
+        {
+            if(target.IGetDamage(damage, attackType))
+            {
+                target.ISetKnockback(power, pushTime);
+                gameObject.SetActive(false);
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -9,15 +9,22 @@ public class Goblin_Chase : MonsterState<GoblinState>
     Vector2 optimumRange;
     Transform target;
     bool isTransition;
+    bool isNotFound;
     public override void Enter()
     {
         isTransition = false;
+        isNotFound = false;
         target = owner.sensor.target;
         optimumRange = owner.GetAtckData(0).optimumRange;
     }
     public override void Update()
     {
         Vector2 currentPos = new Vector2(pos.X, pos.Z);
+        if (target == null)
+        {
+            isNotFound = true;
+            return;
+        }
         Vector3 targetPos = target.position;
 
         Vector2 distance = new Vector2(targetPos.x, targetPos.y) - currentPos;
@@ -53,8 +60,8 @@ public class Goblin_Chase : MonsterState<GoblinState>
     public override void Transition()
     {
         if (isTransition)
-        {
             owner.SetState = GoblinState.Atck;
-        }
+        else if(isNotFound)
+            owner.SetState = GoblinState.Idle;
     }
 }

@@ -353,7 +353,7 @@ Transform:
   m_GameObject: {fileID: 162992163}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.80021334, y: 0.99728, z: -10}
+  m_LocalPosition: {x: -0.800231, y: 0.99820995, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1189,6 +1189,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4719915068444086467, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1250,6 +1254,10 @@ PrefabInstance:
     - target: {fileID: 4719915068444086467, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
       propertyPath: m_Name
       value: Goblin (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4719915068444086467, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2027,11 +2035,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 737948117196933098, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.668
+      value: 1.67
       objectReference: {fileID: 0}
     - target: {fileID: 737948117196933098, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.13
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 737948117196933098, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2064,6 +2072,14 @@ PrefabInstance:
     - target: {fileID: 737948117196933098, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2371541292244356324, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493163614983369463, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
+      propertyPath: Atck_Data.Array.data[0].Atck_CoolTime
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4719915068444086467, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
       propertyPath: m_Name
@@ -2282,6 +2298,10 @@ PrefabInstance:
     - target: {fileID: 4719915068444086467, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
       propertyPath: m_Name
       value: Goblin (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4719915068444086467, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2605,6 +2625,10 @@ PrefabInstance:
     - target: {fileID: 4719915068444086467, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
       propertyPath: m_Name
       value: Goblin (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4719915068444086467, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4085,6 +4109,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4719915068444086467, guid: 9d5b58eed80c7ff43af7c3239460ac39, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4242,7 +4270,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4621700051401635338, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.96
+      value: -3.43
       objectReference: {fileID: 0}
     - target: {fileID: 4621700051401635338, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4280,6 +4308,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4803227102972917773, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1741029621}
     - target: {fileID: 5868913814905516206, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
       propertyPath: m_BoundingShape2D
       value: 
@@ -4287,6 +4319,10 @@ PrefabInstance:
     - target: {fileID: 6941593350664759580, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8493437146200328571, guid: a82feab542ee1e54f9986b7027c2d698, type: 3}
+      propertyPath: lunaSlashController.coolTime
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

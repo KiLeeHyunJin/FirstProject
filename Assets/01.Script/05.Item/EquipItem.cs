@@ -25,4 +25,17 @@ public class EquipItem : BaseItem
     {
         inventorySystem.AddItem(id, itemType);
     }
+    public override void Swap(BaseItem targetItem)
+    {
+        base.Swap(targetItem);
+        EquipItem equip = targetItem as EquipItem;
+        if(equip != null)
+        {
+            EnumType.EquipType targetEquipType = equip.equipType;
+
+            equip.SetEquipData(equipType);
+
+            equipType = targetEquipType;
+        }
+    }
 }

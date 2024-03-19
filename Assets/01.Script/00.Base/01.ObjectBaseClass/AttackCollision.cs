@@ -62,6 +62,8 @@ public class AttackCollision
     /// <returns></returns>
     private bool SideCollision()
     {
+        if (ownerPos == null)
+            return false;
         float ownerX = ownerPos.X + ownerPos.Offset.x;
         float targetX = targetPos.Pos.x + targetPos.Offset.x;
         //오너 우측 변 >= 타겟 좌측 변

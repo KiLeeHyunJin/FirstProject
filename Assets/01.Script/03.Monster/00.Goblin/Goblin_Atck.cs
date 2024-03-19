@@ -7,6 +7,7 @@ using UnityEngine;
 public class Goblin_Atck : MonsterState<GoblinState>
 {
     [SerializeField] ProjectileObj prefab;
+    ProjectileObj atckBall;
     float attackTime;
     int dir;
     bool isTransition;
@@ -34,9 +35,10 @@ public class Goblin_Atck : MonsterState<GoblinState>
             {
                 if (prefab == null)
                     break;
-                ProjectileObj obj = GameObject.Instantiate(prefab);
-                obj.transform.position = new Vector2(pos.X, pos.Z);
-                obj.SetData(new Vector2(1, 1), pos.Pose, dir);
+                if (atckBall == null)
+                    atckBall = GameObject.Instantiate(prefab);
+                atckBall.transform.position = new Vector2(pos.X, pos.Z);
+                atckBall.SetData(new Vector2(1, 1), pos.Pose, dir);
                 break;
             }
             yield return new WaitForFixedUpdate();

@@ -55,6 +55,35 @@ public class KeyManager : MonoBehaviour
 
         //allKeysMap.Enable();
     }
+    void OnQ(InputValue value)
+    {
+        if (value.isPressed)
+            SlotKeyLayer |= 1 << (int)SlotKey.Q;
+    }
+
+    void OnW(InputValue value)
+    {
+        if (value.isPressed)
+            SlotKeyLayer |= 1 << (int)SlotKey.W;
+    }
+
+    void OnE(InputValue value)
+    {
+        if (value.isPressed)
+            SlotKeyLayer |= 1 << (int)SlotKey.E;
+    }
+
+    void OnR(InputValue value)
+    {
+        if (value.isPressed)
+            SlotKeyLayer |= 1 << (int)SlotKey.R;
+    }
+
+    void OnT(InputValue value)
+    {
+        if (value.isPressed)
+            SlotKeyLayer |= 1 << (int)SlotKey.T;
+    }
 
     void OnX(InputValue value)
     {
@@ -108,7 +137,7 @@ public class KeyManager : MonoBehaviour
     public void OnLayer(QuickKey checkKey) => Layer |= 1 << (int)Layer;
     public bool ContainLayer(QuickKey checkKey) => ContainCheck(Layer, 1 << (int)checkKey);
     public bool ContainLayer(DefaultKey checkKey) => ContainCheck(DefaultLayer, 1 << (int)checkKey);
-    public bool COntainLayer(SlotKey checkKey) => ContainCheck(SlotKeyLayer, 1 << (int)checkKey);
+    public bool ContainLayer(SlotKey checkKey) => ContainCheck(SlotKeyLayer, 1 << (int)checkKey);
     bool ContainCheck(int layer , int  checkLayer)
     {
         checkLayer &= layer & checkLayer;

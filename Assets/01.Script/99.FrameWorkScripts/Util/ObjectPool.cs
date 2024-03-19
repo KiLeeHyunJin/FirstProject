@@ -21,7 +21,7 @@ public class ObjectPool : MonoBehaviour
             PooledObject instance = Instantiate(prefab);
             instance.gameObject.SetActive(false);
             instance.Pool = this;
-            instance.transform.parent = transform;
+            instance.transform.SetParent(transform);
             objectPool.Push(instance);
         }
     }
@@ -51,7 +51,8 @@ public class ObjectPool : MonoBehaviour
         if (objectPool.Count < capacity)
         {
             instance.gameObject.SetActive(false);
-            instance.transform.parent = transform;
+            instance.gameObject.transform.SetParent(transform, false);
+            //instance.transform.parent = transform;
             objectPool.Push(instance);
         }
         else

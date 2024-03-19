@@ -51,6 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layer: 6
   speed: 3
+  damageUI: {fileID: 403156970752532021, guid: 65d5fc11f2993e44fabbb4e79e86324e, type: 3}
+  canvas: {fileID: 0}
   hitbox: {fileID: 5064105028532702890}
 --- !u!212 &8266287704003760047
 SpriteRenderer:
@@ -213,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 4558043772746265433}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

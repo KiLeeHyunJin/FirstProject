@@ -55,4 +55,22 @@ public class BaseItem
     {
 
     }
+    public virtual void Swap(BaseItem targetItem)
+    {
+        int targetId = targetItem.id;
+        int targetIdx = targetItem.idx;
+        int targetCount = targetItem.count;
+        Sprite targetIcon  = targetItem.icon;
+        EnumType.ItemState targetState = targetItem.stateType;
+
+        targetItem.icon = icon;
+        targetItem.id = id;
+        targetItem.count = count;
+        targetItem.stateType = stateType;
+
+        icon = targetIcon;
+        id = targetId;
+        count = targetCount;
+        stateType = targetState;
+    }
 }

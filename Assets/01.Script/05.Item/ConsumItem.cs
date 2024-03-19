@@ -21,4 +21,19 @@ public class ConsumItem : BaseItem
         inventorySystem.data.playerController.AddState(consumeType, value);
         MinusItem(1);
     }
+    public override void Swap(BaseItem targetItem)
+    {
+        base.Swap(targetItem);
+        ConsumItem consume = targetItem as ConsumItem;
+        if(consume != null)
+        {
+            EnumType.ConsumeType targetConsumeType = consume.consumeType;
+            int targetValue = consume.value;
+
+            consume.SetConsumeData(consumeType, value);
+
+            consumeType = targetConsumeType;
+            value = targetValue;
+        }
+    }
 }

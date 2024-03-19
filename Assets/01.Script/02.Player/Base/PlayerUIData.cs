@@ -68,6 +68,7 @@ public class PlayerUIData : MonoBehaviour
     public void UpdateEquipSlot(EnumType.EquipType type) => equipmentWindow.UpdateEntry(type);
 
     public void UpdateQuickSlot(int idx, int quickSlotIdx) => quickSlotWindow.UpdateEntry(idx, quickSlotIdx);
+    public void UpdateClearQuickSlot(int quickSlotIdx) => quickSlotWindow.ClearSlot(quickSlotIdx);
     public void CallSetQuick(int idx, int saveIdx) => playerData.quickSlot.CallSetItem(idx, saveIdx);
     public void CallUsedItem(EnumType.ItemType type, int idx) => playerData.inventory.UseItem(type, idx);
     public void CallSwapItem(EnumType.ItemType type,int idx1, int idx2) => playerData.inventory.SwapItem(type, idx1, idx2);
