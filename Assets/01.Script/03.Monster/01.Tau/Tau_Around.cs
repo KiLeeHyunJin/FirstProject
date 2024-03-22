@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 [Serializable]
 public class Tau_Around : MonsterState<TauState>

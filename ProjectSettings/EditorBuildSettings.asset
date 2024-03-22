@@ -6,17 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/00.Scenes/00.Enter/SelectSever.unity
+    guid: 1d581e19e3f17114ea68b76706c89568
+  - enabled: 1
+    path: Assets/00.Scenes/00.Enter/SelectCharacter.unity
+    guid: 4015126b84faf2e44bd42f6d1acb8edb
+  - enabled: 1
     path: Assets/00.Scenes/01.Town/SeriaRoom.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/00.Scenes/01.Town/ElvenGaurd.unity
     guid: d20221aac354b234e8c73d54dd8f27e8
-  - enabled: 1
-    path: Assets/00.Scenes/00.Enter/SelectCharacter.unity
-    guid: 4015126b84faf2e44bd42f6d1acb8edb
-  - enabled: 1
-    path: Assets/00.Scenes/00.Enter/SelectSever.unity
-    guid: 1d581e19e3f17114ea68b76706c89568
   - enabled: 1
     path: Assets/00.Scenes/Lorien.unity
     guid: a3a85e12feb0db8419b9727aebfc5d55

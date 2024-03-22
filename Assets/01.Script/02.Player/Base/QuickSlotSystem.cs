@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using static EnumType;
-using static UnityEditor.Progress;
 
 public class QuickSlotSystem
 {
@@ -45,8 +40,8 @@ public class QuickSlotSystem
 
     public void CallSetItem(int idx, int saveIdx)
     {
-        ConsumItem consum  = inventory.GetConsume(idx) as ConsumItem;  
-        if(consum != null)
+        ConsumItem consum = inventory.GetConsume(idx) as ConsumItem;
+        if (consum != null)
         {
             InsertItemCheck(idx);
             consume[saveIdx] = consum;
@@ -79,7 +74,7 @@ public class QuickSlotSystem
         //consume[(int)key].SetItemData(item.count, item.id, item.itemType, item.icon);
         //consume[(int)key].SetConsumeData(item.consumeType, item.value);
         //업데이트 
-       // data.uIData.UpdateEquipSlot(item);
+        // data.uIData.UpdateEquipSlot(item);
     }
 
 }
