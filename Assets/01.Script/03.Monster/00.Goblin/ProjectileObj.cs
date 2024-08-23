@@ -1,4 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class ProjectileObj : MonoBehaviour
 {
@@ -23,7 +28,7 @@ public class ProjectileObj : MonoBehaviour
         //isStart = true;
         gameObject.SetActive(false);
     }
-    public void SetData(Vector2 _power, Vector3 _pos, int _dir)
+    public void SetData(Vector2 _power, Vector3 _pos,int _dir)
     {
         gameObject.SetActive(true);
         target = null;
@@ -65,7 +70,7 @@ public class ProjectileObj : MonoBehaviour
         Vector3 currentPos = new Vector3(transform.position.x, 0, pos.z);
         if (target.ICollision(size, currentPos, offset))
         {
-            if (target.IGetDamage(damage, attackType))
+            if(target.IGetDamage(damage, attackType))
             {
                 target.ISetKnockback(power, pushTime);
                 gameObject.SetActive(false);
@@ -75,7 +80,7 @@ public class ProjectileObj : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == layer)
+        if(collision.gameObject.layer == layer)
         {
             target = collision.GetComponent<Attackable>();
         }

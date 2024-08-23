@@ -1,5 +1,8 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 [Serializable]
 public class JumpUp : PlayerBaseState<PlayerState>
@@ -42,7 +45,7 @@ public class JumpUp : PlayerBaseState<PlayerState>
         else if (owner.keys.ContainLayer(KeyManager.DefaultKey.X))
             if (pos.Y > 0.5f)
                 owner.SetState = PlayerState.X;
-
+        
     }
 
 

@@ -1,5 +1,10 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static EnumType;
+using static UnityEditor.LightingExplorerTableColumn;
+using static UnityEditor.Progress;
 
 public class EquipmentSystem
 {
@@ -41,7 +46,7 @@ public class EquipmentSystem
     public void DequipItem(EquipType itemType)
     {
         int idx = (int)itemType;
-        if (DequipCheck(idx))
+        if(DequipCheck(idx))
         {
             equips[idx].Dequip();
             equips[idx].Clear();

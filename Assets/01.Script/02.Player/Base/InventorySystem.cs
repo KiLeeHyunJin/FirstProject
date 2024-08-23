@@ -1,5 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static EnumType;
+using static UnityEditor.LightingExplorerTableColumn;
 public class InvenEntry
 {
     public EnumType.ItemType Type;
@@ -13,13 +16,13 @@ public class InventorySystem
     public PlayerData data;
     EnumType.ItemType currentUIType;
     public BaseItem GetConsume(int idx)
-    { return inventory[(int)ItemType.Consume, idx]; }
+    { return inventory[(int)ItemType.Consume,idx]; }
     public InvenEntry[] GetInventory(EnumType.ItemType type)
     {
         currentUIType = type;
         for (int i = 0; i < getArray.Length; i++)
         {
-            if (inventory[(int)type, i].stateType == ItemState.Fill)
+            if(inventory[(int)type, i].stateType == ItemState.Fill)
             {
                 getArray[i].icon = inventory[(int)type, i].icon;
                 getArray[i].count = inventory[(int)type, i].count;
@@ -44,7 +47,7 @@ public class InventorySystem
     }
     public EnumType.EquipType GetEquipType(int idx)
     {
-        if (inventory[(int)ItemType.Equip, idx].stateType == ItemState.Fill)
+        if(inventory[(int)ItemType.Equip, idx].stateType == ItemState.Fill)
         {
             EquipItem item = inventory[(int)ItemType.Equip, idx] as EquipItem;
             if (item != null)
@@ -90,7 +93,7 @@ public class InventorySystem
                 }
                 inventory[i, j] = item;
             }
-
+               
         }
     }
     public void SetEquipSystem(EquipmentSystem _equipmentSystem) => equipment = _equipmentSystem;
@@ -99,7 +102,7 @@ public class InventorySystem
         if (idx >= inventory.GetLength(1))
             return;
 
-        if (inventory[(int)type, idx].stateType == ItemState.Fill)
+        if(inventory[(int)type, idx].stateType == ItemState.Fill)
         {
             if (inventory[(int)type, idx].count > 0)
             {
@@ -125,7 +128,7 @@ public class InventorySystem
 
     public void AddItem(int id, ItemType type, int count = 1)
     {
-        if (type != ItemType.Equip)
+        if(type != ItemType.Equip)
         {
             int idx = SearchItem(id, type);
             if (idx >= 0)
@@ -144,9 +147,9 @@ public class InventorySystem
         {
             inventory[(int)type, addIdx].SetItemData(count, id, type, item.Icon);
 
-            if (item.Type == ItemType.Equip)
+            if(item.Type == ItemType.Equip)
                 inventory[(int)type, addIdx].SetEquipData(item.Equip);
-            else if (item.Type == ItemType.Consume)
+            else if(item.Type == ItemType.Consume)
                 inventory[(int)type, addIdx].SetConsumeData(item.AddStat, item.Value);
 
             UpdateSlot(addIdx, type);
@@ -157,22 +160,22 @@ public class InventorySystem
     {
         for (int i = 0; i < inventory.GetLength(1); i++)
         {
-            if (inventory[(int)type, i].stateType == ItemState.Blank)
+            if (inventory[(int)type,i].stateType == ItemState.Blank)
                 return i;
         }
         return -1;
     }
 
-    public void ClearSlot(int idx, ItemType type) => inventory[(int)type, idx].Clear();
+    public void ClearSlot(int idx, ItemType type) => inventory[(int)type,idx].Clear();
 
-    public bool RemoveItem(int idx, ItemType type, int count = 1)
+    public bool RemoveItem(int idx, ItemType type,int count = 1)
     {
         if (inventory.GetLength(1) <= idx || 0 > idx)
             return false;
 
-        if (inventory[(int)type, idx].count >= count)
+        if(inventory[(int)type, idx].count >= count)
         {
-            bool result = inventory[(int)type, idx].MinusItem(count);
+            bool result  = inventory[(int)type, idx].MinusItem(count);
             UpdateSlot(idx, type);
             return result;
         }
@@ -198,23 +201,23 @@ public class InventorySystem
         UpdateSlot(idx1, type);
         UpdateSlot(idx2, type);
     }
-    void Swap(BaseItem idx1, BaseItem idx2)
+    void Swap(BaseItem idx1,BaseItem idx2)
     {
-        //    switch (currentUIType)
-        //    {
-        //        case ItemType.Equip:
-        //            EquipItem equipItem1 = idx1 as EquipItem;
-        //            EquipItem equipItem2 = idx2 as EquipItem;
-        //            equipItem1.Swap(equipItem2);
-        //            break;
-        //        case ItemType.Consume:
-        //            ConsumItem consumItem1 = idx1 as ConsumItem;
-        //            ConsumItem consumItem2 = idx2 as ConsumItem;
-        //            consumItem1.Swap(consumItem2);
-        //            break;
-        //        case ItemType.Gold:
-        //            break;
-        //    }
+    //    switch (currentUIType)
+    //    {
+    //        case ItemType.Equip:
+    //            EquipItem equipItem1 = idx1 as EquipItem;
+    //            EquipItem equipItem2 = idx2 as EquipItem;
+    //            equipItem1.Swap(equipItem2);
+    //            break;
+    //        case ItemType.Consume:
+    //            ConsumItem consumItem1 = idx1 as ConsumItem;
+    //            ConsumItem consumItem2 = idx2 as ConsumItem;
+    //            consumItem1.Swap(consumItem2);
+    //            break;
+    //        case ItemType.Gold:
+    //            break;
+    //    }
         idx1.Swap(idx2);
 
         if (idx1.count <= 0)

@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +31,7 @@ public class EquipmentWindow : MonoBehaviour
         dragData = new InventoryDragData();
         for (int i = 0; i < (int)EnumType.EquipType.END; i++)
         {
-            equips[i].SetIndex(i, this);
+            equips[i].SetIndex(i,this);
         }
         playerData.CheckPlayerData();
         for (int i = 0; i < (int)EnumType.EquipType.END; i++)
